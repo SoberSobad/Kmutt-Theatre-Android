@@ -1,13 +1,19 @@
 package com.kmutt.sit.theater;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.kmutt.sit.theater.membership.MembershipActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +32,31 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Button button1 = findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MembershipActivity.class);
+                startActivity(i);
+            }
+        });
+
+        Toast.makeText(this, "CREATE", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Toast.makeText(this, "PAUSE", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Toast.makeText(this, "RESUME", Toast.LENGTH_SHORT).show();
     }
 
     @Override
