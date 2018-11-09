@@ -33,30 +33,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        Toast.makeText(this, "CREATE MainActivity", Toast.LENGTH_SHORT).show();
+
+        //Create MembershipActivity
+        final Intent mbshipAct = new Intent(MainActivity.this, MembershipActivity.class);
+        //mbshipAct.putExtras(this.getIntent());
+        //mbshipAct.putExtra("ID",(int) Math.ceil(Math.random() * 100));      //Test create once activity
+
         Button button1 = findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, MembershipActivity.class);
-                startActivity(i);
+                startActivity(mbshipAct);
             }
         });
-
-        Toast.makeText(this, "CREATE", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        Toast.makeText(this, "PAUSE", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "PAUSE MainActivity", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        Toast.makeText(this, "RESUME", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "RESUME MainActivity", Toast.LENGTH_SHORT).show();
     }
 
     @Override
