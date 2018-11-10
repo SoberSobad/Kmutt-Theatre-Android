@@ -150,17 +150,17 @@
 
         <EditText
             android:id="@+id/editText20"
-            android:layout_width="215dp"
+            android:layout_width="214dp"
             android:layout_height="150dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="620dp"
+            android:layout_marginTop="640dp"
             android:ems="10"
-            android:hint="Address"
+            android:focusable="true"
+            android:isScrollContainer="true"
             android:inputType="textMultiLine"
-            android:lines="2"
-            android:maxLength="60"
-            android:maxLines="3"
-            android:minLines="1"
+            android:gravity="top"
+            android:lines="6"
+            android:maxLength="150"
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
             android:selectAllOnFocus="false"
@@ -172,7 +172,7 @@
             android:layout_width="220dp"
             android:layout_height="40dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="780dp"
+            android:layout_marginTop="800dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -191,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="820dp"
+            android:layout_marginTop="840dp"
             android:ems="10"
             android:hint="District"
             android:inputType="textPersonName"
@@ -203,11 +203,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="870dp"
+            android:layout_marginTop="888dp"
             android:ems="10"
             android:hint="Zip code"
             android:inputType="number"
             android:maxLength="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="620dp"
+            android:text="Address"
+            android:textSize="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
