@@ -22,8 +22,12 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="280dp"
+        android:backgroundTint="#14F21D"
         android:text="Log in"
+        android:textColor="#EEECEC"
+        android:textSize="25dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
