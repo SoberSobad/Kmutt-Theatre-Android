@@ -17,6 +17,7 @@
         android:text="Sign up"
         android:backgroundTint="#ffffff"
         android:textStyle="bold"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,16 +27,16 @@
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="272dp"
-        android:backgroundTint="#000000"
         android:text="Log in"
         android:textColor="#EEECEC"
         android:textSize="25dp"
         android:textStyle="bold"
+        android:background="@drawable/button_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/userInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
@@ -51,12 +52,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/passInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="210dp"
-        android:background="#8A8A8A"
+        android:background="@drawable/changecolor"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
