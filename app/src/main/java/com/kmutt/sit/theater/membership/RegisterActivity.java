@@ -7,11 +7,21 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import java.sql.*;
 
 import com.kmutt.sit.theater.MainActivity;
 import com.kmutt.sit.theater.R;
 
 public class RegisterActivity extends AppCompatActivity {
+
+
+        /*try {
+            Connection myConn = DriverManager.getConnection("10.4.56.40","user01","user01");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         //ArrayAdapter<String> genderSpinAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genders);
         ArrayAdapter<String> genderSpinAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genders);
         genderDrop.setAdapter(genderSpinAdapt);
+
+
     }
 }

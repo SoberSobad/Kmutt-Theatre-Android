@@ -5,10 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.kmutt.sit.theater.MainActivity;
 import com.kmutt.sit.theater.R;
+
+import org.json.JSONObject;
 
 public class MembershipActivity extends AppCompatActivity {
 
@@ -30,6 +37,35 @@ public class MembershipActivity extends AppCompatActivity {
                 startActivity(regisAct);
             }
         });
+
+        final TextView redText = findViewById(R.id.redText);
+
+        Button loginButt = findViewById(R.id.loginButt);
+        loginButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "http://theatre.sit.kmutt.ac.th/group6";
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                        (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                redText.setText("Response: " + response.toString());
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // TODO: Handle error
+                                redText.setText(error.getMessage() + "Error !!!");
+
+                            }
+                        });
+                MySingleton.getInstance(MembershipActivity.this).addToRequestQueue(jsonObjectRequest);
+            }
+        });
+
     }
 
     @Override
