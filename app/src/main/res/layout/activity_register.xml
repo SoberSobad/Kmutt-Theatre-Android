@@ -65,12 +65,12 @@
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
-            android:layout_height="1500dp"
-            android:background="@drawable/changecolor"
-            android:textColorHint="#9E9E9E"
+            android:layout_height="200dp"
             android:layout_marginStart="36dp"
             android:layout_marginTop="1000dp"
+            android:background="@drawable/changecolor"
             android:text="TextView"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -173,7 +173,7 @@
             android:layout_marginStart="36dp"
             android:layout_marginTop="548dp"
             android:text="Date of Birth"
-            android:textColor="#E00202"
+            android:textColor="#ffffff"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -259,7 +259,7 @@
             android:layout_marginTop="620dp"
             android:text="Address"
             android:textSize="16dp"
-            android:textColor="#E00202"
+            android:textColor="#ffffff"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
