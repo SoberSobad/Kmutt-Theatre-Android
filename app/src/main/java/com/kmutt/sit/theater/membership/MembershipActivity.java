@@ -3,19 +3,30 @@ package com.kmutt.sit.theater.membership;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.kmutt.sit.theater.MainActivity;
 import com.kmutt.sit.theater.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MembershipActivity extends AppCompatActivity {
 
@@ -35,6 +46,7 @@ public class MembershipActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(regisAct);
+
             }
         });
 
@@ -44,14 +56,22 @@ public class MembershipActivity extends AppCompatActivity {
         loginButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://theatre.sit.kmutt.ac.th/group6";
+                String url = "http://theatre.sit.kmutt.ac.th/group6/login";
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                        (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                Map<String, String> params = new HashMap();
+                params.put("user", "Ay");
+                params.put("password", "123456");
+
+                JSONObject parameters = new JSONObject(params);
+
+                JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+                        (Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
+
 
                             @Override
-                            public void onResponse(JSONObject response) {
+                            public void onResponse(JSONArray response) {
                                 redText.setText("Response: " + response.toString());
+
                             }
                         }, new Response.ErrorListener() {
 
@@ -61,8 +81,49 @@ public class MembershipActivity extends AppCompatActivity {
                                 redText.setText(error.getMessage() + "Error !!!");
 
                             }
-                        });
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params.put("user", "Ay");
+                        params.put("password", "123456");
+                        return params;
+                    }
+                };
+
                 MySingleton.getInstance(MembershipActivity.this).addToRequestQueue(jsonObjectRequest);
+                /*
+                StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+
+                        Log.d(TAG, "Success "+ s.toString());
+
+                        try {
+                            JSONObject data = new JSONObject(s);
+                            String dir = data.getString("dir");
+                            Log.d("dir", dir);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                        new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d(TAG, "Error response " + error.getMessage());
+                            }
+                        }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params.put("user", "Ay");
+                        params.put("password", "123456");
+
+                        return params;
+                    }
+                };*/
             }
         });
 
@@ -93,4 +154,7 @@ public class MembershipActivity extends AppCompatActivity {
         this.getIntent().setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
     }*/
 
+    protected void login(String user, String password){
+
+    }
 }
