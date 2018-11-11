@@ -30,6 +30,8 @@ import java.util.Map;
 
 public class MembershipActivity extends AppCompatActivity {
 
+    //private static final String TAG = "MembershipActivity";
+    static int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,8 @@ public class MembershipActivity extends AppCompatActivity {
         setContentView(R.layout.activity_membership);
         Toast.makeText(this, "CREATE MembershipActivity", Toast.LENGTH_SHORT).show();
 
-
+        final EditText userInput = findViewById(R.id.userInput);
+        final EditText passInput = findViewById(R.id.passInput);
 
         final Intent regisAct = new Intent(MembershipActivity.this, RegisterActivity.class);
 
@@ -56,15 +59,24 @@ public class MembershipActivity extends AppCompatActivity {
         loginButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://theatre.sit.kmutt.ac.th/group6/login";
 
+                /*
                 Map<String, String> params = new HashMap();
                 params.put("user", "Ay");
                 params.put("password", "123456");
+                */
+                /*
+                JSONObject parameters = new JSONObject();
+                parameters.put("user","Ay");
+                parameters.put("password","123456");
+                */
 
-                JSONObject parameters = new JSONObject(params);
+                    //// TODO: Below is where we left with json Post request  ( Can't pass argument. jsonObjectRequest don't accept jsonObject as parameters )
+                /*
+                String url = "http://theatre.sit.kmutt.ac.th/group6/login";
 
                 JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+
                         (Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
 
 
@@ -89,20 +101,24 @@ public class MembershipActivity extends AppCompatActivity {
                         params.put("password", "123456");
                         return params;
                     }
+
                 };
 
                 MySingleton.getInstance(MembershipActivity.this).addToRequestQueue(jsonObjectRequest);
+                */
+                    /////// TODO: TILL THIS LINE ***************************************************************************
                 /*
                 StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
 
                         Log.d(TAG, "Success "+ s.toString());
-
+                        //redText.setText("Success "+ s.toString());
                         try {
                             JSONObject data = new JSONObject(s);
                             String dir = data.getString("dir");
                             Log.d("dir", dir);
+                            redText.setText("Success "+ s.toString()+" || "+"dir" + dir);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -113,6 +129,7 @@ public class MembershipActivity extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Log.d(TAG, "Error response " + error.getMessage());
+                                redText.setText("Error response " + error.getMessage());
                             }
                         }){
                     @Override
@@ -123,7 +140,59 @@ public class MembershipActivity extends AppCompatActivity {
 
                         return params;
                     }
-                };*/
+                };
+                */
+                String url = "http://theatre.sit.kmutt.ac.th/group6/loginn?user="+ userInput.getText() + "&pass=" + passInput.getText();
+                JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+
+                        (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                //redText.setText("Response: " + response.toString());
+                                //id = Integer.parseInt(response.get(0).toString());
+                                //try {
+                                    //redText.setText("id = " + response);
+                                    //id = Integer.parseInt(response.get(0).toString());
+                                    //redText.setText("id = " + response.get(0).toString());
+                                String result = JsonarrayParseString.parseString(response,"ID",0);
+                                //String display;
+                                if(result.length() != 0) {
+                                    id = Integer.parseInt(result);
+                                    //id = 5;
+                                    redText.setText("id = " + id);
+                                    //display = "id = " + result;
+                                    //redText.setText(display);
+                                }else {
+                                    redText.setText("Invalid username or password.\nPlease try again.");
+                                }
+                                    //redText.setText("id = " + JsonarrayParseString.parseString(response,"ID",0));
+
+                                        //} catch (JSONException e) {
+                                //    e.printStackTrace();
+                                //}
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // TODO: Handle error
+                                redText.setText(error.getMessage() + "Error !!!");
+
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        params.put("user", "Ay");
+                        params.put("password", "123456");
+                        return params;
+                    }
+
+                };
+
+                MySingleton.getInstance(MembershipActivity.this).addToRequestQueue(jsonObjectRequest);
             }
         });
 
