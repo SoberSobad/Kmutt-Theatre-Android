@@ -89,14 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
         final Button topupButt = findViewById(R.id.topupButt);
 
 
-        topupButt.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent topupAct = new Intent(RegisterActivity.this, TopupActivity.class);
-                topupAct.putExtra("id",id);
-                startActivity(topupAct);
-            }
-        });
+
     /*
         genderDrop.setFocusable(false);
         genderDrop.setFocusableInTouchMode(false);
@@ -110,6 +103,35 @@ public class RegisterActivity extends AppCompatActivity {
         final Spinner[] spinners = {genderDrop, monthDrop, provinceDrop};
         final EditText moneyInp = findViewById(R.id.moneyInp);
 
+        topupButt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent topupAct = new Intent(RegisterActivity.this, TopupActivity.class);
+                topupAct.putExtra("id",id);
+                startActivity(topupAct);
+                //moneyInp.setText("99999");
+                String url = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id="+id;
+                JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+                        (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                moneyInp.setText( JsonarrayParseString.parseString2(response,"Money",0) );
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // TODO: Handle error
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String>  params = new HashMap<String, String>();
+                        return params;
+                    }
+                };
+                MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
+            }
+        });
 
         if(mode == 1){  //Register
             modeHeader.setText("REGISTER");
@@ -218,6 +240,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             } else {
                                                 redText.setText("Password didn't matches");
                                             }
+
                                         }
                                     } else {
                                         redText.setText("Username or Phone Number is already exist : ");
@@ -242,7 +265,7 @@ public class RegisterActivity extends AppCompatActivity {
                     // TODO insert delay here ***********************************************************************************************
                 }
                 if (mode == 3){
-                    String checkUniqUrl = "http://theatre.sit.kmutt.ac.th/group6/checkUniqness?user=" + userInp.getText() + "&phoneno=" + phonenumberInp.getText();
+                    /*String checkUniqUrl = "http://theatre.sit.kmutt.ac.th/group6/checkUniqness?user=" + userInp.getText() + "&phoneno=" + phonenumberInp.getText();
                     JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
 
                             (Request.Method.GET, checkUniqUrl, null, new Response.Listener<JSONArray>() {
@@ -251,7 +274,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     if (response.toString().length() > 2) uniqness = false;
                                     else uniqness = true;
                                     //redText.setText(uniqness+ response.toString());
-                                    if (uniqness) {
+                                    if (uniqness) {*/
                                         if (firstnameInp.getText().toString().matches("") & lastnameInp.getText().toString().matches("") &
                                                 passwordInp.getText().toString().matches("") & emailInp.getText().toString().matches("") &
                                                 phonenumberInp.getText().toString().matches("") & dateInp.getText().toString().matches("") &
@@ -333,7 +356,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                 redText.setText("Password didn't matches");
                                             }
                                         }
-                                    } else {
+                                    /*} else {
                                         redText.setText("Username or Phone Number is already exist : ");
                                     }
                                 }
@@ -352,6 +375,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     };
                     MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
+                    */
                 }
             }
         });
@@ -444,5 +468,27 @@ public class RegisterActivity extends AppCompatActivity {
         MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
         //Toast.makeText(this, "Uniqueness = "+responseLength[0], Toast.LENGTH_SHORT).show();
         return result[0];
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mode == 2) {
+            Intent main = new Intent(RegisterActivity.this, MainActivity.class);
+            main.putExtra("id",id);
+            main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(main);
+            finish();
+        }
+        if(mode == 3){
+            Intent personalInfo = new Intent(RegisterActivity.this, RegisterActivity.class);
+            personalInfo.putExtra("id",id);
+            personalInfo.putExtra("mode",2);
+            personalInfo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(personalInfo);
+            finish();
+        }
+        if(mode == 1){
+            finish();
+        }
     }
 }
