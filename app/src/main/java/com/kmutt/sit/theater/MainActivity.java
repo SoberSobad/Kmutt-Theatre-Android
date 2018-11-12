@@ -77,6 +77,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button infoButt = findViewById(R.id.infoButt);
+        infoButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent infoAct = new Intent(MainActivity.this, RegisterActivity.class);
+                infoAct.putExtra("id",id);
+                infoAct.putExtra("mode",2);
+                startActivity(infoAct);
+            }
+        });
+
 /*
         memberInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,10 +137,14 @@ public class MainActivity extends AppCompatActivity {
             MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
             Button loginButt = findViewById(R.id.loginButt);
             loginButt.setText("Log out");
+            Button infoButt = findViewById(R.id.infoButt);
+            infoButt.setVisibility(View.VISIBLE);
         }else{
             memberInfo.setText("Anonymous");
             Button loginButt = findViewById(R.id.loginButt);
             loginButt.setText("Log in");
+            Button infoButt = findViewById(R.id.infoButt);
+            infoButt.setVisibility(View.INVISIBLE);
         }
 
 
