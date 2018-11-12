@@ -18,7 +18,7 @@
         android:layout_margin="8dp">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/modeHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -31,12 +31,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText7"
+            android:id="@+id/firstNameInp"
             android:layout_width="170dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="80dp"
             android:background="@drawable/changecolor"
+            android:editable="true"
             android:ems="10"
             android:hint="First name"
             android:inputType="textPersonName"
@@ -47,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText8"
+            android:id="@+id/lastNameInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -66,8 +67,8 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="1000dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="1112dp"
             android:background="@drawable/changecolor"
             android:text="TextView"
             android:visibility="invisible"
@@ -75,7 +76,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText9"
+            android:id="@+id/emailInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -83,14 +84,15 @@
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="E-mail"
-            android:textColor="#ffffff"
             android:inputType="textPersonName"
+            android:maxLength="50"
+            android:textColor="#ffffff"
             android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText11"
+            android:id="@+id/passwordInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -99,13 +101,14 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
+            android:maxLength="20"
             android:textColor="#ffffff"
             android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText12"
+            android:id="@+id/confirmpassInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -114,13 +117,31 @@
             android:ems="10"
             android:hint="Confirm password"
             android:inputType="textPassword"
+            android:maxLength="20"
             android:textColor="#ffffff"
             android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText16"
+            android:id="@+id/moneyInp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="328dp"
+            android:background="@drawable/changecolor"
+            android:ems="10"
+            android:text = "Money : "
+            android:inputType="text"
+            android:maxLength="25"
+            android:textColor="#ffffff"
+            android:textColorHint="#9E9E9E"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/usernameInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -129,13 +150,14 @@
             android:ems="10"
             android:hint="Username"
             android:inputType="textPersonName"
+            android:maxLength="20"
             android:textColor="#ffffff"
             android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText17"
+            android:id="@+id/phoneNoInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -143,26 +165,27 @@
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Phone number"
-            android:inputType="phone"
+            android:inputType="number"
             android:maxLength="10"
             android:phoneNumber="true"
-            android:textColorHint="#9E9E9E"
             android:textColor="#ffffff"
+            android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText19"
-            android:layout_width="0dp"
+            android:id="@+id/dateInp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/changecolor"
-            android:textColorHint="#9E9E9E"
             android:layout_marginStart="40dp"
             android:layout_marginTop="570dp"
+            android:background="@drawable/changecolor"
             android:ems="10"
-            android:hint="dd/mm/year"
+            android:hint=" date"
+            android:inputType="number"
+            android:maxLength="2"
             android:textColor="#ffffff"
-            android:inputType="date"
+            android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -178,24 +201,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText20"
+            android:id="@+id/addressInp"
             android:layout_width="214dp"
             android:layout_height="150dp"
-            android:background="@drawable/changecolor"
-            android:textColorHint="#9E9E9E"
             android:layout_marginStart="40dp"
             android:layout_marginTop="640dp"
+            android:background="@drawable/changecolor"
             android:ems="10"
             android:focusable="true"
-            android:isScrollContainer="true"
-            android:inputType="textMultiLine"
             android:gravity="top"
+            android:inputType="textMultiLine"
+            android:isScrollContainer="true"
             android:lines="6"
             android:maxLength="150"
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
             android:selectAllOnFocus="false"
             android:textColor="#ffffff"
+            android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -216,12 +239,13 @@
             android:layout_marginStart="220dp"
             android:layout_marginTop="80dp"
             android:background="@drawable/changecolor"
+            android:clickable="true"
             android:textSize="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText21"
+            android:id="@+id/districtInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -229,14 +253,15 @@
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="District"
-            android:textColor="#ffffff"
             android:inputType="textPersonName"
+            android:maxLength="30"
+            android:textColor="#ffffff"
             android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText22"
+            android:id="@+id/zipcodeInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -244,9 +269,9 @@
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Zip code"
-            android:textColor="#ffffff"
             android:inputType="number"
             android:maxLength="5"
+            android:textColor="#ffffff"
             android:textColorHint="#9E9E9E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -260,6 +285,76 @@
             android:text="Address"
             android:textSize="16dp"
             android:textColor="#ffffff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/submitButt"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="1000dp"
+            android:background="@drawable/button_bg"
+            android:text="SUBMIT"
+            android:textColor="#EEECEC"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/monthSpin"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="570dp"
+            android:background="@drawable/changecolor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/yearInp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="210dp"
+            android:layout_marginTop="570dp"
+            android:background="@drawable/changecolor"
+            android:ems="10"
+            android:hint="  year"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textColor="#ffffff"
+            android:textColorHint="#9E9E9E"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/regisRedText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="970dp"
+            android:textColor="#FF0000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/editButt"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="164dp"
+            android:layout_marginTop="16dp"
+            android:text="EDIT"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/topupButt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="260dp"
+            android:layout_marginTop="16dp"
+            android:text="Top Up"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

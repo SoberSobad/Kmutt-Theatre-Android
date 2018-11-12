@@ -39,4 +39,28 @@ public class JsonarrayParseString {
         //return "jsonParseFail !!";
         return "";
     }
+
+    public static String parseString2(JSONArray jsonArray, String name, int index){
+        String pattern = "\"" + name + "\":\"";
+        String result = "";
+        if (jsonArray != null) {
+            String str = jsonArray.toString();
+            if(str.length() == 0) return "Array is null !!";
+            for(int i=0; i<str.length(); i++){
+                if( i+4+name.length()<=str.length() & str.substring(i,i+4+name.length()).equals(pattern) ){
+                    if(index == 0){
+                        for(int j=i+4+name.length(); j<str.length(); j++){
+                            if(str.charAt(j) == '"') break;
+                            result += str.charAt(j);
+                        }
+                        return result;
+                    }
+                    index--;
+                }
+                if(i == str.length()-1) return "cfv"+jsonArray.toString();
+            }
+        }else return "Array is null";
+        //return "jsonParseFail !!";
+        return "";
+    }
 }

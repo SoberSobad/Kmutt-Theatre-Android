@@ -37,17 +37,22 @@ public class MembershipActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_membership);
-        Toast.makeText(this, "CREATE MembershipActivity", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "CREATE MembershipActivity", Toast.LENGTH_SHORT).show();
 
         final EditText userInput = findViewById(R.id.userInput);
         final EditText passInput = findViewById(R.id.passInput);
 
         final Intent regisAct = new Intent(MembershipActivity.this, RegisterActivity.class);
+        regisAct.putExtra("mode",1);
+        regisAct.putExtra("id",-1);
 
         Button regisButt = findViewById(R.id.regisButt);
         regisButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                regisAct.putExtra("mode",1);
+                regisAct.putExtra("id",-1);
                 startActivity(regisAct);
 
             }
@@ -160,10 +165,12 @@ public class MembershipActivity extends AppCompatActivity {
                                 //String display;
                                 if(result.length() != 0) {
                                     id = Integer.parseInt(result);
-                                    //id = 5;
-                                    redText.setText("id = " + id);
-                                    //display = "id = " + result;
-                                    //redText.setText(display);
+                                    //redText.setText("id = " + id);
+
+                                    regisAct.putExtra("mode",2);
+                                    regisAct.putExtra("id",id);
+                                    startActivity(regisAct);
+
                                 }else {
                                     redText.setText("Invalid username or password.\nPlease try again.");
                                 }
@@ -202,14 +209,14 @@ public class MembershipActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        Toast.makeText(this, "PAUSE MembershipActivity", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "PAUSE MembershipActivity", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        Toast.makeText(this, "RESUME MembershipActivity"+getIntent().getIntExtra("ID",000), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "RESUME MembershipActivity"+getIntent().getIntExtra("ID",000), Toast.LENGTH_SHORT).show();
     }
 
     /*
