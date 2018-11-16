@@ -33,17 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     static int mode;
     static int id;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
 
-        mode = getIntent().getIntExtra("mode",2);
-        id = getIntent().getIntExtra("id",-1);
-
-        final TextView modeHeader = findViewById(R.id.modeHeader);
-
-        final Spinner provinceDrop = findViewById(R.id.provinceSpin);
         final String[] provinces = new String[]{"Amnat Charoen","Ang Thong","Bangkok","Bueng Kan"
                 + "Buriram","Chachoengsao","Chai Nat","Chaiyaphum"
                 + "Chanthaburi","Chiang Mai","Chiang Rai","Chonburi"
@@ -64,6 +54,41 @@ public class RegisterActivity extends AppCompatActivity {
                 + "Tak","Trang","Trat","Ubon Ratchathani"
                 + "Udon Thani","Uthai Thani","Uttaradit","Yala"
                 + "Yasothon"};
+          // Province spinner
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+
+        mode = getIntent().getIntExtra("mode",2);
+        id = getIntent().getIntExtra("id",-1);
+
+        final TextView modeHeader = findViewById(R.id.modeHeader);
+
+        final Spinner provinceDrop = findViewById(R.id.provinceSpin);
+        /*
+        final String[] provinces = new String[]{"Amnat Charoen","Ang Thong","Bangkok","Bueng Kan"
+                + "Buriram","Chachoengsao","Chai Nat","Chaiyaphum"
+                + "Chanthaburi","Chiang Mai","Chiang Rai","Chonburi"
+                + "Chumphon","Kalasin","Kamphaeng Phet","Kanchanaburi"
+                + "Khon Kaen","Krabi","Lampang","Lamphun"
+                + "Loei","Lopburi","Mae Hong Son","Maha Sarakham"
+                + "Mukdahan","Nakhon Nayok","Nakhon Pathom","Nakhon Phanom"
+                + "Nakhon Ratchasima","Nakhon Sawan","Nakhon Si Thammarat","Nan"
+                + "Narathiwat","Nong Bua Lam Phu","Nong Khai","Nonthaburi"
+                + "Pathum Thani","Pattani","Phang Nga","Phatthalung"
+                + "Phayao","Phetchabun","Phetchaburi","Phichit"
+                + "Phitsanulok","Phra Nakhon Si Ayutthaya","Phrae","Phuket"
+                + "Prachinburi","Prachuap Khiri Khan","Ranong","Ratchaburi"
+                + "Rayong","Roi Et","Sa Kaeo","Sakon Nakhon"
+                + "Samut Prakan","Samut Sakhon","Samut Songkhram","Saraburi"
+                + "Satun","Sing Buri","Sisaket","Songkhla"
+                + "Sukhothai","Suphan Buri","Surat Thani","Surin"
+                + "Tak","Trang","Trat","Ubon Ratchathani"
+                + "Udon Thani","Uthai Thani","Uttaradit","Yala"
+                + "Yasothon"};
+    */
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinces);
         provinceDrop.setAdapter(adapter);
 
@@ -134,15 +159,18 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         if(mode == 1){  //Register
+            /*
             modeHeader.setText("REGISTER");
             editButt.setVisibility(View.INVISIBLE);
             submitButt.setVisibility(View.VISIBLE);
             confirmpassInp.setVisibility(View.VISIBLE);
             topupButt.setVisibility(View.INVISIBLE);
             moneyInp.setVisibility(View.INVISIBLE);
+            */
         }
 
         if(mode == 2){
+/*
             modeHeader.setText("Personal info");
             editButt.setVisibility(View.VISIBLE);
             submitButt.setVisibility(View.INVISIBLE);
@@ -202,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
             for(int i=0; i<spinners.length; i++){
                 spinners[i].setEnabled(false);
             }
-
+*/
         }
 
         submitButt.setOnClickListener(new View.OnClickListener() {
@@ -384,6 +412,14 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = 3;
+
+                Intent editIntent = new Intent(RegisterActivity.this, RegisterActivity.class);
+                editIntent.putExtra("id",id);
+                editIntent.putExtra("mode",3);
+                editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+
+/*
                 submitButt.setText("SAVE");
                 modeHeader.setText("Editing..");
                 editButt.setVisibility(View.INVISIBLE);
@@ -402,6 +438,7 @@ public class RegisterActivity extends AppCompatActivity {
                 for(int i=0; i<spinners.length; i++){
                     spinners[i].setEnabled(true);
                 }
+*/
             }
         });
     }
@@ -431,7 +468,7 @@ public class RegisterActivity extends AppCompatActivity {
         };
         MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
     }
-
+/*
     protected Boolean checkUniqness(String url){
         //JSONArray jsonArray;
         final String[] responseLength = new String[1];
@@ -456,7 +493,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
+                        // TODO: Delete **************************************************************************************
                     }
                 }) {
             @Override
@@ -469,7 +506,7 @@ public class RegisterActivity extends AppCompatActivity {
         //Toast.makeText(this, "Uniqueness = "+responseLength[0], Toast.LENGTH_SHORT).show();
         return result[0];
     }
-
+*/
     @Override
     public void onBackPressed() {
         if(mode == 2) {
@@ -489,6 +526,125 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if(mode == 1){
             finish();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.firstNameInp);    final EditText lastnameInp = findViewById(R.id.lastNameInp);
+        final EditText dateInp = findViewById(R.id.dateInp);              final EditText yearInp = findViewById(R.id.yearInp);              final EditText emailInp = findViewById(R.id.emailInp);
+        final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText districtInp = findViewById(R.id.districtInp);
+        final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.passwordInp);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
+        final EditText moneyInp = findViewById(R.id.moneyInp);
+        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,districtInp,postcodeInp};
+
+        final TextView redText = findViewById(R.id.regisRedText);
+        final TextView confirmpassTxt = findViewById(R.id.confirmpassText);
+        final TextView modeHeader = findViewById(R.id.modeHeader);
+
+        final Button submitButt = findViewById(R.id.submitButt);
+        final Button editButt = findViewById(R.id.editButt);
+        final Button topupButt = findViewById(R.id.topupButt);
+
+        final Spinner genderDrop = findViewById(R.id.genderSpin);
+        final Spinner monthDrop = findViewById(R.id.monthSpin);
+        final Spinner provinceDrop = findViewById(R.id.provinceSpin);
+
+        final Spinner[] spinners = {genderDrop, monthDrop, provinceDrop};
+
+
+        if (mode == 1) {
+            confirmpassTxt.setVisibility(View.VISIBLE);
+            modeHeader.setText("REGISTER");
+            editButt.setVisibility(View.INVISIBLE);
+            submitButt.setVisibility(View.VISIBLE);
+            confirmpassInp.setVisibility(View.VISIBLE);
+            topupButt.setVisibility(View.INVISIBLE);
+            moneyInp.setVisibility(View.INVISIBLE);
+        }
+        if (mode == 2){
+            confirmpassTxt.setVisibility(View.INVISIBLE);
+            modeHeader.setText("Personal info");
+            editButt.setVisibility(View.VISIBLE);
+            submitButt.setVisibility(View.INVISIBLE);
+            confirmpassInp.setVisibility(View.INVISIBLE);
+            topupButt.setVisibility(View.VISIBLE);
+            moneyInp.setVisibility(View.VISIBLE);
+            for(int i=0; i<editTexts.length; i++) {
+                editTexts[i].setFocusable(false);
+                editTexts[i].setFocusableInTouchMode(false);
+                editTexts[i].setClickable(false);
+            }
+            String url = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id="+id;
+            JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            //addressInp.setText(response.toString());
+                            userInp.setText( JsonarrayParseString.parseString2(response,"Username",0) );
+                            passwordInp.setText( JsonarrayParseString.parseString2(response,"Password",0) );
+                            firstnameInp.setText( JsonarrayParseString.parseString2(response,"FirstName",0) );
+                            lastnameInp.setText( JsonarrayParseString.parseString2(response,"LastName",0) );
+                            String birthDate = JsonarrayParseString.parseString2(response,"Birthdate",0);
+                            yearInp.setText( birthDate.substring(0,5) );
+                            dateInp.setText( birthDate.substring(8,10) );
+                            monthDrop.setSelection( Integer.parseInt(birthDate.substring(5,7))-1 );
+                            emailInp.setText( JsonarrayParseString.parseString2(response,"Email",0) );
+                            phonenumberInp.setText( JsonarrayParseString.parseString2(response,"PhoneNumber",0) );
+                            addressInp.setText( JsonarrayParseString.parseString2(response,"Address",0) );
+                            districtInp.setText( JsonarrayParseString.parseString2(response,"District",0) );
+                            postcodeInp.setText( JsonarrayParseString.parseString2(response,"Postcode",0) );
+                            moneyInp.setText( JsonarrayParseString.parseString2(response,"Money",0) );
+                            String gender = JsonarrayParseString.parseString2(response,"Gender",0);
+                            String province = JsonarrayParseString.parseString2(response,"Province",0);
+                            genderDrop.setSelection( gender.compareToIgnoreCase("Male") == 0 ? 0 : 1 );
+                            for(int i=0; i<provinces.length; i++){
+                                if (province.equals(provinces[i])){
+                                    provinceDrop.setSelection(i);
+                                    break;
+                                }
+                            }
+                            //Todo Spinnerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO: Handle error
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String>  params = new HashMap<String, String>();
+                    return params;
+                }
+            };
+            MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
+
+            for(int i=0; i<spinners.length; i++){
+                spinners[i].setEnabled(false);
+            }
+        }
+        if (mode == 3) {
+            confirmpassTxt.setVisibility(View.VISIBLE);
+            submitButt.setText("SAVE");
+            modeHeader.setText("Editing..");
+            editButt.setVisibility(View.INVISIBLE);
+            submitButt.setVisibility(View.VISIBLE);
+            confirmpassInp.setVisibility(View.VISIBLE);
+            topupButt.setVisibility(View.INVISIBLE);
+            moneyInp.setVisibility(View.INVISIBLE);
+            for(int i=0; i<editTexts.length; i++) {
+                editTexts[i].setFocusable(true);
+                editTexts[i].setFocusableInTouchMode(true);
+                editTexts[i].setClickable(true);
+            }
+            userInp.setFocusable(false);
+            userInp.setFocusableInTouchMode(false);
+            userInp.setClickable(false);
+            for(int i=0; i<spinners.length; i++){
+                spinners[i].setEnabled(true);
+            }
         }
     }
 }

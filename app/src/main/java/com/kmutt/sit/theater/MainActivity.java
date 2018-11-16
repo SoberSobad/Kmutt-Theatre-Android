@@ -68,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 if(id == -1)  startActivity(mbshipAct);
                 else{
                     Intent main = new Intent(MainActivity.this, MainActivity.class);
-                    //personalInfo.putExtra("id",id);
-                    //personalInfo.putExtra("mode",2);
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(main);
                     finish();
