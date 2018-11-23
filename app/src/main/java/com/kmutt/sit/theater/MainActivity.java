@@ -2,6 +2,7 @@ package com.kmutt.sit.theater;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,36 +45,15 @@ public class MainActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         id = getIntent().getIntExtra("id",-1);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
 
 
 
-        //Create MembershipActivity
-        final Intent mbshipAct = new Intent(MainActivity.this, MembershipActivity.class);
+
         //mbshipAct.putExtras(this.getIntent());
         //mbshipAct.putExtra("ID",(int) Math.ceil(Math.random() * 100));      //Test create once activity
 
         Button loginButt = findViewById(R.id.loginButt);
-        loginButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(id == -1)  startActivity(mbshipAct);
-                else{
-                    Intent main = new Intent(MainActivity.this, MainActivity.class);
-                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(main);
-                    finish();
-                }
-            }
-        });
 
         Button infoButt = findViewById(R.id.infoButt);
         infoButt.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         final EditText memberInfo = findViewById(R.id.memberInfo);
+        //Create MembershipActivity
+        final Intent mbshipAct = new Intent(MainActivity.this, MembershipActivity.class);
         if(id != -1) {
             String url = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id=" + id;
             JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
@@ -137,12 +119,31 @@ public class MainActivity extends AppCompatActivity {
             loginButt.setText("Log out");
             Button infoButt = findViewById(R.id.infoButt);
             infoButt.setVisibility(View.VISIBLE);
+
+            loginButt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    id = -1;
+                    Intent main = new Intent(MainActivity.this, MainActivity.class);
+                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(main);
+                    finish();
+                }
+            });
         }else{
             memberInfo.setText("Anonymous");
             Button loginButt = findViewById(R.id.loginButt);
             loginButt.setText("Log in");
             Button infoButt = findViewById(R.id.infoButt);
             infoButt.setVisibility(View.INVISIBLE);
+
+            loginButt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(mbshipAct);
+                }
+            });
+
         }
 
 
