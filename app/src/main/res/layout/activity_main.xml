@@ -69,6 +69,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/memberInfo"/>
 
+            <Button
+                android:id="@+id/logoutButt"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:contentDescription="log out"
+                android:text="Log Out"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/memberInfo" />
+
             <EditText
                 android:id="@+id/memberInfo"
                 android:layout_width="match_parent"

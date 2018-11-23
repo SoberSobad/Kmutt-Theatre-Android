@@ -45,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
         id = getIntent().getIntExtra("id",-1);
 
+        Button loginButt = findViewById(R.id.loginButt);
+        final Intent mbshipAct = new Intent(MainActivity.this, MembershipActivity.class);
+
+        loginButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (id == -1) {
+                    startActivity(mbshipAct);
+                } else {
+                    Intent main = new Intent(MainActivity.this, MainActivity.class);
+                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(main);
+                    finish();
+                }
+            }
+        });
 
 
 
@@ -88,7 +104,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         final EditText memberInfo = findViewById(R.id.memberInfo);
         //Create MembershipActivity
-        final Intent mbshipAct = new Intent(MainActivity.this, MembershipActivity.class);
+
+
+        Button infoButt = findViewById(R.id.infoButt);
+        Button loginButt = findViewById(R.id.loginButt);
+        Button logoutButt = findViewById(R.id.logoutButt);
+        ConstraintLayout bottomArea = findViewById(R.id.bottomArea);
+
         if(id != -1) {
             String url = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id=" + id;
             JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
@@ -98,8 +120,6 @@ public class MainActivity extends AppCompatActivity {
                             memberInfo.setText("Hi, " + JsonarrayParseString.parseString2(response, "FirstName", 0) + " " +
                                     JsonarrayParseString.parseString2(response, "LastName", 0) + "\n" +
                                     "Money : " + JsonarrayParseString.parseString2(response, "Money", 0)
-
-
                             );
                         }
                     }, new Response.ErrorListener() {
@@ -115,35 +135,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
             MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
-            Button loginButt = findViewById(R.id.loginButt);
-            loginButt.setText("Log out");
-            Button infoButt = findViewById(R.id.infoButt);
             infoButt.setVisibility(View.VISIBLE);
+            logoutButt.setVisibility(View.VISIBLE);
 
-            loginButt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    id = -1;
-                    Intent main = new Intent(MainActivity.this, MainActivity.class);
-                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(main);
-                    finish();
-                }
-            });
         }else{
             memberInfo.setText("Anonymous");
-            Button loginButt = findViewById(R.id.loginButt);
             loginButt.setText("Log in");
-            Button infoButt = findViewById(R.id.infoButt);
             infoButt.setVisibility(View.INVISIBLE);
-
-            loginButt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(mbshipAct);
-                }
-            });
-
         }
 
 
