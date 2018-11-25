@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         id = getIntent().getIntExtra("id",-1);
 
         Button loginButt = findViewById(R.id.loginButt);
+        Button infoButt = findViewById(R.id.infoButt);
+        Button logoutButt = findViewById(R.id.logoutButt);
         final Intent mbshipAct = new Intent(MainActivity.this, MembershipActivity.class);
 
         loginButt.setOnClickListener(new View.OnClickListener() {
@@ -62,16 +64,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        logoutButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                id = -1;
+                Intent main = new Intent(MainActivity.this, MainActivity.class);
+                main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(main);
+                finish();
+            }
+        });
+
 
 
 
 
         //mbshipAct.putExtras(this.getIntent());
         //mbshipAct.putExtra("ID",(int) Math.ceil(Math.random() * 100));      //Test create once activity
-
-        Button loginButt = findViewById(R.id.loginButt);
-
-        Button infoButt = findViewById(R.id.infoButt);
         infoButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-
     }
 
     @Override
@@ -137,11 +144,14 @@ public class MainActivity extends AppCompatActivity {
             MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
             infoButt.setVisibility(View.VISIBLE);
             logoutButt.setVisibility(View.VISIBLE);
+            bottomArea.setVisibility(View.INVISIBLE);
 
         }else{
             memberInfo.setText("Anonymous");
             loginButt.setText("Log in");
             infoButt.setVisibility(View.INVISIBLE);
+            logoutButt.setVisibility(View.INVISIBLE);
+            bottomArea.setVisibility(View.VISIBLE);
         }
 
 
