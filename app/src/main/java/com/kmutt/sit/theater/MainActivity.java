@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.kmutt.sit.theater.booking.PaymentActivity;
 import com.kmutt.sit.theater.membership.JsonarrayParseString;
 import com.kmutt.sit.theater.membership.MembershipActivity;
 import com.kmutt.sit.theater.membership.MySingleton;
@@ -49,12 +50,13 @@ public class MainActivity extends AppCompatActivity {
         Button infoButt = findViewById(R.id.infoButt);
         Button logoutButt = findViewById(R.id.logoutButt);
         final Intent mbshipAct = new Intent(MainActivity.this, MembershipActivity.class);
+        final Intent paymentAct = new Intent(MainActivity.this, PaymentActivity.class);
 
         loginButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (id == -1) {
-                    startActivity(mbshipAct);
+                    startActivity(paymentAct); //TESTING, LATER CHANGE BACK TO mbshipAct
                 } else {
                     Intent main = new Intent(MainActivity.this, MainActivity.class);
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -9,9 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +22,6 @@ import com.kmutt.sit.theater.MainActivity;
 import com.kmutt.sit.theater.R;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -102,10 +99,10 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> monthSpinAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, months);
         monthDrop.setAdapter(monthSpinAdapt);
 
-        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.firstNameInp);    final EditText lastnameInp = findViewById(R.id.lastNameInp);
+        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.cardNoField);    final EditText lastnameInp = findViewById(R.id.cardHolderField);
         final EditText dateInp = findViewById(R.id.dateInp);              final EditText yearInp = findViewById(R.id.yearInp);              final EditText emailInp = findViewById(R.id.emailInp);
         final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText districtInp = findViewById(R.id.districtInp);
-        final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.passwordInp);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
+        final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.expiryField);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
 
         final TextView redText = findViewById(R.id.regisRedText);
 
@@ -532,10 +529,10 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.firstNameInp);    final EditText lastnameInp = findViewById(R.id.lastNameInp);
+        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.cardNoField);    final EditText lastnameInp = findViewById(R.id.cardHolderField);
         final EditText dateInp = findViewById(R.id.dateInp);              final EditText yearInp = findViewById(R.id.yearInp);              final EditText emailInp = findViewById(R.id.emailInp);
         final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText districtInp = findViewById(R.id.districtInp);
-        final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.passwordInp);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
+        final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.expiryField);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
         final EditText moneyInp = findViewById(R.id.moneyInp);
         final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,districtInp,postcodeInp};
 
