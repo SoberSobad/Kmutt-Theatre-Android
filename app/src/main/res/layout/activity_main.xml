@@ -59,6 +59,19 @@
             android:minHeight="1500dp">
 
             <Button
+                android:id="@+id/devPaymentButt"
+                android:layout_width="374dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="44dp"
+                android:background="@drawable/changecolor"
+                android:text="Developer: Go to payment view"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:visibility="visible"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/logoutButt" />
+
+            <Button
                 android:id="@+id/infoButt"
                 android:layout_width="100dp"
                 android:layout_height="60dp"

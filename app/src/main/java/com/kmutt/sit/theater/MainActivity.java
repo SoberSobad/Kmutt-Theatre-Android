@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (id == -1) {
-                    startActivity(paymentAct); //TESTING, LATER CHANGE BACK TO mbshipAct
+                    startActivity(mbshipAct);
                 } else {
                     Intent main = new Intent(MainActivity.this, MainActivity.class);
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -74,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(main);
                 finish();
+            }
+        });
+
+        //TODO: REMOVE DEV BUTTON
+        Button devPaymentButt = findViewById(R.id.devPaymentButt);
+        devPaymentButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(paymentAct);
             }
         });
 
