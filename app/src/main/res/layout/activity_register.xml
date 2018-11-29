@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/cardNoField"
+            android:id="@+id/firstnameInp"
             android:layout_width="170dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/cardHolderField"
+            android:id="@+id/lastnameInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -63,12 +63,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <EditText
+            android:id="@+id/IDInp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="315dp"
+            android:background="@drawable/changecolor"
+            android:ems="10"
+            android:hint="ID number"
+            android:inputType="number"
+            android:maxLength="20"
+            android:textColor="#ffffff"
+            android:textColorHint="#9E9E9E"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="1248dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="1464dp"
             android:background="@drawable/changecolor"
             android:text="TextView"
             android:visibility="invisible"
@@ -79,8 +97,8 @@
             android:id="@+id/emailInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="570dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="664dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="E-mail"
@@ -95,8 +113,8 @@
             android:id="@+id/expiryField"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="380dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="472dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Password"
@@ -111,8 +129,8 @@
             android:id="@+id/confirmpassInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="450dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="544dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Confirm password"
@@ -147,8 +165,8 @@
             android:id="@+id/usernameInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="313dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="404dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Username"
@@ -163,8 +181,8 @@
             android:id="@+id/phoneNoInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="640dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="736dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Phone number"
@@ -180,8 +198,8 @@
             android:id="@+id/dateInp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="712dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="808dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint=" date"
@@ -197,18 +215,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="693dp"
             android:text="Date of Birth"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/dateInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/addressInp"
             android:layout_width="214dp"
             android:layout_height="150dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="787dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="880dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:focusable="true"
@@ -229,8 +246,8 @@
             android:id="@+id/provinceSpin"
             android:layout_width="220dp"
             android:layout_height="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="955dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="1048dp"
             android:background="@drawable/changecolor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -247,28 +264,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/districtInp"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="1014dp"
+        <Spinner
+            android:id="@+id/districtSpin"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="1108dp"
             android:background="@drawable/changecolor"
-            android:ems="10"
-            android:hint="District"
-            android:inputType="textPersonName"
-            android:maxLength="30"
-            android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
+            android:clickable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/subdistrictSpin"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="1168dp"
+            android:background="@drawable/changecolor"
+            android:clickable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <EditText
             android:id="@+id/zipcodeInp"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="1083dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="1228dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Zip code"
@@ -284,24 +308,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="764dp"
             android:text="Address"
             android:textColor="#ffffff"
             android:textSize="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/addressInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/submitButt"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="1172dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="1392dp"
+            android:layout_marginEnd="40dp"
             android:background="@drawable/button_bg"
             android:text="SUBMIT"
             android:textColor="#EEECEC"
             android:textSize="25dp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -309,8 +334,8 @@
             android:id="@+id/monthSpin"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="712dp"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="808dp"
             android:background="@drawable/changecolor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -319,8 +344,8 @@
             android:id="@+id/yearInp"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginStart="210dp"
-            android:layout_marginTop="712dp"
+            android:layout_marginStart="208dp"
+            android:layout_marginTop="808dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="  year"
@@ -335,9 +360,11 @@
             android:id="@+id/regisRedText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="1140dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1356dp"
+            android:layout_marginEnd="8dp"
             android:textColor="#FF0000"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -366,11 +393,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="7dp"
             android:text="Firstname"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/moneyInp" />
+            app:layout_constraintBottom_toTopOf="@+id/firstnameInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
@@ -379,18 +405,28 @@
             android:layout_marginStart="40dp"
             android:text="Lastname"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardNoField" />
+            app:layout_constraintBottom_toTopOf="@+id/lastnameInp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="Identification number"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toTopOf="@+id/IDInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="36dp"
             android:text="Username"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardHolderField" />
+            app:layout_constraintBottom_toTopOf="@+id/usernameInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView4"
@@ -399,29 +435,28 @@
             android:layout_marginStart="40dp"
             android:text="Password"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/usernameInp" />
+            app:layout_constraintBottom_toTopOf="@+id/expiryField"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/confirmpassText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="36dp"
             android:text="Confirm Password"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expiryField" />
+            app:layout_constraintBottom_toTopOf="@+id/confirmpassInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="48dp"
             android:text="Email"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/confirmpassInp" />
+            app:layout_constraintBottom_toTopOf="@+id/emailInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView10"
@@ -430,18 +465,18 @@
             android:layout_marginStart="40dp"
             android:text="Phone Number"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailInp" />
+            app:layout_constraintBottom_toTopOf="@+id/phoneNoInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="Rrovince"
+            android:text="Province"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addressInp" />
+            app:layout_constraintBottom_toTopOf="@+id/provinceSpin"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView12"
@@ -450,8 +485,18 @@
             android:layout_marginStart="40dp"
             android:text="District"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/provinceSpin" />
+            app:layout_constraintBottom_toTopOf="@+id/districtSpin"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="Sub district"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toTopOf="@+id/subdistrictSpin"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView13"
@@ -460,8 +505,8 @@
             android:layout_marginStart="40dp"
             android:text="Zip code"
             android:textColor="#ffffff"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/districtInp" />
+            app:layout_constraintBottom_toTopOf="@+id/zipcodeInp"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

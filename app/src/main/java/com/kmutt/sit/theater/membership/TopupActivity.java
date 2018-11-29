@@ -43,7 +43,7 @@ public class TopupActivity extends AppCompatActivity {
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
-                            current = Integer.parseInt(JsonarrayParseString.parseString2(response, "Money", 0));
+                            current = Integer.parseInt(JsonHandler.parseString(response, "Money"));
                             //topup = Integer.parseInt(amountInp.getText().toString());
                             //add = current + topup;
                         }
@@ -72,7 +72,7 @@ public class TopupActivity extends AppCompatActivity {
                             (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
-                                    current = Integer.parseInt(JsonarrayParseString.parseString2(response, "Money", 0));
+                                    current = Integer.parseInt(JsonHandler.parseString(response, "Money", 0));
                                     topup = Integer.parseInt(amountInp.getText().toString());
                                     add = current + topup;
                                 }

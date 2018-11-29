@@ -3,38 +3,27 @@ package com.kmutt.sit.theater;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.kmutt.sit.theater.booking.PaymentActivity;
-import com.kmutt.sit.theater.membership.JsonarrayParseString;
+import com.kmutt.sit.theater.membership.JsonHandler;
 import com.kmutt.sit.theater.membership.MembershipActivity;
 import com.kmutt.sit.theater.membership.MySingleton;
 import com.kmutt.sit.theater.membership.RegisterActivity;
 
 import org.json.JSONArray;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
 
-    //final EditText memberInfo = findViewById(R.id.memberInfo);
     static int id = -1;
 
     @Override
@@ -86,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-        //mbshipAct.putExtras(this.getIntent());
-        //mbshipAct.putExtra("ID",(int) Math.ceil(Math.random() * 100));      //Test create once activity
         infoButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,14 +85,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-/*
-        memberInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(mbshipAct);
-            }
-        });
-*/
     }
 
     @Override
@@ -120,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        id = getIntent().getIntExtra("id",-1);
         final EditText memberInfo = findViewById(R.id.memberInfo);
         //Create MembershipActivity
 
@@ -130,28 +106,23 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout bottomArea = findViewById(R.id.bottomArea);
 
         if(id != -1) {
-            String url = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id=" + id;
+            String url = "http://theatre.sit.kmutt.ac.th/customer/group6/getInfo?id=" + id;
             JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
-                            memberInfo.setText("Hi, " + JsonarrayParseString.parseString2(response, "FirstName", 0) + " " +
-                                    JsonarrayParseString.parseString2(response, "LastName", 0) + "\n" +
-                                    "Money : " + JsonarrayParseString.parseString2(response, "Money", 0)
+                            memberInfo.setText("Hi, " + JsonHandler.parseString(response, "Fname") + " " +
+                                    JsonHandler.parseString(response, "Lname")
                             );
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // TODO: Handle error
+                            memberInfo.setText("fail to retrieve member's information \nMemberID = "+id);
                         }
-                    }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    return params;
-                }
-            };
+                    });
+
             MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
             infoButt.setVisibility(View.VISIBLE);
             logoutButt.setVisibility(View.VISIBLE);

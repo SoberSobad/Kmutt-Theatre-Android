@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     static int id;
 
 
-        final String[] provinces = new String[]{"Amnat Charoen","Ang Thong","Bangkok","Bueng Kan"
+        /*final String[] provinces = new String[]{"Amnat Charoen","Ang Thong","Bangkok","Bueng Kan"
                 + "Buriram","Chachoengsao","Chai Nat","Chaiyaphum"
                 + "Chanthaburi","Chiang Mai","Chiang Rai","Chonburi"
                 + "Chumphon","Kalasin","Kamphaeng Phet","Kanchanaburi"
@@ -51,7 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
                 + "Tak","Trang","Trat","Ubon Ratchathani"
                 + "Udon Thani","Uthai Thani","Uttaradit","Yala"
                 + "Yasothon"};
+                */
           // Province spinner
+
+    final String[] provinces = new String[JsonHandler.places.length];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         mode = getIntent().getIntExtra("mode",2);
         id = getIntent().getIntExtra("id",-1);
+
+        for(int i=0; i<JsonHandler.places.length; i++){
+            provinces[i] = JsonHandler.places[i][0][0];
+        }
 
         final TextView modeHeader = findViewById(R.id.modeHeader);
 
@@ -86,6 +93,9 @@ public class RegisterActivity extends AppCompatActivity {
                 + "Udon Thani","Uthai Thani","Uttaradit","Yala"
                 + "Yasothon"};
     */
+        //final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinces);
+        String[] provinc = new String[JsonHandler.places.length];
+
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinces);
         provinceDrop.setAdapter(adapter);
 
@@ -99,9 +109,9 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> monthSpinAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, months);
         monthDrop.setAdapter(monthSpinAdapt);
 
-        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.cardNoField);    final EditText lastnameInp = findViewById(R.id.cardHolderField);
+        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.firstnameInp);    final EditText lastnameInp = findViewById(R.id.lastnameInp);
         final EditText dateInp = findViewById(R.id.dateInp);              final EditText yearInp = findViewById(R.id.yearInp);              final EditText emailInp = findViewById(R.id.emailInp);
-        final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText districtInp = findViewById(R.id.districtInp);
+        final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText IDInp = findViewById(R.id.IDInp);
         final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.expiryField);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
 
         final TextView redText = findViewById(R.id.regisRedText);
@@ -121,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
         genderDrop.setEnabled(false);
     */
         //EditText[] editTexts = {userInp, firstnameInp, lastnameInp, dateInp, yearInp, emailInp, phonenumberInp, addressInp, districtInp, postcodeInp, passwordInp, confirmpassInp};
-        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,districtInp,postcodeInp};
+        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,IDInp,postcodeInp};
         final Spinner[] spinners = {genderDrop, monthDrop, provinceDrop};
         final EditText moneyInp = findViewById(R.id.moneyInp);
 
@@ -137,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
                         (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                moneyInp.setText( JsonarrayParseString.parseString2(response,"Money",0) );
+                                moneyInp.setText( JsonHandler.parseString(response,"Money") );
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -185,22 +195,22 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 //addressInp.setText(response.toString());
-                                userInp.setText( JsonarrayParseString.parseString2(response,"Username",0) );
-                                passwordInp.setText( JsonarrayParseString.parseString2(response,"Password",0) );
-                                firstnameInp.setText( JsonarrayParseString.parseString2(response,"FirstName",0) );
-                                lastnameInp.setText( JsonarrayParseString.parseString2(response,"LastName",0) );
-                                String birthDate = JsonarrayParseString.parseString2(response,"Birthdate",0);
+                                userInp.setText( JsonHandler.parseString(response,"Username",0) );
+                                passwordInp.setText( JsonHandler.parseString(response,"Password",0) );
+                                firstnameInp.setText( JsonHandler.parseString(response,"FirstName",0) );
+                                lastnameInp.setText( JsonHandler.parseString(response,"LastName",0) );
+                                String birthDate = JsonHandler.parseString(response,"Birthdate",0);
                                 yearInp.setText( birthDate.substring(0,5) );
                                 dateInp.setText( birthDate.substring(8,10) );
                                 monthDrop.setSelection( Integer.parseInt(birthDate.substring(5,7))-1 );
-                                emailInp.setText( JsonarrayParseString.parseString2(response,"Email",0) );
-                                phonenumberInp.setText( JsonarrayParseString.parseString2(response,"PhoneNumber",0) );
-                                addressInp.setText( JsonarrayParseString.parseString2(response,"Address",0) );
-                                districtInp.setText( JsonarrayParseString.parseString2(response,"District",0) );
-                                postcodeInp.setText( JsonarrayParseString.parseString2(response,"Postcode",0) );
-                                moneyInp.setText( JsonarrayParseString.parseString2(response,"Money",0) );
-                                String gender = JsonarrayParseString.parseString2(response,"Gender",0);
-                                String province = JsonarrayParseString.parseString2(response,"Province",0);
+                                emailInp.setText( JsonHandler.parseString(response,"Email",0) );
+                                phonenumberInp.setText( JsonHandler.parseString(response,"PhoneNumber",0) );
+                                addressInp.setText( JsonHandler.parseString(response,"Address",0) );
+                                districtInp.setText( JsonHandler.parseString(response,"District",0) );
+                                postcodeInp.setText( JsonHandler.parseString(response,"Postcode",0) );
+                                moneyInp.setText( JsonHandler.parseString(response,"Money",0) );
+                                String gender = JsonHandler.parseString(response,"Gender",0);
+                                String province = JsonHandler.parseString(response,"Province",0);
                                 genderDrop.setSelection( gender.compareToIgnoreCase("Male") == 0 ? 0 : 1 );
                                 for(int i=0; i<provinces.length; i++){
                                     if (province.equals(provinces[i])){
@@ -260,7 +270,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                         "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + genderDrop.getSelectedItem().toString() +
                                                         "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
                                                         "&email=" + emailInp.getText() + "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
-                                                        "&district=" + districtInp.getText() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText();
+                                                        "&district=" + IDInp.getText() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText();
                                                 runPHP(url);
                                             } else {
                                                 redText.setText("Password didn't matches");
@@ -312,7 +322,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                         "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + genderDrop.getSelectedItem().toString() +
                                                         "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
                                                         "&email=" + emailInp.getText() + "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
-                                                        "&district=" + districtInp.getText() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText();
+                                                        "&district=" + IDInp.getText() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText();
                                                 runPHP(url);
                                                 mode=2;
                                                 modeHeader.setText("Personal info");
@@ -334,22 +344,22 @@ public class RegisterActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onResponse(JSONArray response) {
                                                                 //addressInp.setText(response.toString());
-                                                                userInp.setText( JsonarrayParseString.parseString2(response,"Username",0) );
-                                                                passwordInp.setText( JsonarrayParseString.parseString2(response,"Password",0) );
-                                                                firstnameInp.setText( JsonarrayParseString.parseString2(response,"FirstName",0) );
-                                                                lastnameInp.setText( JsonarrayParseString.parseString2(response,"LastName",0) );
-                                                                String birthDate = JsonarrayParseString.parseString2(response,"Birthdate",0);
+                                                                userInp.setText( JsonHandler.parseString(response,"Username") );
+                                                                passwordInp.setText( JsonHandler.parseString(response,"Password") );
+                                                                firstnameInp.setText( JsonHandler.parseString(response,"FirstName") );
+                                                                lastnameInp.setText( JsonHandler.parseString(response,"LastName") );
+                                                                String birthDate = JsonHandler.parseString(response,"Birthdate");
                                                                 yearInp.setText( birthDate.substring(0,5) );
                                                                 dateInp.setText( birthDate.substring(8,10) );
                                                                 monthDrop.setSelection( Integer.parseInt(birthDate.substring(5,7))-1 );
-                                                                emailInp.setText( JsonarrayParseString.parseString2(response,"Email",0) );
-                                                                phonenumberInp.setText( JsonarrayParseString.parseString2(response,"PhoneNumber",0) );
-                                                                addressInp.setText( JsonarrayParseString.parseString2(response,"Address",0) );
-                                                                districtInp.setText( JsonarrayParseString.parseString2(response,"District",0) );
-                                                                postcodeInp.setText( JsonarrayParseString.parseString2(response,"Postcode",0) );
-                                                                moneyInp.setText( JsonarrayParseString.parseString2(response,"Money",0) );
-                                                                String gender = JsonarrayParseString.parseString2(response,"Gender",0);
-                                                                String province = JsonarrayParseString.parseString2(response,"Province",0);
+                                                                emailInp.setText( JsonHandler.parseString(response,"Email") );
+                                                                phonenumberInp.setText( JsonHandler.parseString(response,"PhoneNumber") );
+                                                                addressInp.setText( JsonHandler.parseString(response,"Address") );
+                                                                IDInp.setText( JsonHandler.parseString(response,"District") );
+                                                                postcodeInp.setText( JsonHandler.parseString(response,"Postcode") );
+                                                                moneyInp.setText( JsonHandler.parseString(response,"Money") );
+                                                                String gender = JsonHandler.parseString(response,"Gender");
+                                                                String province = JsonHandler.parseString(response,"Province");
                                                                 genderDrop.setSelection( gender.compareToIgnoreCase("Male") == 0 ? 0 : 1 );
                                                                 for(int i=0; i<provinces.length; i++){
                                                                     if (province.equals(provinces[i])){
@@ -479,7 +489,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         //addressInp.setText(response.toString());
-                        //result[0] = JsonarrayParseString.parseString(response,"ID",0);
+                        //result[0] = JsonHandler.parseString(response,"ID",0);
                         //jsonArray = response;
                         boolean resulttt = (response.toString().length() != 0);
                         Toast.makeText(RegisterActivity.this, resulttt+" response = "+response.toString() , Toast.LENGTH_SHORT).show();
@@ -529,12 +539,12 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.cardNoField);    final EditText lastnameInp = findViewById(R.id.cardHolderField);
+        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.firstnameInp);    final EditText lastnameInp = findViewById(R.id.lastnameInp);
         final EditText dateInp = findViewById(R.id.dateInp);              final EditText yearInp = findViewById(R.id.yearInp);              final EditText emailInp = findViewById(R.id.emailInp);
-        final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText districtInp = findViewById(R.id.districtInp);
+        final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText IDInp = findViewById(R.id.IDInp);
         final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.expiryField);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
         final EditText moneyInp = findViewById(R.id.moneyInp);
-        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,districtInp,postcodeInp};
+        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,IDInp,postcodeInp};
 
         final TextView redText = findViewById(R.id.regisRedText);
         final TextView confirmpassTxt = findViewById(R.id.confirmpassText);
@@ -579,22 +589,22 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONArray response) {
                             //addressInp.setText(response.toString());
-                            userInp.setText( JsonarrayParseString.parseString2(response,"Username",0) );
-                            passwordInp.setText( JsonarrayParseString.parseString2(response,"Password",0) );
-                            firstnameInp.setText( JsonarrayParseString.parseString2(response,"FirstName",0) );
-                            lastnameInp.setText( JsonarrayParseString.parseString2(response,"LastName",0) );
-                            String birthDate = JsonarrayParseString.parseString2(response,"Birthdate",0);
+                            userInp.setText( JsonHandler.parseString(response,"Username") );
+                            passwordInp.setText( JsonHandler.parseString(response,"Password") );
+                            firstnameInp.setText( JsonHandler.parseString(response,"FirstName") );
+                            lastnameInp.setText( JsonHandler.parseString(response,"LastName") );
+                            String birthDate = JsonHandler.parseString(response,"Birthdate");
                             yearInp.setText( birthDate.substring(0,5) );
                             dateInp.setText( birthDate.substring(8,10) );
                             monthDrop.setSelection( Integer.parseInt(birthDate.substring(5,7))-1 );
-                            emailInp.setText( JsonarrayParseString.parseString2(response,"Email",0) );
-                            phonenumberInp.setText( JsonarrayParseString.parseString2(response,"PhoneNumber",0) );
-                            addressInp.setText( JsonarrayParseString.parseString2(response,"Address",0) );
-                            districtInp.setText( JsonarrayParseString.parseString2(response,"District",0) );
-                            postcodeInp.setText( JsonarrayParseString.parseString2(response,"Postcode",0) );
-                            moneyInp.setText( JsonarrayParseString.parseString2(response,"Money",0) );
-                            String gender = JsonarrayParseString.parseString2(response,"Gender",0);
-                            String province = JsonarrayParseString.parseString2(response,"Province",0);
+                            emailInp.setText( JsonHandler.parseString(response,"Email") );
+                            phonenumberInp.setText( JsonHandler.parseString(response,"PhoneNumber") );
+                            addressInp.setText( JsonHandler.parseString(response,"Address") );
+                            IDInp.setText( JsonHandler.parseString(response,"District") );
+                            postcodeInp.setText( JsonHandler.parseString(response,"Postcode") );
+                            moneyInp.setText( JsonHandler.parseString(response,"Money") );
+                            String gender = JsonHandler.parseString(response,"Gender");
+                            String province = JsonHandler.parseString(response,"Province");
                             genderDrop.setSelection( gender.compareToIgnoreCase("Male") == 0 ? 0 : 1 );
                             for(int i=0; i<provinces.length; i++){
                                 if (province.equals(provinces[i])){
