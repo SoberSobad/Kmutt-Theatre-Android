@@ -4,12 +4,16 @@
         <shape android:shape="rectangle">
             <corners android:radius="8dp"/>
             <solid android:color="#656565"/>
+            <padding android:left="12dp"
+                android:right="12dp"/>
         </shape>
     </item>
     <item android:state_focused="true">
         <shape android:shape="rectangle">
             <corners android:radius="8dp"/>
             <solid android:color="#9E9E9E"/>
+            <padding android:left="12dp"
+                android:right="12dp"/>
         </shape>
     </item>
 </selector>
