@@ -4,16 +4,22 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -26,35 +32,34 @@ import org.json.JSONArray;
 public class RegisterActivity extends AppCompatActivity {
 
 
-    static boolean uniqness;
     static int mode;
     static int id;
 
-
-        /*final String[] provinces = new String[]{"Amnat Charoen","Ang Thong","Bangkok","Bueng Kan"
-                + "Buriram","Chachoengsao","Chai Nat","Chaiyaphum"
-                + "Chanthaburi","Chiang Mai","Chiang Rai","Chonburi"
-                + "Chumphon","Kalasin","Kamphaeng Phet","Kanchanaburi"
-                + "Khon Kaen","Krabi","Lampang","Lamphun"
-                + "Loei","Lopburi","Mae Hong Son","Maha Sarakham"
-                + "Mukdahan","Nakhon Nayok","Nakhon Pathom","Nakhon Phanom"
-                + "Nakhon Ratchasima","Nakhon Sawan","Nakhon Si Thammarat","Nan"
-                + "Narathiwat","Nong Bua Lam Phu","Nong Khai","Nonthaburi"
-                + "Pathum Thani","Pattani","Phang Nga","Phatthalung"
-                + "Phayao","Phetchabun","Phetchaburi","Phichit"
-                + "Phitsanulok","Phra Nakhon Si Ayutthaya","Phrae","Phuket"
-                + "Prachinburi","Prachuap Khiri Khan","Ranong","Ratchaburi"
-                + "Rayong","Roi Et","Sa Kaeo","Sakon Nakhon"
-                + "Samut Prakan","Samut Sakhon","Samut Songkhram","Saraburi"
-                + "Satun","Sing Buri","Sisaket","Songkhla"
-                + "Sukhothai","Suphan Buri","Surat Thani","Surin"
-                + "Tak","Trang","Trat","Ubon Ratchathani"
-                + "Udon Thani","Uthai Thani","Uttaradit","Yala"
-                + "Yasothon"};
-                */
-          // Province spinner
-
     final String[] provinces = new String[JsonHandler.places.length];
+    final List<String> districts = new ArrayList<>();
+    final List<String> subdistricts = new ArrayList<>();
+    int provinceNo;
+    int districtNo;
+    int subdistrictNo;
+
+    //************************* Initializing ************************************************
+    Spinner provinceDrop;
+    Spinner districtDrop;
+    Spinner subdistrictDrop;
+    Spinner genderDrop;
+    Spinner monthDrop;
+
+    EditText userInp;             EditText firstnameInp;        EditText lastnameInp;
+    EditText dateInp;             EditText yearInp;             EditText emailInp;
+    EditText phonenumberInp;      EditText addressInp;          EditText identInp;
+    EditText postcodeInp;         EditText passwordInp;         EditText confirmpassInp;
+    EditText moneyInp;
+
+    TextView modeHeader;         TextView confirmpassTxt;    TextView redText;
+
+    Button submitButt;
+    Button editButt;
+    Button topupButt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,353 +69,246 @@ public class RegisterActivity extends AppCompatActivity {
         mode = getIntent().getIntExtra("mode",2);
         id = getIntent().getIntExtra("id",-1);
 
+
         for(int i=0; i<JsonHandler.places.length; i++){
             provinces[i] = JsonHandler.places[i][0][0];
         }
 
-        final TextView modeHeader = findViewById(R.id.modeHeader);
+        //********************************************  FIND VIEW *******************************
+        provinceDrop = findViewById(R.id.provinceSpin);
+        districtDrop = findViewById(R.id.districtSpin);
+        subdistrictDrop = findViewById(R.id.subdistrictSpin);
+        genderDrop = findViewById(R.id.genderSpin);
+        monthDrop = findViewById(R.id.monthSpin);
 
-        final Spinner provinceDrop = findViewById(R.id.provinceSpin);
-        /*
-        final String[] provinces = new String[]{"Amnat Charoen","Ang Thong","Bangkok","Bueng Kan"
-                + "Buriram","Chachoengsao","Chai Nat","Chaiyaphum"
-                + "Chanthaburi","Chiang Mai","Chiang Rai","Chonburi"
-                + "Chumphon","Kalasin","Kamphaeng Phet","Kanchanaburi"
-                + "Khon Kaen","Krabi","Lampang","Lamphun"
-                + "Loei","Lopburi","Mae Hong Son","Maha Sarakham"
-                + "Mukdahan","Nakhon Nayok","Nakhon Pathom","Nakhon Phanom"
-                + "Nakhon Ratchasima","Nakhon Sawan","Nakhon Si Thammarat","Nan"
-                + "Narathiwat","Nong Bua Lam Phu","Nong Khai","Nonthaburi"
-                + "Pathum Thani","Pattani","Phang Nga","Phatthalung"
-                + "Phayao","Phetchabun","Phetchaburi","Phichit"
-                + "Phitsanulok","Phra Nakhon Si Ayutthaya","Phrae","Phuket"
-                + "Prachinburi","Prachuap Khiri Khan","Ranong","Ratchaburi"
-                + "Rayong","Roi Et","Sa Kaeo","Sakon Nakhon"
-                + "Samut Prakan","Samut Sakhon","Samut Songkhram","Saraburi"
-                + "Satun","Sing Buri","Sisaket","Songkhla"
-                + "Sukhothai","Suphan Buri","Surat Thani","Surin"
-                + "Tak","Trang","Trat","Ubon Ratchathani"
-                + "Udon Thani","Uthai Thani","Uttaradit","Yala"
-                + "Yasothon"};
-    */
-        //final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinces);
-        String[] provinc = new String[JsonHandler.places.length];
+        userInp = findViewById(R.id.usernameInp);          firstnameInp = findViewById(R.id.firstnameInp);    lastnameInp = findViewById(R.id.lastnameInp);
+        dateInp = findViewById(R.id.dateInp);              yearInp = findViewById(R.id.yearInp);              emailInp = findViewById(R.id.emailInp);
+        phonenumberInp = findViewById(R.id.phoneNoInp);    addressInp = findViewById(R.id.addressInp);        identInp = findViewById(R.id.IDInp);
+        postcodeInp = findViewById(R.id.zipcodeInp);       passwordInp = findViewById(R.id.expiryField);      confirmpassInp = findViewById(R.id.confirmpassInp);
+        moneyInp = findViewById(R.id.moneyInp);
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinces);
-        provinceDrop.setAdapter(adapter);
+        modeHeader = findViewById(R.id.modeHeader);        confirmpassTxt = findViewById(R.id.confirmpassText);   redText = findViewById(R.id.regisRedText);
 
-        final Spinner genderDrop = findViewById(R.id.genderSpin);
-        String[] genders = new String[]{"Male", "Female"};
-        ArrayAdapter<String> genderSpinAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genders);
+        submitButt = findViewById(R.id.submitButt);
+        editButt = findViewById(R.id.editButt);
+        topupButt = findViewById(R.id.topupButt);
+
+        //******************************************** Spinner set Adapter *********************
+        final ArrayAdapter<String> provinceAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinces);
+        provinceDrop.setAdapter(provinceAdapt);
+
+        final ArrayAdapter<String> districtAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, districts);
+        districtDrop.setAdapter(districtAdapt);
+
+        final ArrayAdapter<String> subdistrictAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subdistricts);
+        subdistrictDrop.setAdapter(subdistrictAdapt);
+
+        final String[] genders = new String[]{"Male", "Female"};
+        final ArrayAdapter<String> genderSpinAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genders);
         genderDrop.setAdapter(genderSpinAdapt);
 
-        final Spinner monthDrop = findViewById(R.id.monthSpin);
         final String[] months = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-        ArrayAdapter<String> monthSpinAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, months);
+        final ArrayAdapter<String> monthSpinAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, months);
         monthDrop.setAdapter(monthSpinAdapt);
 
-        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.firstnameInp);    final EditText lastnameInp = findViewById(R.id.lastnameInp);
-        final EditText dateInp = findViewById(R.id.dateInp);              final EditText yearInp = findViewById(R.id.yearInp);              final EditText emailInp = findViewById(R.id.emailInp);
-        final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText IDInp = findViewById(R.id.IDInp);
-        final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.expiryField);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
-
-        final TextView redText = findViewById(R.id.regisRedText);
-
-        final Button submitButt = findViewById(R.id.submitButt);
-        final Button editButt = findViewById(R.id.editButt);
-        final Button topupButt = findViewById(R.id.topupButt);
-
-
-
-    /*
-        genderDrop.setFocusable(false);
-        genderDrop.setFocusableInTouchMode(false);
-        genderDrop.setClickable(false);
-
-        genderDrop.setSelection(1);
-        genderDrop.setEnabled(false);
-    */
-        //EditText[] editTexts = {userInp, firstnameInp, lastnameInp, dateInp, yearInp, emailInp, phonenumberInp, addressInp, districtInp, postcodeInp, passwordInp, confirmpassInp};
-        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,IDInp,postcodeInp};
+        //********************************************* Assisgn to arrays *************************
+        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,postcodeInp};
         final Spinner[] spinners = {genderDrop, monthDrop, provinceDrop};
-        final EditText moneyInp = findViewById(R.id.moneyInp);
 
+        //********************************************* Selected Listener for Places spinners ***********
+        provinceDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                districts.clear();
+                for(int i=1; i<JsonHandler.places[position].length; i++){
+                    districts.add(JsonHandler.places[position][i][0]);
+                }
+                districtAdapt.notifyDataSetChanged();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {            }
+        });
+        districtDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                subdistricts.clear();
+                int provNo = provinceDrop.getSelectedItemPosition();
+                int distNo = districtDrop.getSelectedItemPosition();
+                for(int i=1; i<JsonHandler.places[provNo][distNo+1].length; i++){
+                    subdistricts.add(JsonHandler.places[provNo][distNo+1][i]);
+                }
+                subdistrictAdapt.notifyDataSetChanged();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {            }
+        });
+
+        //******************************************** On Click Listener for Button *******************************
         topupButt.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {       //TODO: Reconstruct php request  I don't think lines below startActivity is necessary ********************************
                 Intent topupAct = new Intent(RegisterActivity.this, TopupActivity.class);
                 topupAct.putExtra("id",id);
                 startActivity(topupAct);
-                //moneyInp.setText("99999");
-                String url = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id="+id;
-                JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
-                        (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                moneyInp.setText( JsonHandler.parseString(response,"Money") );
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // TODO: Handle error
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String>  params = new HashMap<String, String>();
-                        return params;
-                    }
-                };
-                MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
             }
         });
-
-        if(mode == 1){  //Register
-            /*
-            modeHeader.setText("REGISTER");
-            editButt.setVisibility(View.INVISIBLE);
-            submitButt.setVisibility(View.VISIBLE);
-            confirmpassInp.setVisibility(View.VISIBLE);
-            topupButt.setVisibility(View.INVISIBLE);
-            moneyInp.setVisibility(View.INVISIBLE);
-            */
-        }
-
-        if(mode == 2){
-/*
-            modeHeader.setText("Personal info");
-            editButt.setVisibility(View.VISIBLE);
-            submitButt.setVisibility(View.INVISIBLE);
-            confirmpassInp.setVisibility(View.INVISIBLE);
-            topupButt.setVisibility(View.VISIBLE);
-            moneyInp.setVisibility(View.VISIBLE);
-            for(int i=0; i<editTexts.length; i++) {
-                editTexts[i].setFocusable(false);
-                editTexts[i].setFocusableInTouchMode(false);
-                editTexts[i].setClickable(false);
-            }
-                String url = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id="+id;
-                JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
-                        (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                //addressInp.setText(response.toString());
-                                userInp.setText( JsonHandler.parseString(response,"Username",0) );
-                                passwordInp.setText( JsonHandler.parseString(response,"Password",0) );
-                                firstnameInp.setText( JsonHandler.parseString(response,"FirstName",0) );
-                                lastnameInp.setText( JsonHandler.parseString(response,"LastName",0) );
-                                String birthDate = JsonHandler.parseString(response,"Birthdate",0);
-                                yearInp.setText( birthDate.substring(0,5) );
-                                dateInp.setText( birthDate.substring(8,10) );
-                                monthDrop.setSelection( Integer.parseInt(birthDate.substring(5,7))-1 );
-                                emailInp.setText( JsonHandler.parseString(response,"Email",0) );
-                                phonenumberInp.setText( JsonHandler.parseString(response,"PhoneNumber",0) );
-                                addressInp.setText( JsonHandler.parseString(response,"Address",0) );
-                                districtInp.setText( JsonHandler.parseString(response,"District",0) );
-                                postcodeInp.setText( JsonHandler.parseString(response,"Postcode",0) );
-                                moneyInp.setText( JsonHandler.parseString(response,"Money",0) );
-                                String gender = JsonHandler.parseString(response,"Gender",0);
-                                String province = JsonHandler.parseString(response,"Province",0);
-                                genderDrop.setSelection( gender.compareToIgnoreCase("Male") == 0 ? 0 : 1 );
-                                for(int i=0; i<provinces.length; i++){
-                                    if (province.equals(provinces[i])){
-                                        provinceDrop.setSelection(i);
-                                        break;
-                                    }
-                                }
-                                //Todo Spinnerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // TODO: Handle error
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String>  params = new HashMap<String, String>();
-                        return params;
-                    }
-                };
-                MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
-
-            for(int i=0; i<spinners.length; i++){
-                spinners[i].setEnabled(false);
-            }
-*/
-        }
 
         submitButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                redText.setText("Please wait...");
 
-                //boolean uniqness = checkUniqness("http://theatre.sit.kmutt.ac.th/group6/checkUniqness?user=" + userInp.getText() + "&phoneno=" + phonenumberInp.getText());
+                //***** Set delay *********************
+                submitButt.setEnabled(false);
+                submitButt.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        submitButt.setEnabled(true);
+                    }
+                }, 5000);
 
+                //********************************************** Check for space *********************************************
+                if (firstnameInp.getText().toString().matches("") & lastnameInp.getText().toString().matches("") &
+                        passwordInp.getText().toString().matches("") & emailInp.getText().toString().matches("") &
+                        phonenumberInp.getText().toString().matches("") & dateInp.getText().toString().matches("") &
+                        yearInp.getText().toString().matches("") & postcodeInp.getText().toString().matches("")) {
+                    redText.setText("Please fill every space provided");
+                } else {
 
-                if(mode == 1) {
-                    String checkUniqUrl = "http://theatre.sit.kmutt.ac.th/group6/checkUniqness?user=" + userInp.getText() + "&phoneno=" + phonenumberInp.getText();
-                    JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+                    if (mode == 1) {
+                        if (passwordInp.getText().toString().matches(confirmpassInp.getText().toString())) {    // Matching Password and Confirm Password
+                            String url = "http://theatre.sit.kmutt.ac.th/customer/androidRegist?user=" + userInp.getText() + "&pass=" + passwordInp.getText() +
+                                    "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + genderDrop.getSelectedItem().toString() +
+                                    "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
+                                    "&email=" + emailInp.getText() + "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
+                                    "&district=" + districtDrop.getSelectedItem().toString() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText() +
+                                    "&subdist=" + subdistrictDrop.getSelectedItem().toString() + "&idcard=" + identInp.getText();
 
-                            (Request.Method.GET, checkUniqUrl, null, new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-                                    if (response.toString().length() > 2) uniqness = false;
-                                    else uniqness = true;
-                                    //redText.setText(uniqness+ response.toString());
-                                    if (uniqness) {
-                                        if (firstnameInp.getText().toString().matches("") & lastnameInp.getText().toString().matches("") &
-                                                passwordInp.getText().toString().matches("") & emailInp.getText().toString().matches("") &
-                                                phonenumberInp.getText().toString().matches("") & dateInp.getText().toString().matches("") &
-                                                yearInp.getText().toString().matches("") & postcodeInp.getText().toString().matches("")) {
-                                            redText.setText("Please fill every space provided");
-                                        } else {
-                                            if (passwordInp.getText().toString().matches(confirmpassInp.getText().toString())) {
-                                                redText.setText("");
-                                                String url = "http://theatre.sit.kmutt.ac.th/group6/regis?user=" + userInp.getText() + "&pass=" + passwordInp.getText() +
-                                                        "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + genderDrop.getSelectedItem().toString() +
-                                                        "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
-                                                        "&email=" + emailInp.getText() + "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
-                                                        "&district=" + IDInp.getText() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText();
-                                                runPHP(url);
-                                            } else {
-                                                redText.setText("Password didn't matches");
-                                            }
-
-                                        }
-                                    } else {
-                                        redText.setText("Username or Phone Number is already exist : ");
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    // TODO: Handle error
-                                    //uniqness = true;
-                                    //redText.setText(uniqness+ "Successssss");
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            return params;
-                        }
-                    };
-                    MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
-
-                    // TODO insert delay here ***********************************************************************************************
-                }
-                if (mode == 3){
-                    /*String checkUniqUrl = "http://theatre.sit.kmutt.ac.th/group6/checkUniqness?user=" + userInp.getText() + "&phoneno=" + phonenumberInp.getText();
-                    JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
-
-                            (Request.Method.GET, checkUniqUrl, null, new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-                                    if (response.toString().length() > 2) uniqness = false;
-                                    else uniqness = true;
-                                    //redText.setText(uniqness+ response.toString());
-                                    if (uniqness) {*/
-                                        if (firstnameInp.getText().toString().matches("") & lastnameInp.getText().toString().matches("") &
-                                                passwordInp.getText().toString().matches("") & emailInp.getText().toString().matches("") &
-                                                phonenumberInp.getText().toString().matches("") & dateInp.getText().toString().matches("") &
-                                                yearInp.getText().toString().matches("") & postcodeInp.getText().toString().matches("")) {
-                                            redText.setText("Please fill every space provided");
-                                        } else {
-                                            if (passwordInp.getText().toString().matches(confirmpassInp.getText().toString())) {
-                                                redText.setText("");
-                                                String url = "http://theatre.sit.kmutt.ac.th/group6/update?id=" + id + "&pass=" + passwordInp.getText() +
-                                                        "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + genderDrop.getSelectedItem().toString() +
-                                                        "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
-                                                        "&email=" + emailInp.getText() + "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
-                                                        "&district=" + IDInp.getText() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText();
-                                                runPHP(url);
-                                                mode=2;
-                                                modeHeader.setText("Personal info");
-                                                submitButt.setText("SUBMIT");
-                                                editButt.setVisibility(View.VISIBLE);
-                                                submitButt.setVisibility(View.INVISIBLE);
-                                                confirmpassInp.setVisibility(View.INVISIBLE);
-                                                topupButt.setVisibility(View.VISIBLE);
-                                                moneyInp.setVisibility(View.VISIBLE);
-
-                                                for(int i=0; i<editTexts.length; i++) {
-                                                    editTexts[i].setFocusable(false);
-                                                    editTexts[i].setFocusableInTouchMode(false);
-                                                    editTexts[i].setClickable(false);
+                            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                                    (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                                        @Override
+                                        public void onResponse(JSONArray response) {
+                                            if (response.toString().length() > 2) {
+                                                String done = JsonHandler.parseString(response, "done");
+                                                if(done.matches("true")) {
+                                                    redText.setText("Account have been created successfully");
+                                                    Intent main = new Intent(RegisterActivity.this, MainActivity.class);
+                                                    id = Integer.parseInt(JsonHandler.parseString(response, "userID"));
+                                                    main.putExtra("id", id);
+                                                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(main);
+                                                }else{
+                                                    String note = JsonHandler.parseString(response, "note");
+                                                    redText.setText(note);
                                                 }
-                                                String urll = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id="+id;
-                                                JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
-                                                        (Request.Method.GET, urll, null, new Response.Listener<JSONArray>() {
-                                                            @Override
-                                                            public void onResponse(JSONArray response) {
-                                                                //addressInp.setText(response.toString());
-                                                                userInp.setText( JsonHandler.parseString(response,"Username") );
-                                                                passwordInp.setText( JsonHandler.parseString(response,"Password") );
-                                                                firstnameInp.setText( JsonHandler.parseString(response,"FirstName") );
-                                                                lastnameInp.setText( JsonHandler.parseString(response,"LastName") );
-                                                                String birthDate = JsonHandler.parseString(response,"Birthdate");
-                                                                yearInp.setText( birthDate.substring(0,5) );
-                                                                dateInp.setText( birthDate.substring(8,10) );
-                                                                monthDrop.setSelection( Integer.parseInt(birthDate.substring(5,7))-1 );
-                                                                emailInp.setText( JsonHandler.parseString(response,"Email") );
-                                                                phonenumberInp.setText( JsonHandler.parseString(response,"PhoneNumber") );
-                                                                addressInp.setText( JsonHandler.parseString(response,"Address") );
-                                                                IDInp.setText( JsonHandler.parseString(response,"District") );
-                                                                postcodeInp.setText( JsonHandler.parseString(response,"Postcode") );
-                                                                moneyInp.setText( JsonHandler.parseString(response,"Money") );
-                                                                String gender = JsonHandler.parseString(response,"Gender");
-                                                                String province = JsonHandler.parseString(response,"Province");
-                                                                genderDrop.setSelection( gender.compareToIgnoreCase("Male") == 0 ? 0 : 1 );
-                                                                for(int i=0; i<provinces.length; i++){
-                                                                    if (province.equals(provinces[i])){
-                                                                        provinceDrop.setSelection(i);
-                                                                        break;
-                                                                    }
-                                                                }
-                                                                //Todo Spinnerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-                                                            }
-                                                        }, new Response.ErrorListener() {
-                                                            @Override
-                                                            public void onErrorResponse(VolleyError error) {
-                                                                // TODO: Handle error
-                                                            }
-                                                        }) {
-                                                    @Override
-                                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                                        Map<String, String>  params = new HashMap<String, String>();
-                                                        return params;
-                                                    }
-                                                };
-                                                MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
-
-                                                for(int i=0; i<spinners.length; i++){
-                                                    spinners[i].setEnabled(false);
-                                                }
-
-                                            } else {
-                                                redText.setText("Password didn't matches");
                                             }
                                         }
-                                    /*} else {
-                                        redText.setText("Username or Phone Number is already exist : ");
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    // TODO: Handle error
-                                    //uniqness = true;
-                                    //redText.setText(uniqness+ "Successssss");
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            return params;
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            redText.setText(error.getMessage());
+                                        }
+                                    }) {
+                            };
+                            //******** No retry*************
+                            jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy((int) TimeUnit.SECONDS.toMillis(20), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                            MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonArrayRequest);
+                        } else {
+                            redText.setText("Passwords aren't matching");
                         }
-                    };
-                    MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
-                    */
+                    }
+                    if (mode == 3) {
+                        if (passwordInp.getText().toString().matches(confirmpassInp.getText().toString())) {
+                            redText.setText("");
+                            String url = "http://theatre.sit.kmutt.ac.th/group6/update?id=" + id + "&pass=" + passwordInp.getText() +
+                                    "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + genderDrop.getSelectedItem().toString() +
+                                    "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
+                                    "&email=" + emailInp.getText() + "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
+                                    "&district=" + districtDrop.getSelectedItem().toString() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText();
+                            runPHP(url);
+                            mode = 2;
+                            modeHeader.setText("Personal info");
+                            submitButt.setText("SUBMIT");
+                            editButt.setVisibility(View.VISIBLE);
+                            submitButt.setVisibility(View.INVISIBLE);
+                            confirmpassInp.setVisibility(View.INVISIBLE);
+                            topupButt.setVisibility(View.VISIBLE);
+                            moneyInp.setVisibility(View.VISIBLE);
+
+                            for (int i = 0; i < editTexts.length; i++) {
+                                editTexts[i].setFocusable(false);
+                                editTexts[i].setFocusableInTouchMode(false);
+                                editTexts[i].setClickable(false);
+                            }
+                            String urll = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id=" + id;
+                            JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+                                    (Request.Method.GET, urll, null, new Response.Listener<JSONArray>() {
+                                        @Override
+                                        public void onResponse(JSONArray response) {
+                                            //addressInp.setText(response.toString());
+                                            userInp.setText(JsonHandler.parseString(response, "Username"));
+                                            passwordInp.setText(JsonHandler.parseString(response, "Password"));
+                                            firstnameInp.setText(JsonHandler.parseString(response, "FirstName"));
+                                            lastnameInp.setText(JsonHandler.parseString(response, "LastName"));
+                                            String birthDate = JsonHandler.parseString(response, "Birthdate");
+                                            yearInp.setText(birthDate.substring(0, 5));
+                                            dateInp.setText(birthDate.substring(8, 10));
+                                            monthDrop.setSelection(Integer.parseInt(birthDate.substring(5, 7)) - 1);
+                                            emailInp.setText(JsonHandler.parseString(response, "Email"));
+                                            phonenumberInp.setText(JsonHandler.parseString(response, "PhoneNumber"));
+                                            addressInp.setText(JsonHandler.parseString(response, "Address"));
+                                            //districtInp.setText( JsonHandler.parseString(response,"District") );
+                                            postcodeInp.setText(JsonHandler.parseString(response, "Postcode"));
+                                            moneyInp.setText(JsonHandler.parseString(response, "Money"));
+                                            String gender = JsonHandler.parseString(response, "Gender");
+                                            String province = JsonHandler.parseString(response, "Province");
+                                            genderDrop.setSelection(gender.compareToIgnoreCase("Male") == 0 ? 0 : 1);
+                                            for (int i = 0; i < provinces.length; i++) {
+                                                if (province.equals(provinces[i])) {
+                                                    provinceDrop.setSelection(i);
+                                                    break;
+                                                }
+                                            }
+                                            //Todo Spinnerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            // TODO: Handle error
+                                        }
+                                    }) {
+                            };
+                            MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
+
+                            for (int i = 0; i < spinners.length; i++) {
+                                spinners[i].setEnabled(false);
+                            }
+
+                        } else {
+                            redText.setText("Password didn't matches");
+                        }
+                    }
+                                        /*} else {
+                                            redText.setText("Username or Phone Number is already exist : ");
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // TODO: Handle error
+                                        //uniqness = true;
+                                        //redText.setText(uniqness+ "Successssss");
+                                    }
+                                }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<String, String>();
+                                return params;
+                            }
+                        };
+                        MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
+                        */
+
                 }
             }
         });
@@ -475,52 +373,14 @@ public class RegisterActivity extends AppCompatActivity {
         };
         MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
     }
-/*
-    protected Boolean checkUniqness(String url){
-        //JSONArray jsonArray;
-        final String[] responseLength = new String[1];
-        final boolean[] result = new boolean[1];
-        result[0] = true;
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
 
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //addressInp.setText(response.toString());
-                        //result[0] = JsonHandler.parseString(response,"ID",0);
-                        //jsonArray = response;
-                        boolean resulttt = (response.toString().length() != 0);
-                        Toast.makeText(RegisterActivity.this, resulttt+" response = "+response.toString() , Toast.LENGTH_SHORT).show();
-                        if(response.toString().length() != 0) result[0] = false;
-                        responseLength[0] = response.toString();
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Delete **************************************************************************************
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
-                return params;
-            }
-        };
-        MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
-        //Toast.makeText(this, "Uniqueness = "+responseLength[0], Toast.LENGTH_SHORT).show();
-        return result[0];
-    }
-*/
     @Override
     public void onBackPressed() {
-        if(mode == 2) {
-            Intent main = new Intent(RegisterActivity.this, MainActivity.class);
+        if(mode == 2) { //TODO: Are all these code really necessary? Won't finish() just send it back to mainActivity anyways?
+            /*Intent main = new Intent(RegisterActivity.this, MainActivity.class);
             main.putExtra("id",id);
             main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(main);
+            startActivity(main);*/
             finish();
         }
         if(mode == 3){
@@ -539,27 +399,9 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        final EditText userInp = findViewById(R.id.usernameInp);          final EditText firstnameInp = findViewById(R.id.firstnameInp);    final EditText lastnameInp = findViewById(R.id.lastnameInp);
-        final EditText dateInp = findViewById(R.id.dateInp);              final EditText yearInp = findViewById(R.id.yearInp);              final EditText emailInp = findViewById(R.id.emailInp);
-        final EditText phonenumberInp = findViewById(R.id.phoneNoInp);    final EditText addressInp = findViewById(R.id.addressInp);        final EditText IDInp = findViewById(R.id.IDInp);
-        final EditText postcodeInp = findViewById(R.id.zipcodeInp);       final EditText passwordInp = findViewById(R.id.expiryField);      final EditText confirmpassInp = findViewById(R.id.confirmpassInp);
-        final EditText moneyInp = findViewById(R.id.moneyInp);
-        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,IDInp,postcodeInp};
 
-        final TextView redText = findViewById(R.id.regisRedText);
-        final TextView confirmpassTxt = findViewById(R.id.confirmpassText);
-        final TextView modeHeader = findViewById(R.id.modeHeader);
-
-        final Button submitButt = findViewById(R.id.submitButt);
-        final Button editButt = findViewById(R.id.editButt);
-        final Button topupButt = findViewById(R.id.topupButt);
-
-        final Spinner genderDrop = findViewById(R.id.genderSpin);
-        final Spinner monthDrop = findViewById(R.id.monthSpin);
-        final Spinner provinceDrop = findViewById(R.id.provinceSpin);
-
+        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,postcodeInp};
         final Spinner[] spinners = {genderDrop, monthDrop, provinceDrop};
-
 
         if (mode == 1) {
             confirmpassTxt.setVisibility(View.VISIBLE);
@@ -600,7 +442,7 @@ public class RegisterActivity extends AppCompatActivity {
                             emailInp.setText( JsonHandler.parseString(response,"Email") );
                             phonenumberInp.setText( JsonHandler.parseString(response,"PhoneNumber") );
                             addressInp.setText( JsonHandler.parseString(response,"Address") );
-                            IDInp.setText( JsonHandler.parseString(response,"District") );
+                            //districtInp.setText( JsonHandler.parseString(response,"District") );
                             postcodeInp.setText( JsonHandler.parseString(response,"Postcode") );
                             moneyInp.setText( JsonHandler.parseString(response,"Money") );
                             String gender = JsonHandler.parseString(response,"Gender");

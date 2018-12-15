@@ -52,15 +52,14 @@ public class MembershipActivity extends AppCompatActivity {
         loginButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String url = "http://theatre.sit.kmutt.ac.th/customer/group6/loginn?user="+ userInput.getText() + "&pass=" + passInput.getText();
-                String url = "http://theatre.sit.kmutt.ac.th/customer/group6/loginn?user=cs18@gmail.com&pass=0812345678";
+                String url = "http://theatre.sit.kmutt.ac.th/customer/androidLogin?user="+ userInput.getText() + "&pass=" + JsonHandler.md5(passInput.getText().toString());
                 JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                         (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                String result = JsonHandler.parseString(response,"MemberID");
-                                if(result.length() != 0) {
-                                    id = Integer.parseInt(result);
+                                String result = JsonHandler.parseString(response,"userID");
+                                if(result.length() != 0 & (id = Integer.parseInt(result)) != -1) {
+                                    //id = Integer.parseInt(result);
                                     Intent mainAct = new Intent(MembershipActivity.this, MainActivity.class);
                                     mainAct.putExtra("id",id);
                                     mainAct.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -75,25 +74,11 @@ public class MembershipActivity extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // TODO: Handle error
-                                redText.setText(error.getMessage() + "Error !!!");
+                                redText.setText(error.getMessage());
 
                             }
                         });
                 MySingleton.getInstance(MembershipActivity.this).addToRequestQueue(jsonObjectRequest);
-                /*  It don't wait for response so it return null ********************************************
-                JSONArray response = JsonHandler.getMethod(url, MembershipActivity.this, redText);
-                String result = JsonHandler.parseString(response,"MemberID",0);
-                //String display;
-                if(result.length() != 0) {
-                    id = Integer.parseInt(result);
-                    regisAct.putExtra("mode",2);
-                    regisAct.putExtra("id",id);
-                    startActivity(regisAct);
-
-                }else {
-                    redText.setText("Invalid username or password.\nPlease try again.");
-                }
-                */
             }
         });
     }
@@ -107,16 +92,5 @@ public class MembershipActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
-
-    /*
-    //@Override
-    public void onBackPressed() {
-        Toast.makeText(this, "BackPressed", Toast.LENGTH_SHORT).show();
-        //finish();
-        //getIntent().getExtra
-        //Intent mainAct = new Intent(getApplicationContext(), MainActivity.class);
-        //mainAct.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        this.getIntent().setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
-    }*/
 
 }

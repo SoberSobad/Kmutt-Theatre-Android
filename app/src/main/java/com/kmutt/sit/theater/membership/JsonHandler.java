@@ -10,6 +10,9 @@ import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class JsonHandler {
 
     public static String parseString(JSONArray jsonArray, String name){
@@ -21,7 +24,7 @@ public class JsonHandler {
         String result = "";
         if (jsonArray != null) {
             String str = jsonArray.toString();
-            if(str.length() == 0) return "Array is null !";
+            if(str.length() <= 2) return "Array is null !";
             for(int i=0; i<str.length(); i++){
                 if( i+pattern.length()<=str.length() & str.substring(i,i+pattern.length()).equals(pattern) ){
                         if(str.charAt(i+pattern.length()) == '"'){
@@ -29,7 +32,7 @@ public class JsonHandler {
                             i++;
                         }
                         for(int j=i+pattern.length(); j<str.length(); j++){
-                            if((str.charAt(j) == ',' & !hasQoute) | (str.charAt(j) == '"' & hasQoute)) break;
+                            if((str.charAt(j) == ',' & !hasQoute) | (str.charAt(j) == '"' & hasQoute) | (str.charAt(j) == '}')) break;
                             result += str.charAt(j);
                         }
                     return result;
@@ -115,7 +118,32 @@ public class JsonHandler {
         return result[0];
     }
 
-    public static String[][][] places = {            {
+    public static final String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static final String[][][] places = {            {
                     {"Amnat Charoen"},
                     {"Lue Amnat","Amnat","Dong Bang","Dong Mayang","Khok Klang","Maet","Pueai","Rai Khi"},
                     {"Mueang Amnat Charoen","Bung","Don Moei","Huai Rai","Kai Kham","Khuem Yai","Kut Pla Duk","Lao Phruan","Na Chik","Na Mo Ma","Na Phue","Na Tae","Na Wang","Na Yom","Nam Plik","Non Nam Thaeng","Non Pho","Nong Masaeo","Pla Khao","Sang Nok Tha"},

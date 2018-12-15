@@ -25,19 +25,26 @@ import org.json.JSONArray;
 public class MainActivity extends AppCompatActivity {
 
     static int id = -1;
+    Button loginButt;
+    Button infoButt;
+    Button logoutButt;
+    EditText memberInfo;
+    ConstraintLayout bottomArea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final EditText memberInfo = findViewById(R.id.memberInfo);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         id = getIntent().getIntExtra("id",-1);
 
-        Button loginButt = findViewById(R.id.loginButt);
-        Button infoButt = findViewById(R.id.infoButt);
-        Button logoutButt = findViewById(R.id.logoutButt);
+        memberInfo = findViewById(R.id.memberInfo);
+        loginButt = findViewById(R.id.loginButt);
+        infoButt = findViewById(R.id.infoButt);
+        logoutButt = findViewById(R.id.logoutButt);
+        bottomArea = findViewById(R.id.bottomArea);
+
         final Intent mbshipAct = new Intent(MainActivity.this, MembershipActivity.class);
         final Intent paymentAct = new Intent(MainActivity.this, PaymentActivity.class);
 
@@ -96,18 +103,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         id = getIntent().getIntExtra("id",-1);
-        final EditText memberInfo = findViewById(R.id.memberInfo);
-        //Create MembershipActivity
-
-
-        Button infoButt = findViewById(R.id.infoButt);
-        Button loginButt = findViewById(R.id.loginButt);
-        Button logoutButt = findViewById(R.id.logoutButt);
-        ConstraintLayout bottomArea = findViewById(R.id.bottomArea);
-
         if(id != -1) {
-            String url = "http://theatre.sit.kmutt.ac.th/customer/group6/getInfo?id=" + id;
-            JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
@@ -122,8 +120,7 @@ public class MainActivity extends AppCompatActivity {
                             memberInfo.setText("fail to retrieve member's information \nMemberID = "+id);
                         }
                     });
-
-            MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
+            MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonArrayRequest);
             infoButt.setVisibility(View.VISIBLE);
             logoutButt.setVisibility(View.VISIBLE);
             bottomArea.setVisibility(View.INVISIBLE);
@@ -135,8 +132,6 @@ public class MainActivity extends AppCompatActivity {
             logoutButt.setVisibility(View.INVISIBLE);
             bottomArea.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     @Override
