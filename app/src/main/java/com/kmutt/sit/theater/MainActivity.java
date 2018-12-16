@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         id = getIntent().getIntExtra("id",-1);
         if(id != -1) {
-            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+//            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
+//            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
             ConstraintLayout cl = findViewById(R.id.mainScrollArea);
             ConstraintSet constraintSet;
             constraintSet = new ConstraintSet();
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             constraintSet.applyTo(cl);
 
             String url = "http://theatre.sit.kmutt.ac.th/customer/group6/getInfo?id=" + id;
-            JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
