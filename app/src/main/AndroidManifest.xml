@@ -27,7 +27,8 @@
             android:launchMode="singleTask" />
         <activity android:name=".membership.RegisterActivity" />
         <activity android:name=".membership.TopupActivity" />
-        <activity android:name=".booking.PaymentActivity"></activity>
+        <activity android:name=".booking.PaymentActivity" />
+        <activity android:name=".membership.InfoActivity"></activity>
     </application>
 
 </manifest>

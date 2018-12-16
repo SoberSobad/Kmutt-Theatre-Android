@@ -18,8 +18,6 @@ public class JsonHandler {
     public static String parseString(JSONArray jsonArray, String name){
         String pattern;
         boolean hasQoute = false;
-        //if(hasQoute) pattern = "\"" + name + "\":\"";
-        //else pattern = "\"" + name + "\":";
         pattern = "\"" + name + "\":";
         String result = "";
         if (jsonArray != null) {
@@ -36,8 +34,6 @@ public class JsonHandler {
                             result += str.charAt(j);
                         }
                     return result;
-                    //return "!!";
-                    //return "String is parsing and get "+str.substring(i+pattern.length(),str.length());
                 }
                 if(i == str.length()-1) return "Cannot find given name in "+jsonArray.toString();
             }

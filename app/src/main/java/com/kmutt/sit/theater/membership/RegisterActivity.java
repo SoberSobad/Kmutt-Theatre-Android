@@ -38,9 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
     final String[] provinces = new String[JsonHandler.places.length];
     final List<String> districts = new ArrayList<>();
     final List<String> subdistricts = new ArrayList<>();
-    int provinceNo;
-    int districtNo;
-    int subdistrictNo;
+
+    EditText[] editTexts;
+    Spinner[] spinners;
 
     //************************* Initializing ************************************************
     Spinner provinceDrop;
@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView modeHeader;         TextView confirmpassTxt;    TextView redText;
 
     Button submitButt;
-    Button editButt;
+    //Button editButt;
     Button topupButt;
 
     @Override
@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
         modeHeader = findViewById(R.id.modeHeader);        confirmpassTxt = findViewById(R.id.confirmpassText);   redText = findViewById(R.id.regisRedText);
 
         submitButt = findViewById(R.id.submitButt);
-        editButt = findViewById(R.id.editButt);
+        //editButt = findViewById(R.id.editButt);
         topupButt = findViewById(R.id.topupButt);
 
         //******************************************** Spinner set Adapter *********************
@@ -112,8 +112,8 @@ public class RegisterActivity extends AppCompatActivity {
         monthDrop.setAdapter(monthSpinAdapt);
 
         //********************************************* Assisgn to arrays *************************
-        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,postcodeInp};
-        final Spinner[] spinners = {genderDrop, monthDrop, provinceDrop};
+        editTexts = new EditText[]{userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,postcodeInp,identInp};    //These will be disable in mode2
+        spinners = new Spinner[]{genderDrop, monthDrop, provinceDrop,districtDrop,subdistrictDrop};
 
         //********************************************* Selected Listener for Places spinners ***********
         provinceDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -174,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
                         yearInp.getText().toString().matches("") & postcodeInp.getText().toString().matches("")) {
                     redText.setText("Please fill every space provided");
                 } else {
-
+                    //******************************** Insert new registry ***********************************************
                     if (mode == 1) {
                         if (passwordInp.getText().toString().matches(confirmpassInp.getText().toString())) {    // Matching Password and Confirm Password
                             String url = "http://theatre.sit.kmutt.ac.th/customer/androidRegist?user=" + userInp.getText() + "&pass=" + passwordInp.getText() +
@@ -217,6 +217,7 @@ public class RegisterActivity extends AppCompatActivity {
                             redText.setText("Passwords aren't matching");
                         }
                     }
+                    //*************************************** Update existing registry **************************************
                     if (mode == 3) {
                         if (passwordInp.getText().toString().matches(confirmpassInp.getText().toString())) {
                             redText.setText("");
@@ -229,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
                             mode = 2;
                             modeHeader.setText("Personal info");
                             submitButt.setText("SUBMIT");
-                            editButt.setVisibility(View.VISIBLE);
+                            //editButt.setVisibility(View.VISIBLE);
                             submitButt.setVisibility(View.INVISIBLE);
                             confirmpassInp.setVisibility(View.INVISIBLE);
                             topupButt.setVisibility(View.VISIBLE);
@@ -312,40 +313,18 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
+        /*
         editButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mode = 3;
-
                 Intent editIntent = new Intent(RegisterActivity.this, RegisterActivity.class);
                 editIntent.putExtra("id",id);
                 editIntent.putExtra("mode",3);
                 editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-
-/*
-                submitButt.setText("SAVE");
-                modeHeader.setText("Editing..");
-                editButt.setVisibility(View.INVISIBLE);
-                submitButt.setVisibility(View.VISIBLE);
-                confirmpassInp.setVisibility(View.VISIBLE);
-                topupButt.setVisibility(View.INVISIBLE);
-                moneyInp.setVisibility(View.INVISIBLE);
-                for(int i=0; i<editTexts.length; i++) {
-                    editTexts[i].setFocusable(true);
-                    editTexts[i].setFocusableInTouchMode(true);
-                    editTexts[i].setClickable(true);
-                }
-                userInp.setFocusable(false);
-                userInp.setFocusableInTouchMode(false);
-                userInp.setClickable(false);
-                for(int i=0; i<spinners.length; i++){
-                    spinners[i].setEnabled(true);
-                }
-*/
             }
         });
+        */
     }
 
     protected void runPHP(String url){
@@ -376,11 +355,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(mode == 2) { //TODO: Are all these code really necessary? Won't finish() just send it back to mainActivity anyways?
-            /*Intent main = new Intent(RegisterActivity.this, MainActivity.class);
-            main.putExtra("id",id);
-            main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(main);*/
+        if(mode == 2) {
             finish();
         }
         if(mode == 3){
@@ -399,54 +374,53 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        final EditText[] editTexts = {userInp,passwordInp,confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,emailInp,phonenumberInp,addressInp,postcodeInp};
-        final Spinner[] spinners = {genderDrop, monthDrop, provinceDrop};
-
+        id = getIntent().getIntExtra("id",-1);
         if (mode == 1) {
-            confirmpassTxt.setVisibility(View.VISIBLE);
             modeHeader.setText("REGISTER");
-            editButt.setVisibility(View.INVISIBLE);
-            submitButt.setVisibility(View.VISIBLE);
-            confirmpassInp.setVisibility(View.VISIBLE);
+            //editButt.setVisibility(View.INVISIBLE);
             topupButt.setVisibility(View.INVISIBLE);
             moneyInp.setVisibility(View.INVISIBLE);
+            submitButt.setVisibility(View.VISIBLE);
+            confirmpassInp.setVisibility(View.VISIBLE);
+            confirmpassTxt.setVisibility(View.VISIBLE);
         }
-        if (mode == 2){
-            confirmpassTxt.setVisibility(View.INVISIBLE);
+        if (mode == 2){ /*
             modeHeader.setText("Personal info");
-            editButt.setVisibility(View.VISIBLE);
             submitButt.setVisibility(View.INVISIBLE);
             confirmpassInp.setVisibility(View.INVISIBLE);
+            confirmpassTxt.setVisibility(View.INVISIBLE);
             topupButt.setVisibility(View.VISIBLE);
             moneyInp.setVisibility(View.VISIBLE);
-            for(int i=0; i<editTexts.length; i++) {
-                editTexts[i].setFocusable(false);
-                editTexts[i].setFocusableInTouchMode(false);
-                editTexts[i].setClickable(false);
+            //editButt.setVisibility(View.VISIBLE);
+            for (EditText editText : editTexts) {
+                editText.setFocusable(false);
+                editText.setFocusableInTouchMode(false);
+                editText.setClickable(false);
             }
-            String url = "http://theatre.sit.kmutt.ac.th/group6/getInfo?id="+id;
+            String url = "http://theatre.sit.kmutt.ac.th/androidGetInfo?id="+id;
             JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
                             //addressInp.setText(response.toString());
-                            userInp.setText( JsonHandler.parseString(response,"Username") );
-                            passwordInp.setText( JsonHandler.parseString(response,"Password") );
-                            firstnameInp.setText( JsonHandler.parseString(response,"FirstName") );
-                            lastnameInp.setText( JsonHandler.parseString(response,"LastName") );
+                            userInp.setText( JsonHandler.parseString(response,"username") );
+                            passwordInp.setText( JsonHandler.parseString(response,"password") );
+                            firstnameInp.setText( JsonHandler.parseString(response,"Fname") );
+                            lastnameInp.setText( JsonHandler.parseString(response,"Lname") );
                             String birthDate = JsonHandler.parseString(response,"Birthdate");
                             yearInp.setText( birthDate.substring(0,5) );
                             dateInp.setText( birthDate.substring(8,10) );
                             monthDrop.setSelection( Integer.parseInt(birthDate.substring(5,7))-1 );
-                            emailInp.setText( JsonHandler.parseString(response,"Email") );
+                            emailInp.setText( JsonHandler.parseString(response,"email") );
                             phonenumberInp.setText( JsonHandler.parseString(response,"PhoneNumber") );
                             addressInp.setText( JsonHandler.parseString(response,"Address") );
-                            //districtInp.setText( JsonHandler.parseString(response,"District") );
-                            postcodeInp.setText( JsonHandler.parseString(response,"Postcode") );
-                            moneyInp.setText( JsonHandler.parseString(response,"Money") );
+                            identInp.setText( JsonHandler.parseString(response,"ID_Card") );
+                            postcodeInp.setText( JsonHandler.parseString(response,"ZipCode") );
+                            //moneyInp.setText( JsonHandler.parseString(response,"Money") );
                             String gender = JsonHandler.parseString(response,"Gender");
                             String province = JsonHandler.parseString(response,"Province");
+                            String district = JsonHandler.parseString(response,"District");
+                            String subdistrict = JsonHandler.parseString(response, "SubDistrict");
                             genderDrop.setSelection( gender.compareToIgnoreCase("Male") == 0 ? 0 : 1 );
                             for(int i=0; i<provinces.length; i++){
                                 if (province.equals(provinces[i])){
@@ -461,38 +435,33 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             // TODO: Handle error
                         }
-                    }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String>  params = new HashMap<String, String>();
-                    return params;
-                }
-            };
+                    }) {            };
             MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(jsonObjectRequest);
 
-            for(int i=0; i<spinners.length; i++){
-                spinners[i].setEnabled(false);
+            for (Spinner spinner : spinners) {
+                spinner.setEnabled(false);
             }
+            */
         }
         if (mode == 3) {
             confirmpassTxt.setVisibility(View.VISIBLE);
             submitButt.setText("SAVE");
             modeHeader.setText("Editing..");
-            editButt.setVisibility(View.INVISIBLE);
+            //editButt.setVisibility(View.INVISIBLE);
             submitButt.setVisibility(View.VISIBLE);
             confirmpassInp.setVisibility(View.VISIBLE);
             topupButt.setVisibility(View.INVISIBLE);
             moneyInp.setVisibility(View.INVISIBLE);
-            for(int i=0; i<editTexts.length; i++) {
-                editTexts[i].setFocusable(true);
-                editTexts[i].setFocusableInTouchMode(true);
-                editTexts[i].setClickable(true);
+            for (EditText editText : editTexts) {
+                editText.setFocusable(true);
+                editText.setFocusableInTouchMode(true);
+                editText.setClickable(true);
             }
             userInp.setFocusable(false);
             userInp.setFocusableInTouchMode(false);
             userInp.setClickable(false);
-            for(int i=0; i<spinners.length; i++){
-                spinners[i].setEnabled(true);
+            for (Spinner spinner : spinners) {
+                spinner.setEnabled(true);
             }
         }
     }

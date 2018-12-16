@@ -21,8 +21,8 @@
             android:id="@+id/modeHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
             android:text="REGISTER"
             android:textColor="#E00202"
             android:textSize="30dp"
@@ -372,9 +372,10 @@
             android:id="@+id/editButt"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginStart="164dp"
+            android:layout_marginStart="170dp"
             android:layout_marginTop="50dp"
             android:text="EDIT"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -385,6 +386,7 @@
             android:layout_marginStart="260dp"
             android:layout_marginTop="50dp"
             android:text="Top Up"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

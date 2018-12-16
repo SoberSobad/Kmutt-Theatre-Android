@@ -59,7 +59,6 @@ public class MembershipActivity extends AppCompatActivity {
                             public void onResponse(JSONArray response) {
                                 String result = JsonHandler.parseString(response,"userID");
                                 if(result.length() != 0 & (id = Integer.parseInt(result)) != -1) {
-                                    //id = Integer.parseInt(result);
                                     Intent mainAct = new Intent(MembershipActivity.this, MainActivity.class);
                                     mainAct.putExtra("id",id);
                                     mainAct.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -73,7 +72,6 @@ public class MembershipActivity extends AppCompatActivity {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                // TODO: Handle error
                                 redText.setText(error.getMessage());
 
                             }

@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.kmutt.sit.theater.booking.PaymentActivity;
+import com.kmutt.sit.theater.membership.InfoActivity;
 import com.kmutt.sit.theater.membership.JsonHandler;
 import com.kmutt.sit.theater.membership.MembershipActivity;
 import com.kmutt.sit.theater.membership.MySingleton;
@@ -85,9 +86,9 @@ public class MainActivity extends AppCompatActivity {
         infoButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent infoAct = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent infoAct = new Intent(MainActivity.this, InfoActivity.class);
                 infoAct.putExtra("id",id);
-                infoAct.putExtra("mode",2);
+                //infoAct.putExtra("mode",2);
                 startActivity(infoAct);
             }
         });
