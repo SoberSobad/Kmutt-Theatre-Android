@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:fillViewport="true"
+    android:isScrollContainer="true"
+    android:scrollbars="vertical"
+
+    tools:context=".booking.ConfirmationActivity">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
+
+        <Button
+            android:id="@+id/returnButt"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="62dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/button_bg"
+            android:text="Return"
+            android:textColor="#EEECEC"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmationMessage" />
+
+        <TextView
+            android:id="@+id/modeHeader"
+            android:layout_height="92dp"
+            android:layout_marginTop="70dp"
+            android:text="Thank you for your purchase!"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/confirmationMessage"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="2dp"
+            android:text="1000 THB has been added to your account"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/modeHeader" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

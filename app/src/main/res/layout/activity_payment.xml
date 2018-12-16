@@ -9,7 +9,7 @@
     android:isScrollContainer="true"
     android:scrollbars="vertical"
 
-    tools:context=".membership.RegisterActivity">
+    tools:context=".booking.PaymentActivity">
 
 
     <android.support.constraint.ConstraintLayout
