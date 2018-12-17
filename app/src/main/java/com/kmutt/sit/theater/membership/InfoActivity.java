@@ -47,10 +47,9 @@ public class InfoActivity extends AppCompatActivity {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent editIntent = new Intent(InfoActivity.this, RegisterActivity.class);
+                Intent editIntent = new Intent(InfoActivity.this, EditActivity.class);
                 editIntent.putExtra("memberID",memberID);
-                editIntent.putExtra("mode",3);
-                editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(editIntent);
             }
         });
