@@ -19,7 +19,7 @@ import org.json.JSONArray;
 
 public class MembershipActivity extends AppCompatActivity {
 
-    static int id;
+    static int memberID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +32,15 @@ public class MembershipActivity extends AppCompatActivity {
 
         final Intent regisAct = new Intent(MembershipActivity.this, RegisterActivity.class);
         regisAct.putExtra("mode",1);
-        regisAct.putExtra("id",-1);
+        //regisAct.putExtra("id",-1);
 
         Button regisButt = findViewById(R.id.regisButt);
         regisButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                regisAct.putExtra("mode",1);
-                regisAct.putExtra("id",-1);
+                //regisAct.putExtra("mode",1);
+                //regisAct.putExtra("id",-1);
                 startActivity(regisAct);
 
             }
@@ -58,9 +58,9 @@ public class MembershipActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 String result = JsonHandler.parseString(response,"userID");
-                                if(result.length() != 0 & (id = Integer.parseInt(result)) != -1) {
+                                if(result.length() != 0 & (memberID = Integer.parseInt(result)) != -1) {
                                     Intent mainAct = new Intent(MembershipActivity.this, MainActivity.class);
-                                    mainAct.putExtra("id",id);
+                                    mainAct.putExtra("memberID",memberID);
                                     mainAct.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(mainAct);
                                     finish();

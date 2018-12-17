@@ -23,7 +23,7 @@ public class InfoActivity extends AppCompatActivity {
     TextView province;      TextView district;      TextView subdistrict;
     TextView zipcode;
 
-    static int id;
+    static int memberID;
 
     Button editButton;
     TextView redText;
@@ -33,7 +33,7 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        id = getIntent().getIntExtra("id",-1);
+        memberID = getIntent().getIntExtra("memberID",-1);
 
         firstname = findViewById(R.id.firstName);   lastname = findViewById(R.id.lastName);     identNo = findViewById(R.id.identificationNumber);
         username = findViewById(R.id.username);     gender = findViewById(R.id.gender);         email = findViewById(R.id.email);
@@ -48,7 +48,7 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent editIntent = new Intent(InfoActivity.this, RegisterActivity.class);
-                editIntent.putExtra("id",id);
+                editIntent.putExtra("memberID",memberID);
                 editIntent.putExtra("mode",3);
                 editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(editIntent);
@@ -59,9 +59,9 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        id = getIntent().getIntExtra("id",-1);
-        if(id != -1) {
-            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
+        memberID = getIntent().getIntExtra("memberID",-1);
+        if(memberID != -1) {
+            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
@@ -83,7 +83,7 @@ public class InfoActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            redText.setText(error.getMessage()+ "\nFailed to retrive information \nMemberID = "+id);
+                            redText.setText(error.getMessage()+ "\nFailed to retrive information \nMemberID = "+memberID);
                         }
                     }) {
             };

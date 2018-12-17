@@ -1,5 +1,7 @@
 package com.kmutt.sit.theater.membership;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     static int mode;
-    static int id;
+    //static int memberID;
 
     final String[] provinces = new String[JsonHandler.places.length];
     final List<String> districts = new ArrayList<>();
@@ -67,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         mode = getIntent().getIntExtra("mode",2);
-        id = getIntent().getIntExtra("id",-1);
+        //memberID = getIntent().getIntExtra("id",-1);
 
 
         for(int i=0; i<JsonHandler.places.length; i++){
@@ -144,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         //******************************************** On Click Listener for Button *******************************
-        topupButt.setOnClickListener(new View.OnClickListener(){
+        /*topupButt.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {       //TODO: Reconstruct php request  I don't think lines below startActivity is necessary ********************************
                 Intent topupAct = new Intent(RegisterActivity.this, TopupActivity.class);
@@ -152,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(topupAct);
             }
         });
-
+        */
         submitButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,11 +194,20 @@ public class RegisterActivity extends AppCompatActivity {
                                                 String done = JsonHandler.parseString(response, "done");
                                                 if(done.matches("true")) {
                                                     redText.setText("Account have been created successfully");
-                                                    Intent main = new Intent(RegisterActivity.this, MainActivity.class);
-                                                    id = Integer.parseInt(JsonHandler.parseString(response, "userID"));
-                                                    main.putExtra("id", id);
-                                                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                    startActivity(main);
+                                                    //id = Integer.parseInt(JsonHandler.parseString(response, "userID"));
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                                    builder.setMessage("Registration Successful\nPlease verify your email")
+                                                            .setCancelable(false)
+                                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                public void onClick(DialogInterface dialog, int id) {
+                                                                    Intent main = new Intent(RegisterActivity.this, MainActivity.class);
+                                                                    //main.putExtra("id", id);
+                                                                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                    startActivity(main);
+                                                                }
+                                                            });
+                                                    AlertDialog alert = builder.create();
+                                                    alert.show();
                                                 }else{
                                                     String note = JsonHandler.parseString(response, "note");
                                                     redText.setText(note);
@@ -206,7 +217,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     }, new Response.ErrorListener() {
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
-                                            redText.setText(error.getMessage());
+                                            //redText.setText(error.getMessage());
+                                            redText.setText("Username or Email Address already exist!");
                                         }
                                     }) {
                             };
@@ -218,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                     //*************************************** Update existing registry **************************************
-                    if (mode == 3) {
+                    /*if (mode == 3) {
                         if (passwordInp.getText().toString().matches(confirmpassInp.getText().toString())) {
                             redText.setText("");
                             String url = "http://theatre.sit.kmutt.ac.th/group6/update?id=" + id + "&pass=" + passwordInp.getText() +
@@ -360,11 +372,11 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
         if(mode == 3){
-            Intent personalInfo = new Intent(RegisterActivity.this, RegisterActivity.class);
+            /*Intent personalInfo = new Intent(RegisterActivity.this, RegisterActivity.class);
             personalInfo.putExtra("id",id);
             personalInfo.putExtra("mode",2);
             personalInfo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(personalInfo);
+            startActivity(personalInfo);*/
             finish();
         }
         if(mode == 1){
@@ -375,7 +387,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        id = getIntent().getIntExtra("id",-1);
+        //id = getIntent().getIntExtra("id",-1);
         if (mode == 1) {
             modeHeader.setText("REGISTER");
             //editButt.setVisibility(View.INVISIBLE);
@@ -445,7 +457,7 @@ public class RegisterActivity extends AppCompatActivity {
             */
         }
         if (mode == 3) {
-            confirmpassTxt.setVisibility(View.VISIBLE);
+            /*confirmpassTxt.setVisibility(View.VISIBLE);
             submitButt.setText("SAVE");
             modeHeader.setText("Editing..");
             //editButt.setVisibility(View.INVISIBLE);
@@ -463,7 +475,7 @@ public class RegisterActivity extends AppCompatActivity {
             userInp.setClickable(false);
             for (Spinner spinner : spinners) {
                 spinner.setEnabled(true);
-            }
+            }*/
         }
     }
 }

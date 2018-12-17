@@ -42,7 +42,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    static int id = -1;
+    static int memberID = -1;
     Button loginButt;
     Button infoButt;
     Button logoutButt;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        id = getIntent().getIntExtra("id",-1);
+        memberID = getIntent().getIntExtra("memberID",-1);
 
         memberInfo = findViewById(R.id.memberInfo);
         loginButt = findViewById(R.id.loginButt);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         loginButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (id == -1) {
+                if (memberID == -1) {
                     startActivity(mbshipAct);
                 } else {
                     Intent main = new Intent(MainActivity.this, MainActivity.class);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         logoutButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                id = -1;
+                memberID = -1;
                 Intent main = new Intent(MainActivity.this, MainActivity.class);
                 main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(main);
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent infoAct = new Intent(MainActivity.this, InfoActivity.class);
-                infoAct.putExtra("id",id);
+                infoAct.putExtra("memberID",memberID);
                 //infoAct.putExtra("mode",2);
                 startActivity(infoAct);
             }
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        id = getIntent().getIntExtra("id",-1);
-        if(id != -1) {
+        memberID = getIntent().getIntExtra("memberID",-1);
+        if(memberID != -1) {
 //            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
 //            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
             ConstraintLayout cl = findViewById(R.id.mainScrollArea);
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             constraintSet.connect(infoButt.getId(),constraintSet.TOP,memberInfo.getId(),constraintSet.BOTTOM);
             constraintSet.applyTo(cl);
 
-            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
+            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // TODO: Handle error
-                            memberInfo.setText("fail to retrieve member's information \nMemberID = "+id);
+                            memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
                         }
                     });
             MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonArrayRequest);

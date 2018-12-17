@@ -29,8 +29,9 @@
         <activity android:name=".membership.TopupActivity" />
         <activity android:name=".booking.PaymentActivity" />
         <activity android:name=".booking.ConfirmationActivity" />
-        <activity android:name=".booking.SeatActivity"></activity>
-        <activity android:name=".membership.InfoActivity"></activity>
+        <activity android:name=".booking.SeatActivity" />
+        <activity android:name=".membership.InfoActivity" />
+        <activity android:name=".membership.EditActivity"></activity>
     </application>
 
 </manifest>
