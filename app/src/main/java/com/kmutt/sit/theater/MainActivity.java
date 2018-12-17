@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             constraintSet.connect(infoButt.getId(),constraintSet.TOP,memberInfo.getId(),constraintSet.BOTTOM);
             constraintSet.applyTo(cl);
 
-            String url = "http://theatre.sit.kmutt.ac.th/customer/group6/getInfo?id=" + id;
+            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override

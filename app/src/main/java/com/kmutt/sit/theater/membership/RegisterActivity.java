@@ -289,6 +289,7 @@ public class RegisterActivity extends AppCompatActivity {
                             redText.setText("Password didn't matches");
                         }
                     }
+
                                         /*} else {
                                             redText.setText("Username or Phone Number is already exist : ");
                                         }

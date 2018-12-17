@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="60dp"
             android:text="REGISTER"
             android:textColor="#E00202"
             android:textSize="30dp"

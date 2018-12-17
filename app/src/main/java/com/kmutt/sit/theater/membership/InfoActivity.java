@@ -76,8 +76,8 @@ public class InfoActivity extends AppCompatActivity {
                             birthdate.setText(JsonHandler.parseString(response, "Birthdate"));
                             address.setText(JsonHandler.parseString(response, "Address"));
                             province.setText(JsonHandler.parseString(response, "Province"));
-                            district.setText(JsonHandler.parseString(response, "Province"));
-                            subdistrict.setText(JsonHandler.parseString(response, "Province"));
+                            district.setText(JsonHandler.parseString(response, "District"));
+                            subdistrict.setText(JsonHandler.parseString(response, "SubDistrict"));
                             zipcode.setText(JsonHandler.parseString(response, "ZipCode"));
                         }
                     }, new Response.ErrorListener() {
