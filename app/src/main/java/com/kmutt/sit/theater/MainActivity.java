@@ -3,10 +3,8 @@ package com.kmutt.sit.theater;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintLayout.LayoutParams;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ButtonBarLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -20,27 +18,21 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.kmutt.sit.theater.booking.Movie;
+import com.kmutt.sit.theater.booking.movies.Movie;
 import com.kmutt.sit.theater.booking.PaymentActivity;
 import com.kmutt.sit.theater.membership.InfoActivity;
 import com.kmutt.sit.theater.booking.SeatActivity;
 import com.kmutt.sit.theater.membership.JsonHandler;
 import com.kmutt.sit.theater.membership.MembershipActivity;
 import com.kmutt.sit.theater.membership.MySingleton;
-import com.kmutt.sit.theater.membership.RegisterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.time.Month;
-import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {

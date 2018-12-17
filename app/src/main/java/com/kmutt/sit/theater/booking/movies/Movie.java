@@ -1,4 +1,4 @@
-package com.kmutt.sit.theater.booking;
+package com.kmutt.sit.theater.booking.movies;
 
 import java.util.ArrayList;
 import java.util.Collection;

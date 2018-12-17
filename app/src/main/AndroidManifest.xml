@@ -14,8 +14,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".MainActivityV2"
-            android:label="@string/title_activity_main_v2">
+            android:name=".MainActivityV2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

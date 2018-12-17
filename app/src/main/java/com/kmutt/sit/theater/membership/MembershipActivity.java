@@ -12,7 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.kmutt.sit.theater.MainActivity;
+import com.kmutt.sit.theater.MainActivityV2;
 import com.kmutt.sit.theater.R;
 
 import org.json.JSONArray;
@@ -59,7 +59,7 @@ public class MembershipActivity extends AppCompatActivity {
                             public void onResponse(JSONArray response) {
                                 String result = JsonHandler.parseString(response,"userID");
                                 if(result.length() != 0 & (memberID = Integer.parseInt(result)) != -1) {
-                                    Intent mainAct = new Intent(MembershipActivity.this, MainActivity.class);
+                                    Intent mainAct = new Intent(MembershipActivity.this, MainActivityV2.class);
                                     mainAct.putExtra("memberID",memberID);
                                     mainAct.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(mainAct);
