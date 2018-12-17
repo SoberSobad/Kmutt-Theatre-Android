@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">KMUTT Theater</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_main_v2">MainActivityV2</string>
+    <string name="title_movies">Movies</string>
+    <string name="title_promotions">Promotions</string>
+    <string name="title_membership">Membership</string>
 </resources>

@@ -10,18 +10,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".MainActivityV2"
+            android:label="@string/title_activity_main_v2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".membership.MembershipActivity"
             android:launchMode="singleTask" />
@@ -31,7 +31,7 @@
         <activity android:name=".booking.ConfirmationActivity" />
         <activity android:name=".booking.SeatActivity" />
         <activity android:name=".membership.InfoActivity" />
-        <activity android:name=".membership.EditActivity"></activity>
+        <activity android:name=".membership.EditActivity" />
     </application>
 
 </manifest>

@@ -15,9 +15,9 @@ public class SeatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat);
 
-        Movie movie = MainActivity.clickedMovie;
-        TextView title = findViewById(R.id.seatAct_movieName);
-        title.setText(movie.name);
+//        Movie movie = MainActivity.clickedMovie;
+//        TextView title = findViewById(R.id.seatAct_movieName);
+//        title.setText(movie.name);
 
     }
 }

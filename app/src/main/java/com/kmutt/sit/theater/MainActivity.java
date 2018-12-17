@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -29,6 +30,8 @@ import com.kmutt.sit.theater.membership.MySingleton;
 import com.kmutt.sit.theater.membership.RegisterActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.time.Month;
@@ -170,20 +173,50 @@ public class MainActivity extends AppCompatActivity {
             logoutButt.setVisibility(View.INVISIBLE);
             bottomArea.setVisibility(View.VISIBLE);
         }
-        List<Movie> tmp = Arrays.asList(
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
-                new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
-                new Movie("Harry Potter and test", "16_12_2018", Arrays.asList("13:00","16:00","","")),
-                new Movie("Harry Potter and test2", "15_12_2018", Arrays.asList("13:00","16:00","",""))
-        ); //TODO: REMOVE
-        populateMovieList(tmp, "15_12_2018"); //TODO: REMOVE
+
+        String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/getShowtime";
+        JsonArrayRequest movieRequest = new JsonArrayRequest (Request.Method.GET, movieUrl, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+            // success
+//            List<Movie> tmp = Arrays.asList(
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
+//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
+//                    new Movie("Harry Potter and test", "16_12_2018", Arrays.asList("13:00","16:00","","")),
+//                    new Movie("Harry Potter and test2", "15_12_2018", Arrays.asList("13:00","16:00","",""))
+//            ); //TODO: REMOVE
+            List<Movie> tmp = new ArrayList<>();
+            for (int i = 0; i < response.length(); i++) {
+                try {
+                    JSONObject mov = response.getJSONObject(i);
+//                    Toast.makeText(MainActivity.this, mov.toString(), Toast.LENGTH_LONG).show();
+                    tmp.add(new Movie(mov.getString("title"), "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
+                    Toast.makeText(MainActivity.this, "added!", Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+//            tmp.add(new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
+            populateMovieList(tmp, "15_12_2018"); //TODO: REMOVE
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+//                memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
+                Toast.makeText(MainActivity.this, "Error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        MySingleton.getInstance(MainActivity.this).addToRequestQueue(movieRequest);
+
     }
 
     @Override
@@ -212,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView currentDayTitle = findViewById(R.id.dayTitle);
         TextView currentDay = findViewById(R.id.currentDay);
-        TextView lowestElement = currentDay;
+        View lowestElement = currentDay;
 
         currentDayTitle.setVisibility(View.INVISIBLE);
         currentDay.setText("Loading movies...");
@@ -222,47 +255,64 @@ public class MainActivity extends AppCompatActivity {
         for (Movie H : list) {
 
             if (!(H.date.split("_")[0].equals(dd_mm_yyyy.split("_")[0]))) {Log.d("TESTI", "SKIPPERINO KRIPPERINO"); continue;}
-            final Button myButton = new Button(this);
-            myButton.setId(View.generateViewId());
+//            final Button myButton = new Button(this);
 
+            // ROW
+            final View row = getLayoutInflater().inflate(R.layout.item_movie_showtime, null);
+            row.setId(View.generateViewId());
 
-            String textForButton = "";
-            textForButton += H.name + "\n";
+            // TEXT VIEWS
+            TextView tvMovieTitle =  row.findViewById(R.id.tvMovieTitle);
+            TextView tvShowtimes =  row.findViewById(R.id.tvShowtimes);
+
+            // BIND MOVIE TITLE
+            tvMovieTitle.setText(H.name);
+
+            // BIND SHOWTIMES
+            String showtimesText = "";
+//            showtimesText += H.name + "\n";
             for (String showTime : H.showTimes) {
-                textForButton += " " + showTime + ",";
+                showtimesText += " " + showTime + ",";
             }
-            textForButton = textForButton.substring(0, textForButton.length() - 1); //remove the extra comma at the end
-            myButton.setText(textForButton);
-            myButton.setTextSize(24);
-            myButton.setTag(H);
-            myButton.setOnClickListener(new View.OnClickListener() {
+            showtimesText = showtimesText.substring(0, showtimesText.length() - 1); //remove the extra comma at the end
+            tvShowtimes.setText(showtimesText);
+
+
+//            myButton.setText(showtimesText);
+//            myButton.setTextSize(24);
+//            myButton.setTag(H);
+
+            row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Movie movie = (Movie)myButton.getTag();
+                    Movie movie = (Movie)row.getTag();
                     Intent seatAct = new Intent(MainActivity.this, SeatActivity.class);
+                    seatAct.putExtra("movie_date", movie.date);
+                    seatAct.putExtra("movie_name", movie.name);
+                    seatAct.putExtra("movie_showtimes", movie.showTimes.toArray());
                     clickedMovie = movie;
                     startActivity(seatAct);
                 }
             });
 
-            cl.addView(myButton);
+            cl.addView(row);
 
 
             ConstraintSet constraintSet;
             constraintSet = new ConstraintSet();
             constraintSet.clone(cl);
-            constraintSet.constrainWidth(myButton.getId(),ConstraintSet.MATCH_CONSTRAINT);
-            constraintSet.constrainHeight(myButton.getId(),ConstraintSet.WRAP_CONTENT);
-            constraintSet.connect(myButton.getId(),ConstraintSet.TOP,lowestElement.getId(),ConstraintSet.BOTTOM,0);
-            constraintSet.connect(myButton.getId(),ConstraintSet.LEFT,ConstraintSet.PARENT_ID,ConstraintSet.LEFT,0);
-            constraintSet.connect(myButton.getId(),ConstraintSet.RIGHT,ConstraintSet.PARENT_ID,ConstraintSet.RIGHT,0);
+            constraintSet.constrainWidth(row.getId(),ConstraintSet.MATCH_CONSTRAINT);
+            constraintSet.constrainHeight(row.getId(),ConstraintSet.WRAP_CONTENT);
+            constraintSet.connect(row.getId(),ConstraintSet.TOP,lowestElement.getId(),ConstraintSet.BOTTOM,0);
+            constraintSet.connect(row.getId(),ConstraintSet.LEFT,ConstraintSet.PARENT_ID,ConstraintSet.LEFT,0);
+            constraintSet.connect(row.getId(),ConstraintSet.RIGHT,ConstraintSet.PARENT_ID,ConstraintSet.RIGHT,0);
 
-            constraintSet.constrainDefaultHeight(myButton.getId(), 200);
+            constraintSet.constrainDefaultHeight(row.getId(), 200);
             constraintSet.applyTo(cl);
 
-            lowestElement = myButton;
-            myButton.setVisibility(View.VISIBLE);
-            Log.d("TESTI", Float.toString(myButton.getY()));
+            lowestElement = row;
+            row.setVisibility(View.VISIBLE);
+            Log.d("TESTI", Float.toString(row.getY()));
         }
 
         currentDayTitle.setVisibility(View.VISIBLE);
