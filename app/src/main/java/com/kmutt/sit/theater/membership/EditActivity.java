@@ -39,7 +39,6 @@ public class EditActivity extends AppCompatActivity {
 
     EditText[] editTexts;
     Spinner[] spinners;
-    String data[];
     String[] months;
 
     //************************* Initializing ************************************************
@@ -114,7 +113,6 @@ public class EditActivity extends AppCompatActivity {
         //********************************************* Assisgn to arrays *************************
         editTexts = new EditText[]{confirmpassInp,firstnameInp,lastnameInp,yearInp,dateInp,phonenumberInp,addressInp,postcodeInp};
         spinners = new Spinner[]{genderDrop, monthDrop, provinceDrop,districtDrop,subdistrictDrop};
-        data = new String [editTexts.length + spinners.length];
 
         //********************************************* Selected Listener for Places spinners ***********
         provinceDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -150,28 +148,35 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //********************** Check if anything have been change **********************
-                /*boolean changed = true;
-                for(int i=1; i<editTexts.length; i++){
-                    if(!(data[i].matches(editTexts[i].getText().toString()))) {
-                        changed = false;
-                        break;
-                    }
-                }
-                for(int i=editTexts.length; i<editTexts.length+spinners.length; i++){
-                    if(!(data[i].matches(spinners[i-editTexts.length].getSelectedItem().toString()))) {
-                        changed = false;
-                        break;
-                    }
-                }
-                if(changed) {
-                */
-                    String url = "http://theatre.sit.kmutt.ac.th/customer/androidUpdate?userID=" + memberID + "&pass=" + JsonHandler.md5(confirmpassInp.getText().toString()) +
-                            "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + (genderDrop.getSelectedItem().toString().matches("Male") ? "M" : "F") +
-                            "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
-                            "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
-                            "&district=" + districtDrop.getSelectedItem().toString() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText() +
-                            "&subdist=" + subdistrictDrop.getSelectedItem().toString();
+                //********************************************** Check for space *********************************************
+                if (firstnameInp.getText().toString().matches("") | lastnameInp.getText().toString().matches("") |
+                        phonenumberInp.getText().toString().matches("") | dateInp.getText().toString().matches("") |
+                        yearInp.getText().toString().matches("") | postcodeInp.getText().toString().matches("")) {
+                    redText.setText("Please fill every space provided");
+                }else {
+
+                    //******************************** Birthdate format*************************
+                    int day = Integer.parseInt(dateInp.getText().toString());
+                    int month = monthDrop.getSelectedItemPosition()+1;
+                    int year = Integer.parseInt(yearInp.getText().toString());
+                    boolean leapyear;
+                    if(year%4==0) { if(year%100==0) { if(year%400==0) { leapyear = true; } else { leapyear = false; } } else { leapyear = true; } } else { leapyear = false; }
+                    if (year < 1) yearInp.setText("0001");
+                    if (day < 1) dateInp.setText("01");
+                    //if (day>28 & month == 2 & (year %4 == 0 | (year %100 == 0 & year %400 != 0) ) ) dateInp.setText("28");
+                    //if (day>29 & month == 2) dateInp.setText("29");
+                    if (day>28 & month == 2 & !leapyear) dateInp.setText("28");
+                    if (day>29 & month == 2 & leapyear) dateInp.setText("29");
+                    if (day>30 & (month == 4 | month == 6 | month == 9 | month == 11)) dateInp.setText("30");
+                    if (day>31 & (month == 1 | month == 3 | month == 5 | month == 7 | month == 8 | month == 10 | month == 12)) dateInp.setText("31");
+
+
+                        String url = "http://theatre.sit.kmutt.ac.th/customer/androidUpdate?userID=" + memberID + "&pass=" + JsonHandler.md5(confirmpassInp.getText().toString()) +
+                                "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + (genderDrop.getSelectedItem().toString().matches("Male") ? "M" : "F") +
+                                "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
+                                "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
+                                "&district=" + districtDrop.getSelectedItem().toString() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText() +
+                                "&subdist=" + subdistrictDrop.getSelectedItem().toString();
 
                     JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                             (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -213,9 +218,7 @@ public class EditActivity extends AppCompatActivity {
                     //******** No retry*************
                     jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy((int) TimeUnit.SECONDS.toMillis(30), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     MySingleton.getInstance(EditActivity.this).addToRequestQueue(jsonArrayRequest);
-                /*}else{
-                    redText.setText("Nothing have been changed");
-                }*/
+                }
             }
         });
     }
@@ -231,21 +234,20 @@ public class EditActivity extends AppCompatActivity {
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
-                            firstnameInp.setText(data[1] = JsonHandler.parseString(response, "Fname"));
-                            lastnameInp.setText(data[2] = JsonHandler.parseString(response, "Lname"));
-                            String gender = (data[8] = JsonHandler.parseString(response,"Gender"));
+                            firstnameInp.setText(JsonHandler.parseString(response, "Fname"));
+                            lastnameInp.setText(JsonHandler.parseString(response, "Lname"));
+                            String gender = (JsonHandler.parseString(response,"Gender"));
                             genderDrop.setSelection(gender.compareToIgnoreCase("M") == 0 ? 0 : 1 );
-                            phonenumberInp.setText(data[5] = JsonHandler.parseString(response, "PhoneNumber"));
+                            phonenumberInp.setText(JsonHandler.parseString(response, "PhoneNumber"));
                             String birthDate = JsonHandler.parseString(response,"Birthdate");
-                            yearInp.setText(data[3] = birthDate.substring(0,5) );
-                            dateInp.setText(data[4] = birthDate.substring(8,10) );
-                            data[9] = months[Integer.parseInt(birthDate.substring(5,7))-1];
-                            monthDrop.setSelection(Integer.parseInt(birthDate.substring(5,7))-1);
-                            addressInp.setText(data[6] = JsonHandler.parseString(response, "Address"));
-                            postcodeInp.setText(data[7] = JsonHandler.parseString(response, "ZipCode"));
-                            String province = (data[10] = JsonHandler.parseString(response,"Province"));
-                            String district = (data[11] = JsonHandler.parseString(response,"District"));
-                            String subdistrict = (data[12] = JsonHandler.parseString(response, "SubDistrict"));
+                            yearInp.setText(birthDate.substring(0,5) );
+                            dateInp.setText(birthDate.substring(8,10) );
+                            monthDrop.setSelection(Integer.parseInt(birthDate.substring(5,7))-1 > 0 ? Integer.parseInt(birthDate.substring(5,7))-1 : 0);
+                            addressInp.setText(JsonHandler.parseString(response, "Address"));
+                            postcodeInp.setText(JsonHandler.parseString(response, "ZipCode"));
+                            String province = (JsonHandler.parseString(response,"Province"));
+                            String district = (JsonHandler.parseString(response,"District"));
+                            String subdistrict = (JsonHandler.parseString(response, "SubDistrict"));
                             for(int i=0; i<provinces.length; i++){
                                 if (province.equals(provinces[i])){
                                     provinceDrop.setSelection(i);
