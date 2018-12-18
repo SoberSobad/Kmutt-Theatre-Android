@@ -79,7 +79,6 @@
         android:id="@+id/redText"
         android:layout_width="200dp"
         android:layout_height="180dp"
-        android:inputType="textMultiLine"
         android:textColor="#FF0000"
         app:layout_constraintEnd_toEndOf="@+id/loginButt"
         app:layout_constraintTop_toTopOf="@+id/regisButt" />
