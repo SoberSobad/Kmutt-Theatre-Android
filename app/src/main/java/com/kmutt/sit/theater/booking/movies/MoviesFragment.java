@@ -118,7 +118,7 @@ public class MoviesFragment extends Fragment {
                     try {
                         JSONObject mov = response.getJSONObject(i);
 //                        Toast.makeText(getActivity(), mov.toString(), Toast.LENGTH_LONG).show();
-                        tmp.add(new Movie(mov.getString("title"), "15_12_2018", mov.getString("Image"), Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
+                        tmp.add(new Movie(mov.getString("title"), "15_12_2018", "http://theatre.sit.kmutt.ac.th" + mov.getString("Image"), Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
 //                        Toast.makeText(getActivity(), "added!", Toast.LENGTH_SHORT).show();
 
                     } catch (JSONException e) {
@@ -137,9 +137,9 @@ public class MoviesFragment extends Fragment {
                             startActivity(i);
                         }
                     });
-                    moviesListView.setAdapter(mAdapter);
                 }
                 mAdapter.updateMoviesList(tmp);
+                moviesListView.setAdapter(mAdapter);
 
                 // stop refreshing
                 swipeRefreshLayout.setRefreshing(false);

@@ -76,7 +76,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public Movie movie;
-        TextView tvMovieTitle, tvMovieLang, tvShowtimes;
+        TextView tvMovieTitle, tvMovieLang, tvMovieLength;
         ImageView poster;
 
         public ViewHolder(@NonNull View itemView) {
@@ -84,7 +84,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
 
             tvMovieTitle = itemView.findViewById(R.id.tvMovieTitle);
             tvMovieLang = itemView.findViewById(R.id.tvMovieLang);
-            tvShowtimes = itemView.findViewById(R.id.tvShowtimes);
+            tvMovieLength = itemView.findViewById(R.id.tvMovieLength);
 
             poster = itemView.findViewById(R.id.poster);
         }
@@ -92,16 +92,20 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
         public void bindData(Movie m) {
             this.movie = m;
 
+            m.imageUrl = m.imageUrl.replace('\\', '\0');    // remove all the \ symbol
+
             tvMovieTitle.setText(m.name);
             GlideApp.with(mContext)
                     .load(m.imageUrl)
                     .into(poster);
 
+            tvMovieLength.setText(m.imageUrl);
+
 //            String showTimeText = "";
 //            for (String s : m.showTimes) {
 //                showTimeText += (s + " ");
 //            }
-//            tvShowtimes.setText(showTimeText);
+//            tvMovieLength.setText(showTimeText);
         }
     }
 

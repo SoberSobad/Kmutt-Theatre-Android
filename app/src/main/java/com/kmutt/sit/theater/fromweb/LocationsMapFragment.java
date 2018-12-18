@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -52,7 +53,8 @@ public class LocationsMapFragment extends Fragment {
 
         // WebView
         this.mapWebView = rootView.findViewById(R.id.mapWebView);
-        mapWebView.loadUrl("http://theatre.sit.kmutt.ac.th/customer/group14/map");
+//        mapWebView.loadUrl("http://theatre.sit.kmutt.ac.th/customer/group14/map");
+        mapWebView.loadUrl("http://theatre.sit.kmutt.ac.th/customer/group14/map/mobile");
         mapWebView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -67,8 +69,19 @@ public class LocationsMapFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
 
-
         });
+
+        // WebView settings
+        WebSettings webSettings = mapWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setBuiltInZoomControls(true);
+//        webSettings.setDisplayZoomControls(false);
+//        webSettings.setSupportZoom(true);
+        webSettings.setDefaultTextEncodingName("utf-8");
+
 //        mapWebView.reload();
 
         // set up "Swipe to Refresh"
