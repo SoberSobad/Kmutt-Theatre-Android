@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#80000000"
-            app:layout_constraintDimensionRatio="h,3:4"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="h,4:6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
 
                 <TextView
                     android:id="@+id/tvMovieLang"
@@ -54,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:text="EN"
                     android:textSize="13dp"
-                    android:layout_marginTop="4dp"
+                    android:textColor="#4dffffff"
                     android:textStyle="bold" />
 
                 <TextView
@@ -62,9 +64,9 @@
                     android:layout_height="wrap_content"
                     android:text="|"
                     android:textSize="13dp"
+                    android:textColor="#4dffffff"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:layout_marginTop="4dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -73,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:text="1hr 30 min"
                     android:textSize="13dp"
-                    android:layout_marginTop="4dp"
+                    android:textColor="#4dffffff"
                     android:textStyle="bold" />
             </LinearLayout>
 
