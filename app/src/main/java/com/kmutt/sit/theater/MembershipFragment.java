@@ -22,6 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.kmutt.sit.theater.booking.movies.Movie;
+import com.kmutt.sit.theater.membership.ChangePasswordActivity;
+import com.kmutt.sit.theater.membership.EditActivity;
 import com.kmutt.sit.theater.membership.InfoActivity;
 import com.kmutt.sit.theater.membership.JsonHandler;
 import com.kmutt.sit.theater.membership.MembershipActivity;
@@ -99,6 +101,22 @@ public class MembershipFragment extends Fragment {
             public void onClick(View v) {
                 Intent infoAct = new Intent(getActivity(), InfoActivity.class);
                 startActivity(infoAct);
+            }
+        });
+
+        editButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editIntent = new Intent(getActivity(), EditActivity.class);
+                startActivity(editIntent);
+            }
+        });
+
+        passwordChangeButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent passwordChangeIntent = new Intent(getActivity(), ChangePasswordActivity.class);
+                startActivity(passwordChangeIntent);
             }
         });
 
