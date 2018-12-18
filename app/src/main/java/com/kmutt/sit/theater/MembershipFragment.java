@@ -3,6 +3,7 @@ package com.kmutt.sit.theater;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -47,9 +50,12 @@ public class MembershipFragment extends Fragment {
     View rootView;
     Button loginButt;
     Button infoButt;
-    Button logoutButt;
+    Button editButt;
+    Button passwordChangeButt;
+    TextView tvPoint;
+    TextView pointShow;
     EditText memberInfo;
-    //ConstraintLayout bottomArea;
+    ImageView avatar;
 
     public MembershipFragment() {
 //        memberID = getArguments().getInt("memberID",-1);
@@ -66,8 +72,11 @@ public class MembershipFragment extends Fragment {
         memberInfo = rootView.findViewById(R.id.memberInfo);
         loginButt = rootView.findViewById(R.id.loginButt);
         infoButt = rootView.findViewById(R.id.infoButt);
-        logoutButt = rootView.findViewById(R.id.logoutButt);
-        //bottomArea = rootView.findViewById(R.id.bottomArea);
+        editButt = rootView.findViewById(R.id.editButt);
+        passwordChangeButt = rootView.findViewById(R.id.passwordChangeButt);
+        avatar = rootView.findViewById(R.id.avatar);
+        tvPoint = rootView.findViewById(R.id.tvPoint);
+        pointShow = rootView.findViewById(R.id.pointShow);
 
         final Intent mbshipAct = new Intent(getActivity(), MembershipActivity.class);
 
@@ -77,25 +86,11 @@ public class MembershipFragment extends Fragment {
                 if (memberID == -1) {
                     startActivity(mbshipAct);
                 } else {
-                    /*Intent main = new Intent(getActivity(), MainActivity.class);
-                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(main);
-                    getActivity().finish();*/
+                    memberID = -1;
+                    editor.putInt("memberID", memberID);
+                    editor.commit();
+                    onResume();
                 }
-            }
-        });
-
-        logoutButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                memberID = -1;
-                /*Intent main = new Intent(getActivity(), MainActivity.class);
-                main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(main);
-                getActivity().finish();*/
-                editor.putInt("memberID", memberID);
-                editor.commit();
-                onResume();
             }
         });
 
@@ -103,8 +98,6 @@ public class MembershipFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent infoAct = new Intent(getActivity(), InfoActivity.class);
-                //infoAct.putExtra("memberID",memberID);
-                //infoAct.putExtra("mode",2);
                 startActivity(infoAct);
             }
         });
@@ -115,26 +108,13 @@ public class MembershipFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        /*
-        if (getArguments() != null) {
-            memberID = getArguments().getInt("memberID", -1);
-        }
-        */
+
         memberID = sp.getInt("memberID",-1);
         if(memberID != -1) {
-//            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
-//            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-            /*ConstraintLayout cl = rootView.findViewById(R.id.mainScrollArea);
-            ConstraintSet constraintSet;
-            constraintSet = new ConstraintSet();
-            constraintSet.clone(cl);
-            constraintSet.connect(infoButt.getId(),constraintSet.TOP,memberInfo.getId(),constraintSet.BOTTOM);
-            constraintSet.applyTo(cl);
-            */
 
-            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            String url1 = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
+            JsonArrayRequest jsonArrayRequest1 = new JsonArrayRequest
+                    (Request.Method.GET, url1, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
                             memberInfo.setText("Hi, " + JsonHandler.parseString(response, "Fname") + " " +
@@ -148,24 +128,43 @@ public class MembershipFragment extends Fragment {
                             memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
                         }
                     });
-            MySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest);
+            MySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest1);
+
+            String url2 = "http://theatre.sit.kmutt.ac.th/customer/androidGetPoint?memberID=" + memberID;
+            JsonArrayRequest jsonArrayRequest2 = new JsonArrayRequest
+                    (Request.Method.GET, url2, null, new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            if (response.toString().length() > 2) {
+                                pointShow.setText(JsonHandler.parseString(response, "totalpoint"));
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO: Handle error
+                            memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
+                        }
+                    });
+            MySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest2);
+
+            avatar.setImageResource(R.drawable.logined);
+            loginButt.setText("Log out");
             infoButt.setVisibility(View.VISIBLE);
-            logoutButt.setVisibility(View.VISIBLE);
-            //bottomArea.setVisibility(View.INVISIBLE);
+            editButt.setVisibility(View.VISIBLE);
+            passwordChangeButt.setVisibility(View.VISIBLE);
+            tvPoint.setVisibility(View.VISIBLE);
+            pointShow.setVisibility(View.VISIBLE);
 
         }else{
-            /*ConstraintLayout cl = rootView.findViewById(R.id.mainScrollArea);
-            ConstraintSet constraintSet;
-            constraintSet = new ConstraintSet();
-            constraintSet.clone(cl);
-            constraintSet.connect(infoButt.getId(),constraintSet.TOP,constraintSet.PARENT_ID,constraintSet.TOP);
-            constraintSet.applyTo(cl);*/
-
+            avatar.setImageResource(R.drawable.anonymous);
             memberInfo.setText("Anonymous");
             loginButt.setText("Log in");
             infoButt.setVisibility(View.INVISIBLE);
-            logoutButt.setVisibility(View.INVISIBLE);
-            //bottomArea.setVisibility(View.VISIBLE);
+            editButt.setVisibility(View.INVISIBLE);
+            passwordChangeButt.setVisibility(View.INVISIBLE);
+            tvPoint.setVisibility(View.INVISIBLE);
+            pointShow.setVisibility(View.INVISIBLE);
         }
     }
 }
