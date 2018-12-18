@@ -1,6 +1,8 @@
 package com.kmutt.sit.theater;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -38,6 +40,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     static int memberID = -1;
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
+    final String P_NAME = "App_Config";
     Button loginButt;
     Button infoButt;
     Button logoutButt;
@@ -52,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        memberID = getIntent().getIntExtra("memberID",-1);
+        //memberID = getIntent().getIntExtra("memberID",-1);
+        sp = getSharedPreferences(P_NAME, Context.MODE_PRIVATE);
+        editor = sp.edit();
+        memberID = sp.getInt("memberID",-1);
 
         memberInfo = findViewById(R.id.memberInfo);
         loginButt = findViewById(R.id.loginButt);
@@ -69,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
                 if (memberID == -1) {
                     startActivity(mbshipAct);
                 } else {
-                    Intent main = new Intent(MainActivity.this, MainActivity.class);
+                    /*Intent main = new Intent(MainActivity.this, MainActivity.class);
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(main);
-                    finish();
+                    finish();*/
                 }
             }
         });
@@ -81,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 memberID = -1;
-                Intent main = new Intent(MainActivity.this, MainActivity.class);
+                /*Intent main = new Intent(MainActivity.this, MainActivity.class);
                 main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(main);
-                finish();
+                finish();*/
             }
         });
 
@@ -119,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        memberID = getIntent().getIntExtra("memberID",-1);
+        memberID = sp.getInt("memberID",-1);
         if(memberID != -1) {
 //            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
 //            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest

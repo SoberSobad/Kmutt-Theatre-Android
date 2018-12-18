@@ -1,6 +1,8 @@
 package com.kmutt.sit.theater;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -36,7 +38,9 @@ import java.util.List;
 public class MembershipFragment extends Fragment {
 
     static int memberID = -1;
-
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
+    final String P_NAME = "App_Config";
     //
     // Views
     //
@@ -56,6 +60,9 @@ public class MembershipFragment extends Fragment {
             Bundle savedInstanceState) {
         this.rootView = inflater.inflate(R.layout.fragment_membership, container, false);
 
+        sp = this.getActivity().getSharedPreferences(P_NAME, Context.MODE_PRIVATE);
+        editor = sp.edit();
+
         memberInfo = rootView.findViewById(R.id.memberInfo);
         loginButt = rootView.findViewById(R.id.loginButt);
         infoButt = rootView.findViewById(R.id.infoButt);
@@ -70,10 +77,10 @@ public class MembershipFragment extends Fragment {
                 if (memberID == -1) {
                     startActivity(mbshipAct);
                 } else {
-                    Intent main = new Intent(getActivity(), MainActivity.class);
+                    /*Intent main = new Intent(getActivity(), MainActivity.class);
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(main);
-                    getActivity().finish();
+                    getActivity().finish();*/
                 }
             }
         });
@@ -82,10 +89,13 @@ public class MembershipFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 memberID = -1;
-                Intent main = new Intent(getActivity(), MainActivity.class);
+                /*Intent main = new Intent(getActivity(), MainActivity.class);
                 main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(main);
-                getActivity().finish();
+                getActivity().finish();*/
+                editor.putInt("memberID", memberID);
+                editor.commit();
+                onResume();
             }
         });
 
@@ -93,7 +103,7 @@ public class MembershipFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent infoAct = new Intent(getActivity(), InfoActivity.class);
-                infoAct.putExtra("memberID",memberID);
+                //infoAct.putExtra("memberID",memberID);
                 //infoAct.putExtra("mode",2);
                 startActivity(infoAct);
             }
@@ -105,11 +115,12 @@ public class MembershipFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        /*
         if (getArguments() != null) {
             memberID = getArguments().getInt("memberID", -1);
         }
-
+        */
+        memberID = sp.getInt("memberID",-1);
         if(memberID != -1) {
 //            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
 //            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest

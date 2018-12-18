@@ -1,8 +1,10 @@
 package com.kmutt.sit.theater.membership;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +34,8 @@ public class EditActivity extends AppCompatActivity {
     final String[] provinces = new String[JsonHandler.places.length];
     final List<String> districts = new ArrayList<>();
     final List<String> subdistricts = new ArrayList<>();
+    ArrayAdapter<String> districtAdapt;
+    ArrayAdapter<String> subdistrictAdapt;
 
     EditText[] editTexts;
     Spinner[] spinners;
@@ -55,13 +59,19 @@ public class EditActivity extends AppCompatActivity {
     Button submitButt;
 
     static int memberID;
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
+    final String P_NAME = "App_Config";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        memberID = getIntent().getIntExtra("memberID",-1);
+        //memberID = getIntent().getIntExtra("memberID",-1);
+        sp = getSharedPreferences(P_NAME, Context.MODE_PRIVATE);
+        editor = sp.edit();
+        memberID = sp.getInt("memberID",-1);
 
         for(int i=0; i<JsonHandler.places.length; i++){
             provinces[i] = JsonHandler.places[i][0][0];
@@ -87,10 +97,10 @@ public class EditActivity extends AppCompatActivity {
         final ArrayAdapter<String> provinceAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinces);
         provinceDrop.setAdapter(provinceAdapt);
 
-        final ArrayAdapter<String> districtAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, districts);
+        districtAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, districts);
         districtDrop.setAdapter(districtAdapt);
 
-        final ArrayAdapter<String> subdistrictAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subdistricts);
+        subdistrictAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, subdistricts);
         subdistrictDrop.setAdapter(subdistrictAdapt);
 
         final String[] genders = new String[]{"Male", "Female"};
@@ -157,7 +167,7 @@ public class EditActivity extends AppCompatActivity {
                 if(changed) {
                 */
                     String url = "http://theatre.sit.kmutt.ac.th/customer/androidUpdate?userID=" + memberID + "&pass=" + JsonHandler.md5(confirmpassInp.getText().toString()) +
-                            "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + genderDrop.getSelectedItem().toString() +
+                            "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + (genderDrop.getSelectedItem().toString().matches("Male") ? "M" : "F") +
                             "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
                             "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
                             "&district=" + districtDrop.getSelectedItem().toString() + "&province=" + provinceDrop.getSelectedItem().toString() + "&postcode=" + postcodeInp.getText() +
@@ -201,7 +211,7 @@ public class EditActivity extends AppCompatActivity {
                             }) {
                     };
                     //******** No retry*************
-                    jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy((int) TimeUnit.SECONDS.toMillis(20), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy((int) TimeUnit.SECONDS.toMillis(30), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     MySingleton.getInstance(EditActivity.this).addToRequestQueue(jsonArrayRequest);
                 /*}else{
                     redText.setText("Nothing have been changed");
@@ -213,7 +223,8 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        memberID = getIntent().getIntExtra("memberID",-1);
+        //memberID = getIntent().getIntExtra("memberID",-1);
+        memberID = sp.getInt("memberID",-1);
         if(memberID != -1) {
             String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -238,9 +249,27 @@ public class EditActivity extends AppCompatActivity {
                             for(int i=0; i<provinces.length; i++){
                                 if (province.equals(provinces[i])){
                                     provinceDrop.setSelection(i);
+                                    districts.clear();
+                                    for(int j=1; j<JsonHandler.places[i].length; j++){
+                                        districts.add(JsonHandler.places[i][j][0]);
+                                        if(district.matches(JsonHandler.places[i][j][0])){
+                                            districtAdapt.notifyDataSetChanged();
+                                            districtDrop.setSelection(j-1);
+                                            subdistricts.clear();
+                                            for(int k=1; k<JsonHandler.places[i][j].length; k++){
+                                                subdistricts.add(JsonHandler.places[i][j][k]);
+                                                if(subdistrict.matches(JsonHandler.places[i][j][k])){
+                                                    subdistrictAdapt.notifyDataSetChanged();
+                                                    subdistrictDrop.setSelection(k-1);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    districtAdapt.notifyDataSetChanged();
                                     break;
                                 }
                             }
+
 
                             //********************** Collect All data to see if anything have been change **********************
                             /*for(int i=0; i<editTexts.length; i++){
