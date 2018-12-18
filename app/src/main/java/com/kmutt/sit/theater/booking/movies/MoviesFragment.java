@@ -32,8 +32,6 @@ import java.util.List;
  */
 public class MoviesFragment extends Fragment {
 
-    static int memberID = -1;
-
     //
     // Views
     //
@@ -84,7 +82,7 @@ public class MoviesFragment extends Fragment {
     // Fetch movies
     //
     public void refreshMovies() {
-        // stop refreshing
+        // start refreshing
         swipeRefreshLayout.setRefreshing(true);
 
         // make a connection request to server

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.kmutt.sit.theater.booking.movies.MoviesFragment;
+import com.kmutt.sit.theater.fromweb.LocationsMapFragment;
 
 public class MainActivityV2 extends AppCompatActivity {
 
@@ -21,6 +22,7 @@ public class MainActivityV2 extends AppCompatActivity {
     // FRAGMENTS
     //
     private Fragment membershipFragment;
+    private Fragment locationsMapFragment;
     private Fragment moviesFragment;
 
     //
@@ -36,7 +38,7 @@ public class MainActivityV2 extends AppCompatActivity {
 //                    mTextMessage.setText(R.string.title_movies);
                     loadTab(0);
                     return true;
-                case R.id.navigation_promotions:
+                case R.id.navigation_locations:
 //                    mTextMessage.setText(R.string.title_promotions);
                     loadTab(1);
                     return true;
@@ -72,11 +74,11 @@ public class MainActivityV2 extends AppCompatActivity {
                     moviesFragment = new MoviesFragment();
                 fragment = moviesFragment;
                 break;
-//            case 1:
-//                if (transactionLogsFragment == null)
-//                    transactionLogsFragment = new TransactionLogsFragment();
-//                fragment = transactionLogsFragment;
-//                break;
+            case 1:
+                if (locationsMapFragment == null)
+                    locationsMapFragment = new LocationsMapFragment();
+                fragment = locationsMapFragment;
+                break;
             case 2:
                 if (membershipFragment == null)
                     membershipFragment = new MembershipFragment();
