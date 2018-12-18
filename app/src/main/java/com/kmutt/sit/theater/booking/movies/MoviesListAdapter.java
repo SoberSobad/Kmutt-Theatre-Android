@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kmutt.sit.theater.R;
+import com.kmutt.sit.theater.shared.libs.GlideApp;
 
 import java.util.List;
 
@@ -88,6 +90,9 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
             this.movie = m;
 
             tvMovieTitle.setText(m.name);
+            GlideApp.with(mContext)
+                    .load(m.imageUrl)
+                    .into(poster);
 
 //            String showTimeText = "";
 //            for (String s : m.showTimes) {

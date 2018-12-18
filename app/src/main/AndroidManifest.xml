@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".MainActivityV2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,17 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".membership.MembershipActivity"
+
+        <activity android:name=".membership.MembershipActivity"
             android:launchMode="singleTask" />
         <activity android:name=".membership.RegisterActivity" />
         <activity android:name=".membership.TopupActivity" />
+        <activity android:name=".membership.InfoActivity" />
+        <activity android:name=".membership.EditActivity" />
+        <activity android:name=".membership.ChangePasswordActivity" />
+
         <activity android:name=".booking.PaymentActivity" />
         <activity android:name=".booking.ConfirmationActivity" />
         <activity android:name=".booking.SeatActivity" />
-        <activity android:name=".membership.InfoActivity" />
-        <activity android:name=".membership.EditActivity" />
-        <activity android:name=".membership.ChangePasswordActivity"></activity>
     </application>
 
 </manifest>

@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject mov = response.getJSONObject(i);
 //                    Toast.makeText(MainActivity.this, mov.toString(), Toast.LENGTH_LONG).show();
-                    tmp.add(new Movie(mov.getString("title"), "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
+                    tmp.add(new Movie(mov.getString("title"), "15_12_2018", mov.getString("Image"), Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
                     Toast.makeText(MainActivity.this, "added!", Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
