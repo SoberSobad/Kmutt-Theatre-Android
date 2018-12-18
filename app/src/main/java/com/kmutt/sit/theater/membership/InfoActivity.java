@@ -31,6 +31,7 @@ public class InfoActivity extends AppCompatActivity {
     final String P_NAME = "App_Config";
 
     Button editButton;
+    Button changePassButt;
     TextView redText;
 
     @Override
@@ -50,6 +51,7 @@ public class InfoActivity extends AppCompatActivity {
         zipcode = findViewById(R.id.zipcode);
 
         editButton = findViewById(R.id.editButt);
+        changePassButt = findViewById(R.id.changePassButt);
         redText = findViewById(R.id.infoRedText);
 
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +61,14 @@ public class InfoActivity extends AppCompatActivity {
                 //editIntent.putExtra("memberID",memberID);
                 //editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(editIntent);
+            }
+        });
+
+        changePassButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent changePassIntent = new Intent(InfoActivity.this, ChangePasswordActivity.class);
+                startActivity(changePassIntent);
             }
         });
     }

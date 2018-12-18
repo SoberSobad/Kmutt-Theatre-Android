@@ -211,7 +211,7 @@ public class EditActivity extends AppCompatActivity {
                             }) {
                     };
                     //******** No retry*************
-                    jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy((int) TimeUnit.SECONDS.toMillis(20), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy((int) TimeUnit.SECONDS.toMillis(30), 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                     MySingleton.getInstance(EditActivity.this).addToRequestQueue(jsonArrayRequest);
                 /*}else{
                     redText.setText("Nothing have been changed");

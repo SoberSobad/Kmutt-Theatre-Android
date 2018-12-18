@@ -26,6 +26,8 @@ public class MembershipActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     final String P_NAME = "App_Config";
 
+    Button forgetButt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,8 @@ public class MembershipActivity extends AppCompatActivity {
         final Intent regisAct = new Intent(MembershipActivity.this, RegisterActivity.class);
         regisAct.putExtra("mode",1);
         //regisAct.putExtra("id",-1);
+
+        forgetButt = findViewById(R.id.forgetButt);
 
         Button regisButt = findViewById(R.id.regisButt);
         regisButt.setOnClickListener(new View.OnClickListener() {

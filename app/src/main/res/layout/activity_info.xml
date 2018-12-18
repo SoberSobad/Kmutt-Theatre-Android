@@ -332,12 +332,25 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="100dp"
             android:layout_marginEnd="8dp"
             android:textColor="#FF0000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/changePassButt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="#000000"
+            android:text="Change password"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/editButt"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="@+id/editButt"
+            app:layout_constraintTop_toBottomOf="@+id/editButt" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
