@@ -57,11 +57,12 @@ public class RegisterActivity extends AppCompatActivity {
     EditText postcodeInp;         EditText passwordInp;         EditText confirmpassInp;
     EditText moneyInp;
 
-    TextView modeHeader;         TextView confirmpassTxt;    TextView redText;
+//    TextView modeHeader;
+    TextView confirmpassTxt;    TextView redText;
 
     Button submitButt;
     //Button editButt;
-    Button topupButt;
+    //Button topupButt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +90,12 @@ public class RegisterActivity extends AppCompatActivity {
         postcodeInp = findViewById(R.id.zipcodeInp);       passwordInp = findViewById(R.id.expiryField);      confirmpassInp = findViewById(R.id.confirmpassInp);
         moneyInp = findViewById(R.id.moneyInp);
 
-        modeHeader = findViewById(R.id.modeHeader);        confirmpassTxt = findViewById(R.id.confirmpassText);   redText = findViewById(R.id.regisRedText);
+//        modeHeader = findViewById(R.id.modeHeader);
+        confirmpassTxt = findViewById(R.id.confirmpassText);   redText = findViewById(R.id.regisRedText);
 
         submitButt = findViewById(R.id.submitButt);
         //editButt = findViewById(R.id.editButt);
-        topupButt = findViewById(R.id.topupButt);
+        //topupButt = findViewById(R.id.topupButt);
 
         //******************************************** Spinner set Adapter *********************
         final ArrayAdapter<String> provinceAdapt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, provinces);
@@ -415,9 +417,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onResume();
         //id = getIntent().getIntExtra("id",-1);
         if (mode == 1) {
-            modeHeader.setText("REGISTER");
+//            modeHeader.setText("REGISTER");
             //editButt.setVisibility(View.INVISIBLE);
-            topupButt.setVisibility(View.INVISIBLE);
+            //topupButt.setVisibility(View.INVISIBLE);
             moneyInp.setVisibility(View.INVISIBLE);
             submitButt.setVisibility(View.VISIBLE);
             confirmpassInp.setVisibility(View.VISIBLE);

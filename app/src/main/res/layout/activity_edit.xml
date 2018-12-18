@@ -1,334 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#212121"
     android:fillViewport="true"
     android:isScrollContainer="true"
     android:scrollbars="vertical"
 
     tools:context=".membership.RegisterActivity">
 
-
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="1500dp"
-        android:layout_margin="8dp"
-        android:minHeight="1500dp">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
 
-        <TextView
-            android:id="@+id/modeHeader"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#212121"
+            android:fitsSystemWindows="true"
+            app:expandedTitleGravity="left|bottom"
+            app:collapsedTitleGravity="center"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="Edit"
+                />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="60dp"
-            android:text="EDIT"
-            android:textColor="#E00202"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/firstnameEdit"
-            android:layout_width="170dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="176dp"
-            android:background="@drawable/changecolor"
-            android:editable="true"
-            android:ems="10"
-            android:hint="First name"
-            android:inputType="textPersonName"
-            android:maxLength="20"
-            android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Firstname"
+                android:textColor="#ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/firstnameEdit"
+                    android:layout_width="170dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/changecolor"
+                    android:editable="true"
+                    android:ems="10"
+                    android:hint="First name"
+                    android:inputType="textPersonName"
+                    android:maxLength="20"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#9E9E9E" />
+
+                <Spinner
+                    android:id="@+id/genderSpinEdit"
+                    android:layout_width="105dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/changecolor"
+                    android:clickable="true"
+                    android:textSize="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lastname"
+                android:textColor="#ffffff" />
+
+            <EditText
             android:id="@+id/lastnameEdit"
-            android:layout_width="0dp"
+            android:layout_width="220dp"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Last name"
             android:inputType="textPersonName"
             android:maxLength="20"
             android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
-            app:layout_constraintStart_toStartOf="@+id/firstnameEdit"
-            app:layout_constraintTop_toBottomOf="@+id/firstnameEdit" />
+            android:textColorHint="#9E9E9E" />
 
 
-        <EditText
+            <TextView
+                android:layout_marginTop="25dp"
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone Number"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/phoneNoEdit"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:background="@drawable/changecolor"
+                android:ems="10"
+                android:hint="Phone number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:phoneNumber="true"
+                android:textColor="#ffffff"
+                android:textColorHint="#9E9E9E" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Date of Birth"
+                    android:textColor="#ffffff" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/dateEdit"
+                        android:layout_width="75dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/changecolor"
+                        android:ems="10"
+                        android:hint=" date"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#9E9E9E" />
+
+                    <Spinner
+                        android:id="@+id/monthSpinEdit"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/changecolor" />
+
+                    <EditText
+                        android:id="@+id/yearEdit"
+                        android:layout_width="75dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/changecolor"
+                        android:ems="10"
+                        android:hint="  year"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#9E9E9E"
+                        android:layout_marginLeft="15dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="25dp"
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textColor="#ffffff"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/addressEdit"
+                android:layout_width="214dp"
+                android:layout_height="150dp"
+                android:background="@drawable/changecolor"
+                android:ems="10"
+                android:focusable="true"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:isScrollContainer="true"
+                android:lines="6"
+                android:maxLength="150"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+                android:selectAllOnFocus="false"
+                android:textColor="#ffffff"
+                android:textColorHint="#9E9E9E"/>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Province"
+                android:textColor="#ffffff" />
+
+            <Spinner
+                android:id="@+id/provinceSpinEdit"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:background="@drawable/changecolor" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="District"
+                android:textColor="#ffffff" />
+
+            <Spinner
+                android:id="@+id/districtSpinEdit"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:background="@drawable/changecolor"
+                android:clickable="true" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sub district"
+                android:textColor="#ffffff" />
+
+            <Spinner
+                android:id="@+id/subdistrictSpinEdit"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:background="@drawable/changecolor"
+                android:clickable="true" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zip code"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/zipcodeEdit"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:background="@drawable/changecolor"
+                android:ems="10"
+                android:hint="Zip code"
+                android:inputType="number"
+                android:maxLength="5"
+                android:textColor="#ffffff"
+                android:textColorHint="#9E9E9E" />
+
+            <TextView
+                android:id="@+id/regisRedText"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#FF0000" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:id="@+id/confirmpassText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm Password"
+                android:textColor="#ffffff"/>
+
+            <EditText
             android:id="@+id/confirmpassEdit"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="75dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/changecolor"
             android:ems="10"
             android:hint="Confirm password"
             android:inputType="textPassword"
             android:maxLength="20"
             android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/regisRedText" />
-
-        <EditText
-            android:id="@+id/phoneNoEdit"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/changecolor"
-            android:ems="10"
-            android:hint="Phone number"
-            android:inputType="number"
-            android:maxLength="10"
-            android:phoneNumber="true"
-            android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
-            app:layout_constraintStart_toStartOf="@+id/lastnameEdit"
-            app:layout_constraintTop_toBottomOf="@+id/lastnameEdit" />
-
-        <EditText
-            android:id="@+id/dateEdit"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/changecolor"
-            android:ems="10"
-            android:hint=" date"
-            android:inputType="number"
-            android:maxLength="2"
-            android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
-            app:layout_constraintStart_toStartOf="@+id/phoneNoEdit"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNoEdit" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date of Birth"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/dateEdit"
-            app:layout_constraintStart_toStartOf="@+id/dateEdit" />
-
-        <Spinner
-            android:id="@+id/provinceSpinEdit"
-            android:layout_width="220dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/changecolor"
-            app:layout_constraintStart_toStartOf="@+id/addressEdit"
-            app:layout_constraintTop_toBottomOf="@+id/addressEdit" />
-
-        <Spinner
-            android:id="@+id/genderSpinEdit"
-            android:layout_width="105dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/changecolor"
-            android:clickable="true"
-            android:textSize="8dp"
-            app:layout_constraintStart_toEndOf="@+id/firstnameEdit"
-            app:layout_constraintTop_toTopOf="@+id/firstnameEdit" />
-
-        <Spinner
-            android:id="@+id/districtSpinEdit"
-            android:layout_width="220dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/changecolor"
-            android:clickable="true"
-            app:layout_constraintStart_toStartOf="@+id/provinceSpinEdit"
-            app:layout_constraintTop_toBottomOf="@+id/provinceSpinEdit" />
-
-        <Spinner
-            android:id="@+id/subdistrictSpinEdit"
-            android:layout_width="220dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/changecolor"
-            android:clickable="true"
-            app:layout_constraintStart_toStartOf="@+id/districtSpinEdit"
-            app:layout_constraintTop_toBottomOf="@+id/districtSpinEdit" />
+            android:textColorHint="#9E9E9E"/>
 
 
-        <EditText
-            android:id="@+id/zipcodeEdit"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/changecolor"
-            android:ems="10"
-            android:hint="Zip code"
-            android:inputType="number"
-            android:maxLength="5"
-            android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
-            app:layout_constraintStart_toStartOf="@+id/subdistrictSpinEdit"
-            app:layout_constraintTop_toBottomOf="@+id/subdistrictSpinEdit" />
+            <Button
+                android:id="@+id/submitButt"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_bg"
+                android:text="SUBMIT"
+                android:textColor="#EEECEC"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"/>
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Address"
-            android:textColor="#ffffff"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/addressEdit"
-            app:layout_constraintStart_toStartOf="@+id/addressEdit" />
-
-        <Button
-            android:id="@+id/submitButt"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/button_bg"
-            android:text="SUBMIT"
-            android:textColor="#EEECEC"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/confirmpassEdit"
-            app:layout_constraintTop_toBottomOf="@+id/confirmpassEdit" />
-
-        <Spinner
-            android:id="@+id/monthSpinEdit"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/changecolor"
-            app:layout_constraintStart_toEndOf="@+id/dateEdit"
-            app:layout_constraintTop_toTopOf="@+id/dateEdit" />
-
-        <EditText
-            android:id="@+id/yearEdit"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="12dp"
-            android:background="@drawable/changecolor"
-            android:ems="10"
-            android:hint="  year"
-            android:inputType="number"
-            android:maxLength="4"
-            android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
-            app:layout_constraintStart_toEndOf="@+id/monthSpinEdit"
-            app:layout_constraintTop_toTopOf="@+id/monthSpinEdit" />
-
-        <TextView
-            android:id="@+id/regisRedText"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="8dp"
-            android:textColor="#FF0000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/zipcodeEdit" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Firstname"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/firstnameEdit"
-            app:layout_constraintStart_toStartOf="@+id/firstnameEdit" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lastname"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/lastnameEdit"
-            app:layout_constraintStart_toStartOf="@+id/lastnameEdit" />
-
-        <TextView
-            android:id="@+id/confirmpassText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirm Password"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/confirmpassEdit"
-            app:layout_constraintStart_toStartOf="@+id/confirmpassEdit" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone Number"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/phoneNoEdit"
-            app:layout_constraintStart_toStartOf="@+id/phoneNoEdit" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Province"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/provinceSpinEdit"
-            app:layout_constraintStart_toStartOf="@+id/provinceSpinEdit" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="District"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/districtSpinEdit"
-            app:layout_constraintStart_toStartOf="@+id/districtSpinEdit" />
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sub district"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/subdistrictSpinEdit"
-            app:layout_constraintStart_toStartOf="@+id/subdistrictSpinEdit" />
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Zip code"
-            android:textColor="#ffffff"
-            app:layout_constraintBottom_toTopOf="@+id/zipcodeEdit"
-            app:layout_constraintStart_toStartOf="@+id/zipcodeEdit" />
-
-        <EditText
-            android:id="@+id/addressEdit"
-            android:layout_width="214dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/changecolor"
-            android:ems="10"
-            android:focusable="true"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:isScrollContainer="true"
-            android:lines="6"
-            android:maxLength="150"
-            android:scrollbars="vertical"
-            android:scrollHorizontally="false"
-            android:selectAllOnFocus="false"
-            android:textColor="#ffffff"
-            android:textColorHint="#9E9E9E"
-            app:layout_constraintStart_toStartOf="@+id/dateEdit"
-            app:layout_constraintTop_toBottomOf="@+id/dateEdit" />
-
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
