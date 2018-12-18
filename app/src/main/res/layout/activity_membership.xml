@@ -48,7 +48,7 @@
         android:ems="10"
         android:hint="Username or Email"
         android:inputType="textPersonName"
-        android:maxLength="20"
+        android:maxLength="50"
         android:textColor="#ffffff"
         android:textColorHint="#9E9E9E"
         app:layout_constraintBottom_toBottomOf="parent"

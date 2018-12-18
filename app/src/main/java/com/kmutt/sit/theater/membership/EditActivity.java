@@ -179,7 +179,7 @@ public class EditActivity extends AppCompatActivity {
                     if (day>31 & (month == 1 | month == 3 | month == 5 | month == 7 | month == 8 | month == 10 | month == 12)) dateInp.setText("31");
 
 
-                        String url = "http://theatre.sit.kmutt.ac.th/customer/androidUpdate?userID=" + memberID + "&pass=" + JsonHandler.md5(confirmpassInp.getText().toString()) +
+                    String url = "http://theatre.sit.kmutt.ac.th/customer/androidUpdate?userID=" + memberID + "&pass=" + JsonHandler.md5(confirmpassInp.getText().toString()) +
                                 "&firstname=" + firstnameInp.getText() + "&lastname=" + lastnameInp.getText() + "&gender=" + (genderDrop.getSelectedItem().toString().matches("Male") ? "M" : "F") +
                                 "&birthdate=" + yearInp.getText() + "-" + (monthDrop.getSelectedItemPosition() + 1) + "-" + dateInp.getText() +
                                 "&phonenumber=" + phonenumberInp.getText() + "&address=" + addressInp.getText() +
