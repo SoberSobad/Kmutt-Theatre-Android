@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.kmutt.sit.theater.R;
 import com.kmutt.sit.theater.shared.libs.GlideApp;
 
@@ -38,6 +36,11 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
         super();
         mContext = context;
         this.moviesList = moviesList;
+    }
+
+    public void updateMoviesList(List<Movie> moviesList) {
+        this.moviesList = moviesList;
+        notifyDataSetChanged();
     }
 
     @NonNull
