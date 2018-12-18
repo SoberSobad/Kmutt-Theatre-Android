@@ -49,7 +49,7 @@ public class MembershipFragment extends Fragment {
     Button infoButt;
     Button logoutButt;
     EditText memberInfo;
-    ConstraintLayout bottomArea;
+    //ConstraintLayout bottomArea;
 
     public MembershipFragment() {
 //        memberID = getArguments().getInt("memberID",-1);
@@ -67,7 +67,7 @@ public class MembershipFragment extends Fragment {
         loginButt = rootView.findViewById(R.id.loginButt);
         infoButt = rootView.findViewById(R.id.infoButt);
         logoutButt = rootView.findViewById(R.id.logoutButt);
-        bottomArea = rootView.findViewById(R.id.bottomArea);
+        //bottomArea = rootView.findViewById(R.id.bottomArea);
 
         final Intent mbshipAct = new Intent(getActivity(), MembershipActivity.class);
 
@@ -124,12 +124,13 @@ public class MembershipFragment extends Fragment {
         if(memberID != -1) {
 //            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + id;
 //            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-            ConstraintLayout cl = rootView.findViewById(R.id.mainScrollArea);
+            /*ConstraintLayout cl = rootView.findViewById(R.id.mainScrollArea);
             ConstraintSet constraintSet;
             constraintSet = new ConstraintSet();
             constraintSet.clone(cl);
             constraintSet.connect(infoButt.getId(),constraintSet.TOP,memberInfo.getId(),constraintSet.BOTTOM);
             constraintSet.applyTo(cl);
+            */
 
             String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -150,21 +151,21 @@ public class MembershipFragment extends Fragment {
             MySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest);
             infoButt.setVisibility(View.VISIBLE);
             logoutButt.setVisibility(View.VISIBLE);
-            bottomArea.setVisibility(View.INVISIBLE);
+            //bottomArea.setVisibility(View.INVISIBLE);
 
         }else{
-            ConstraintLayout cl = rootView.findViewById(R.id.mainScrollArea);
+            /*ConstraintLayout cl = rootView.findViewById(R.id.mainScrollArea);
             ConstraintSet constraintSet;
             constraintSet = new ConstraintSet();
             constraintSet.clone(cl);
             constraintSet.connect(infoButt.getId(),constraintSet.TOP,constraintSet.PARENT_ID,constraintSet.TOP);
-            constraintSet.applyTo(cl);
+            constraintSet.applyTo(cl);*/
 
             memberInfo.setText("Anonymous");
             loginButt.setText("Log in");
             infoButt.setVisibility(View.INVISIBLE);
             logoutButt.setVisibility(View.INVISIBLE);
-            bottomArea.setVisibility(View.VISIBLE);
+            //bottomArea.setVisibility(View.VISIBLE);
         }
     }
 }
