@@ -123,6 +123,13 @@ public class EditActivity extends AppCompatActivity {
                     districts.add(JsonHandler.places[position][i][0]);
                 }
                 districtAdapt.notifyDataSetChanged();
+                districtDrop.setSelection(0);
+                subdistricts.clear();
+                for(int i=1; i<JsonHandler.places[position][1].length; i++){
+                    subdistricts.add(JsonHandler.places[position][1][i]);
+                }
+                subdistrictAdapt.notifyDataSetChanged();
+                subdistrictDrop.setSelection(0);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {            }
@@ -137,6 +144,7 @@ public class EditActivity extends AppCompatActivity {
                     subdistricts.add(JsonHandler.places[provNo][distNo+1][i]);
                 }
                 subdistrictAdapt.notifyDataSetChanged();
+                subdistrictDrop.setSelection(0);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {            }
