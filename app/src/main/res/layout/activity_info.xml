@@ -182,6 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="25dp"
+            android:minWidth="100dp"
             android:text="SubDistrict"
             android:textColor="#FFFFFF"
             android:textSize="20dp"

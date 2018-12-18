@@ -1,6 +1,8 @@
 package com.kmutt.sit.theater.membership;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,12 +22,18 @@ import org.json.JSONArray;
 public class MembershipActivity extends AppCompatActivity {
 
     static int memberID;
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
+    final String P_NAME = "App_Config";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_membership);
         //Toast.makeText(this, "CREATE MembershipActivity", Toast.LENGTH_SHORT).show();
+
+        sp = getSharedPreferences(P_NAME, Context.MODE_PRIVATE);
+        editor = sp.edit();
 
         final EditText userInput = findViewById(R.id.userInput);
         final EditText passInput = findViewById(R.id.passInput);
@@ -59,10 +67,12 @@ public class MembershipActivity extends AppCompatActivity {
                             public void onResponse(JSONArray response) {
                                 String result = JsonHandler.parseString(response,"userID");
                                 if(result.length() != 0 & (memberID = Integer.parseInt(result)) != -1) {
-                                    Intent mainAct = new Intent(MembershipActivity.this, MainActivityV2.class);
-                                    mainAct.putExtra("memberID",memberID);
-                                    mainAct.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(mainAct);
+                                    //Intent mainAct = new Intent(MembershipActivity.this, MainActivityV2.class);
+                                    //mainAct.putExtra("memberID",memberID);
+                                    //mainAct.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    editor.putInt("memberID", memberID);
+                                    editor.commit();
+                                    //startActivity(mainAct);
                                     finish();
                                 }else {
                                     redText.setText("Invalid username or password.\nPlease try again.");

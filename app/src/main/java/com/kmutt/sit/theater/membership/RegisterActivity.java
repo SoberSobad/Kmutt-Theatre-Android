@@ -126,6 +126,8 @@ public class RegisterActivity extends AppCompatActivity {
                     districts.add(JsonHandler.places[position][i][0]);
                 }
                 districtAdapt.notifyDataSetChanged();
+                //districtDrop.setSelection(0);
+                //subdistrictAdapt.notifyDataSetChanged();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {            }
@@ -140,6 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
                     subdistricts.add(JsonHandler.places[provNo][distNo+1][i]);
                 }
                 subdistrictAdapt.notifyDataSetChanged();
+                //subdistrictDrop.setSelection(0);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {            }
@@ -200,10 +203,11 @@ public class RegisterActivity extends AppCompatActivity {
                                                             .setCancelable(false)
                                                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                                 public void onClick(DialogInterface dialog, int id) {
-                                                                    Intent main = new Intent(RegisterActivity.this, MainActivity.class);
+                                                                    //Intent main = new Intent(RegisterActivity.this, MainActivity.class);
                                                                     //main.putExtra("id", id);
-                                                                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                                    startActivity(main);
+                                                                    //main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                    //startActivity(main);
+                                                                    finish();
                                                                 }
                                                             });
                                                     AlertDialog alert = builder.create();
@@ -217,8 +221,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     }, new Response.ErrorListener() {
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
-                                            //redText.setText(error.getMessage());
-                                            redText.setText("Username or Email Address already exist!");
+                                            redText.setText("Failed to register : " + error.getMessage());
+                                            //redText.setText("Username or Email Address already exist!");
                                         }
                                     }) {
                             };
