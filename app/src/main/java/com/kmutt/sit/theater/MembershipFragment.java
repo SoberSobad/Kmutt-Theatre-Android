@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -49,9 +50,11 @@ public class MembershipFragment extends Fragment {
     View rootView;
     Button loginButt;
     Button infoButt;
-    //Button logoutButt;
+    Button editButt;
+    Button passwordChangeButt;
+    TextView tvPoint;
+    TextView pointShow;
     EditText memberInfo;
-    //ConstraintLayout bottomArea;
     ImageView avatar;
 
     public MembershipFragment() {
@@ -69,8 +72,11 @@ public class MembershipFragment extends Fragment {
         memberInfo = rootView.findViewById(R.id.memberInfo);
         loginButt = rootView.findViewById(R.id.loginButt);
         infoButt = rootView.findViewById(R.id.infoButt);
+        editButt = rootView.findViewById(R.id.editButt);
+        passwordChangeButt = rootView.findViewById(R.id.passwordChangeButt);
         avatar = rootView.findViewById(R.id.avatar);
-        //logoutButt = rootView.findViewById(R.id.logoutButt);
+        tvPoint = rootView.findViewById(R.id.tvPoint);
+        pointShow = rootView.findViewById(R.id.pointShow);
 
         final Intent mbshipAct = new Intent(getActivity(), MembershipActivity.class);
 
@@ -87,16 +93,6 @@ public class MembershipFragment extends Fragment {
                 }
             }
         });
-
-        /*logoutButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                memberID = -1;
-                editor.putInt("memberID", memberID);
-                editor.commit();
-                onResume();
-            }
-        });*/
 
         infoButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,9 +112,9 @@ public class MembershipFragment extends Fragment {
         memberID = sp.getInt("memberID",-1);
         if(memberID != -1) {
 
-            String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            String url1 = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
+            JsonArrayRequest jsonArrayRequest1 = new JsonArrayRequest
+                    (Request.Method.GET, url1, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
                             memberInfo.setText("Hi, " + JsonHandler.parseString(response, "Fname") + " " +
@@ -132,19 +128,43 @@ public class MembershipFragment extends Fragment {
                             memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
                         }
                     });
-            MySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest);
+            MySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest1);
+
+            String url2 = "http://theatre.sit.kmutt.ac.th/customer/androidGetPoint?memberID=" + memberID;
+            JsonArrayRequest jsonArrayRequest2 = new JsonArrayRequest
+                    (Request.Method.GET, url2, null, new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            if (response.toString().length() > 2) {
+                                pointShow.setText(JsonHandler.parseString(response, "totalpoint"));
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO: Handle error
+                            memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
+                        }
+                    });
+            MySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest2);
+
             avatar.setImageResource(R.drawable.logined);
             loginButt.setText("Log out");
             infoButt.setVisibility(View.VISIBLE);
-            //logoutButt.setVisibility(View.VISIBLE);
-            //bottomArea.setVisibility(View.INVISIBLE);
+            editButt.setVisibility(View.VISIBLE);
+            passwordChangeButt.setVisibility(View.VISIBLE);
+            tvPoint.setVisibility(View.VISIBLE);
+            pointShow.setVisibility(View.VISIBLE);
 
         }else{
             avatar.setImageResource(R.drawable.anonymous);
             memberInfo.setText("Anonymous");
             loginButt.setText("Log in");
             infoButt.setVisibility(View.INVISIBLE);
-            //logoutButt.setVisibility(View.INVISIBLE);
+            editButt.setVisibility(View.INVISIBLE);
+            passwordChangeButt.setVisibility(View.INVISIBLE);
+            tvPoint.setVisibility(View.INVISIBLE);
+            pointShow.setVisibility(View.INVISIBLE);
         }
     }
 }
