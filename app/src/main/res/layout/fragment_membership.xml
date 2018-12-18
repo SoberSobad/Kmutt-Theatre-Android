@@ -4,13 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#020202"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/logined"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/loginButt"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/button_bg"
         android:text="Log in / Sign up"
         android:textColor="#EEECEC"
@@ -27,7 +40,9 @@
         android:id="@+id/memberInfo"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
         android:clickable="false"
         android:editable="false"
         android:inputType="none"
@@ -37,52 +52,57 @@
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/avatar" />
 
+    <Button
+        android:id="@+id/infoButt"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="20dp"
+        android:text="Info"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/memberInfo" />
 
+    <Button
+        android:id="@+id/editButt"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:text="Edit Profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoButt" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageView2"
+    <Button
+        android:id="@+id/passwordChangeButt"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:text="Change Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editButt" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="8dp"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/loginButt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/memberInfo"
-        app:layout_constraintVertical_bias="0.0">
-
-        <Button
-            android:id="@+id/infoButt"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:contentDescription="info"
-            android:text="Info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/memberInfo" />
-
-        <Button
-            android:id="@+id/logoutButt"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:contentDescription="log out"
-            android:text="Log Out"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/memberInfo" />
-
-    </LinearLayout>
-
+        android:text="Point :"
+        android:textSize="22dp"
+        app:layout_constraintStart_toStartOf="@+id/infoButt"
+        tools:layout_editor_absoluteY="262dp" />
 
 
 </android.support.constraint.ConstraintLayout>
