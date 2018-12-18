@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#1e90ff"
     android:fillViewport="true"
     android:isScrollContainer="true"
     android:scrollbars="vertical"
@@ -26,7 +26,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/button_bg"
             android:text="Return"
-            android:textColor="#EEECEC"
+            android:textColor="#EEEC"
             android:textSize="25dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,11 +57,24 @@
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
-            android:textStyle="bold"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/modeHeader" />
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <by.anatoldeveloper.hallscheme.view.ZoomableImageView
+                android:id="@+id/zoomable_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

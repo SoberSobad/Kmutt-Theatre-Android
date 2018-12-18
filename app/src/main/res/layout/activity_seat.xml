@@ -51,4 +51,22 @@
         app:layout_constraintLeft_toRightOf="@+id/seatAct_selectShowtime"
         app:layout_constraintTop_toTopOf="@+id/seatAct_selectShowtime" />
 
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+    <by.anatoldeveloper.hallscheme.view.ZoomableImageView
+        android:id="@+id/zoomable_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seatAct_selectShowtime" />
+
 </android.support.constraint.ConstraintLayout>

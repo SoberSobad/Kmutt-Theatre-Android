@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="16dp"
-            android:text="Payment of"
+            android:text="PAYMENT OF"
             android:textColor="@color/colorPrimary"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="(set in code) THB"
+            android:text="(SET IN CODE) THB"
             android:textColor="@color/colorPrimary"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -125,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="Credit Card Number"
+            android:text="CREDIT CARD NUMBER"
             android:textColor="#ffffff"
             app:layout_constraintBottom_toTopOf="@id/cardNoField"
             app:layout_constraintStart_toStartOf="parent" />
@@ -144,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="18dp"
             android:layout_marginStart="40dp"
-            android:text="Card Holder Name"
+            android:text="CARD HOLDER NAME"
             android:textColor="#ffffff"
             app:layout_constraintBottom_toTopOf="@id/cardHolderField"
             app:layout_constraintStart_toStartOf="parent" />
@@ -154,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="Card Type"
+            android:text="CARD TYPE"
             android:textColor="#ffffff"
             app:layout_constraintBottom_toTopOf="@id/cardType"
             app:layout_constraintStart_toStartOf="parent" />
@@ -164,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="Expiry Date"
+            android:text="EXPIRY DATE"
             android:textColor="#ffffff"
             app:layout_constraintBottom_toTopOf="@id/expiryField"
             app:layout_constraintStart_toStartOf="parent" />

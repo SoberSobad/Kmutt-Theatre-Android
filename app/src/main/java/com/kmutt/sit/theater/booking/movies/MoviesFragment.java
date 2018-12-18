@@ -9,12 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.kmutt.sit.theater.MainActivity;
 import com.kmutt.sit.theater.R;
 import com.kmutt.sit.theater.booking.SeatActivity;
 import com.kmutt.sit.theater.membership.MySingleton;
@@ -38,6 +40,11 @@ public class MoviesFragment extends Fragment {
     View rootView;
     RecyclerView moviesListView;
     SwipeRefreshLayout swipeRefreshLayout;
+
+    //
+    // TEST
+    //
+    Button btnTest;
 
     //
     // List Adapter
@@ -65,6 +72,21 @@ public class MoviesFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refreshMovies();
+            }
+        });
+
+        //
+        // TEST
+        //
+        btnTest = rootView.findViewById(R.id.btnTest);
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent seatAct = new Intent(getActivity(), SeatActivity.class);
+                seatAct.putExtra("movie_date", "19_12_2018");
+                seatAct.putExtra("movie_name", "Horrible Bossess 2");
+                seatAct.putExtra("movie_showtimes", "6:00 9:00 15:00");
+                startActivity(seatAct);
             }
         });
 
