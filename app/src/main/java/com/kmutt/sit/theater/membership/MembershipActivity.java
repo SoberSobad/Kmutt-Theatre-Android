@@ -45,6 +45,13 @@ public class MembershipActivity extends AppCompatActivity {
         //regisAct.putExtra("id",-1);
 
         forgetButt = findViewById(R.id.forgetButt);
+        forgetButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgetPassword = new Intent(MembershipActivity.this, ForgetPasswordActivity.class);
+                startActivity(forgetPassword);
+            }
+        });
 
         Button regisButt = findViewById(R.id.regisButt);
         regisButt.setOnClickListener(new View.OnClickListener() {

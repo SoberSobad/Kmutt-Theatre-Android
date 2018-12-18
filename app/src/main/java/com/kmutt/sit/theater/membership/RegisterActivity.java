@@ -126,8 +126,13 @@ public class RegisterActivity extends AppCompatActivity {
                     districts.add(JsonHandler.places[position][i][0]);
                 }
                 districtAdapt.notifyDataSetChanged();
-                //districtDrop.setSelection(0);
-                //subdistrictAdapt.notifyDataSetChanged();
+                districtDrop.setSelection(0);
+                subdistricts.clear();
+                for(int i=1; i<JsonHandler.places[position][1].length; i++){
+                    subdistricts.add(JsonHandler.places[position][1][i]);
+                }
+                subdistrictAdapt.notifyDataSetChanged();
+                subdistrictDrop.setSelection(0);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {            }
@@ -142,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
                     subdistricts.add(JsonHandler.places[provNo][distNo+1][i]);
                 }
                 subdistrictAdapt.notifyDataSetChanged();
-                //subdistrictDrop.setSelection(0);
+                subdistrictDrop.setSelection(0);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {            }
@@ -169,8 +174,9 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         submitButt.setEnabled(true);
+                        if(redText.getText().toString().matches("Please wait...")) redText.setText("");
                     }
-                }, 5000);
+                }, (int) TimeUnit.SECONDS.toMillis(18));
 
                 //********************************************** Check for space *********************************************
                 if (firstnameInp.getText().toString().matches("") | lastnameInp.getText().toString().matches("") |

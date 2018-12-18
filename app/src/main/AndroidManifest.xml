@@ -31,6 +31,7 @@
         <activity android:name=".booking.ConfirmationActivity" />
         <activity android:name=".booking.SeatActivity" />
         <activity android:name=".booking.showtimes.ShowtimesActivity"></activity>
+        <activity android:name=".membership.ForgetPasswordActivity"></activity>
     </application>
 
 </manifest>
