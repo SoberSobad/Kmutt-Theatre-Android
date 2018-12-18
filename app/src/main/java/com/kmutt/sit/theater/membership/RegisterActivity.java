@@ -173,12 +173,28 @@ public class RegisterActivity extends AppCompatActivity {
                 }, 5000);
 
                 //********************************************** Check for space *********************************************
-                if (firstnameInp.getText().toString().matches("") & lastnameInp.getText().toString().matches("") &
-                        passwordInp.getText().toString().matches("") & emailInp.getText().toString().matches("") &
-                        phonenumberInp.getText().toString().matches("") & dateInp.getText().toString().matches("") &
-                        yearInp.getText().toString().matches("") & postcodeInp.getText().toString().matches("")) {
+                if (firstnameInp.getText().toString().matches("") | lastnameInp.getText().toString().matches("") |
+                        passwordInp.getText().toString().matches("") | emailInp.getText().toString().matches("") |
+                        phonenumberInp.getText().toString().matches("") | dateInp.getText().toString().matches("") |
+                        yearInp.getText().toString().matches("") | postcodeInp.getText().toString().matches("")) {
                     redText.setText("Please fill every space provided");
                 } else {
+
+                    //******************************** Birthdate format*************************
+                    int day = Integer.parseInt(dateInp.getText().toString());
+                    int month = monthDrop.getSelectedItemPosition()+1;
+                    int year = Integer.parseInt(yearInp.getText().toString());
+                    boolean leapyear;
+                    if(year%4==0) { if(year%100==0) { if(year%400==0) { leapyear = true; } else { leapyear = false; } } else { leapyear = true; } } else { leapyear = false; }
+                    if (year < 1) yearInp.setText("0001");
+                    if (day < 1) dateInp.setText("01");
+                    //if (day>28 & month == 2 & (year %4 == 0 | (year %100 == 0 & year %400 != 0) ) ) dateInp.setText("28");
+                    //if (day>29 & month == 2) dateInp.setText("29");
+                    if (day>28 & month == 2 & !leapyear) dateInp.setText("28");
+                    if (day>29 & month == 2 & leapyear) dateInp.setText("29");
+                    if (day>30 & (month == 4 | month == 6 | month == 9 | month == 11)) dateInp.setText("30");
+                    if (day>31 & (month == 1 | month == 3 | month == 5 | month == 7 | month == 8 | month == 10 | month == 12)) dateInp.setText("31");
+
                     //******************************** Insert new registry ***********************************************
                     if (mode == 1) {
                         if (passwordInp.getText().toString().matches(confirmpassInp.getText().toString())) {    // Matching Password and Confirm Password
