@@ -116,10 +116,9 @@ public class MoviesFragment extends Fragment {
                 List<Movie> tmp = new ArrayList<>();
                 for (int i = 0; i < response.length(); i++) {
                     try {
-                        JSONObject mov = response.getJSONObject(i);
-//                        Toast.makeText(getActivity(), mov.toString(), Toast.LENGTH_LONG).show();
-                        tmp.add(new Movie(mov.getString("title"), "15_12_2018", "http://theatre.sit.kmutt.ac.th" + mov.getString("Image"), Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
-//                        Toast.makeText(getActivity(), "added!", Toast.LENGTH_SHORT).show();
+                        JSONObject json = response.getJSONObject(i);
+                        Movie mov = Movie.fromJson(json);
+                        tmp.add(mov);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

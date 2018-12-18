@@ -92,14 +92,35 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
         public void bindData(Movie m) {
             this.movie = m;
 
-            m.imageUrl = m.imageUrl.replace('\\', '\0');    // remove all the \ symbol
-
+            //
+            // TITLE
+            //
             tvMovieTitle.setText(m.name);
+
+            //
+            // POSTER
+            //
+            m.imageUrl = m.imageUrl.replace('\\', '\0');    // remove all the \ symbol
             GlideApp.with(mContext)
                     .load(m.imageUrl)
                     .into(poster);
 
-            tvMovieLength.setText(m.imageUrl);
+            //
+            // LENGTH
+            //
+            String[] length = m.length.split(":");
+            String hr = length[0];
+            String min = length[1];
+
+            // remove 0 from first digit
+            if (hr.charAt(0) == '0')
+                hr = hr.substring(1);
+            if (min.charAt(0) == '0')
+                min = min.substring(1);
+
+            tvMovieLength.setText(hr + " hr " + min + " min.");
+
+//            tvMovieLength.setText(m.imageUrl);
 
 //            String showTimeText = "";
 //            for (String s : m.showTimes) {
