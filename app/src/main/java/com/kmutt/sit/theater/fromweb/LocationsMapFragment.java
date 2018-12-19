@@ -39,6 +39,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.kmutt.sit.theater.R;
 import com.kmutt.sit.theater.booking.movies.Movie;
+import com.kmutt.sit.theater.booking.showtimes.ShowtimesActivity;
 import com.kmutt.sit.theater.membership.MySingleton;
 
 import org.json.JSONArray;
@@ -154,7 +155,20 @@ public class LocationsMapFragment extends Fragment {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // When user clicks a hyperlink, load in the existing WebView
-                view.loadUrl(url);
+                String[] splitted = url.split("/");
+                if (url.startsWith("http://theatre.sit.kmutt.ac.th/customer/group14/booking/")) {
+
+                    int movieId = Integer.parseInt(splitted[splitted.length - 2]);
+                    int branchId = Integer.parseInt(splitted[splitted.length - 1]);
+
+                    Intent i = new Intent(getActivity(), ShowtimesActivity.class);
+                    i.putExtra("movie_id", movieId);
+                    i.putExtra("branch_id", branchId);
+                    startActivity(i);
+                }
+                else {
+                    view.loadUrl(url);
+                }
                 return true;
             }
 

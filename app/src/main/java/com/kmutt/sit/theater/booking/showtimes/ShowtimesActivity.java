@@ -43,6 +43,7 @@ public class ShowtimesActivity extends AppCompatActivity {
     // PARAMS
     //
     int movieId;
+    int branchId;
     String movieName;
     String movieImageUrl;
     String movieLength;
@@ -88,9 +89,10 @@ public class ShowtimesActivity extends AppCompatActivity {
         // Params
         //
         this.movieId = getIntent().getIntExtra("movie_id", -1);
-        this.movieName = getIntent().getStringExtra("movie_name");
-        this.movieImageUrl = getIntent().getStringExtra("movie_img_url");
-        this.movieLength = getIntent().getStringExtra("movie_length");
+        this.branchId = getIntent().getIntExtra("branch_id", -1);
+//        this.movieName = getIntent().getStringExtra("movie_name");
+//        this.movieImageUrl = getIntent().getStringExtra("movie_img_url");
+//        this.movieLength = getIntent().getStringExtra("movie_length");
 
         //
         // Toolbar
