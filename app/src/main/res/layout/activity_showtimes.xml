@@ -8,57 +8,41 @@
     tools:context=".booking.movies.MoviesFragment">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:orientation="vertical">
 
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/lastDayButt"
-            android:layout_width="36dp"
-            android:layout_height="40dp"
-            android:text="&lt;" />
+        <include layout="@layout/layout_movie_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#10ffffff"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/dataTabLayout"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:elevation="0dp"/>
 
-            <TextView
-                android:id="@+id/dayTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MOVIES FOR"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="13dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/infoButt" />
-
-            <TextView
-                android:id="@+id/currentDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="December 15"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="17sp" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/nextDayButt"
-            android:layout_width="36dp"
-            android:layout_height="40dp"
-            android:text="&gt;" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#10ffffff"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"/>
 
     </LinearLayout>
 
@@ -69,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/header">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/showtimesListView"

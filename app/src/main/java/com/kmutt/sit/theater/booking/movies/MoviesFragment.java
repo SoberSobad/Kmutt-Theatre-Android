@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.kmutt.sit.theater.MainActivity;
 import com.kmutt.sit.theater.R;
 import com.kmutt.sit.theater.booking.SeatActivity;
+import com.kmutt.sit.theater.booking.showtimes.ShowtimesActivity;
 import com.kmutt.sit.theater.membership.MySingleton;
 
 import org.json.JSONArray;
@@ -94,10 +95,17 @@ public class MoviesFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        refreshMovies();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
-        refreshMovies();
+//        refreshMovies();
     }
 
     //
@@ -108,7 +116,7 @@ public class MoviesFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(true);
 
         // make a connection request to server
-        String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/getShowtime";
+        String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/movies/all";
         JsonArrayRequest movieRequest = new JsonArrayRequest (Request.Method.GET, movieUrl, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -131,8 +139,11 @@ public class MoviesFragment extends Fragment {
                     mAdapter.setOnClickListener(new MoviesListAdapter.OnClickListener() {
                         @Override
                         public void onClick(MoviesListAdapter.ViewHolder v) {
-                            Intent i = new Intent(getActivity(), SeatActivity.class);
+//                            Intent i = new Intent(getActivity(), SeatActivity.class);
+                            Intent i = new Intent(getActivity(), ShowtimesActivity.class);
                             i.putExtra("movie_name", v.movie.name);
+                            i.putExtra("movie_id", v.movie.id);
+                            i.putExtra("movie_img_url", v.movie.imageUrl);
                             startActivity(i);
                         }
                     });
@@ -149,6 +160,7 @@ public class MoviesFragment extends Fragment {
                 // TODO: Handle error
 //                memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
                 Toast.makeText(getActivity(), "Error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         MySingleton.getInstance(getActivity()).addToRequestQueue(movieRequest);
