@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject mov = response.getJSONObject(i);
 //                    Toast.makeText(MainActivity.this, mov.toString(), Toast.LENGTH_LONG).show();
-                    tmp.add(new Movie(mov.getString("title"), "15_12_2018", mov.getString("Image"), Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
+                    tmp.add(new Movie(mov.getString("title"), "15_12_2018", mov.getString("Image")));
                     Toast.makeText(MainActivity.this, "added!", Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
         currentDayTitle.setVisibility(View.INVISIBLE);
         currentDay.setText("Loading movies...");
-        Log.d("DEBUG", "Starting to populate movie list.");
+        Log.d("DEBUG", "Starting to populate showtime list.");
 
         ConstraintLayout cl = findViewById(R.id.mainScrollArea);
         for (Movie H : list) {
@@ -269,13 +269,13 @@ public class MainActivity extends AppCompatActivity {
             tvMovieTitle.setText(H.name);
 
             // BIND SHOWTIMES
-            String showtimesText = "";
-//            showtimesText += H.name + "\n";
-            for (String showTime : H.showTimes) {
-                showtimesText += " " + showTime + ",";
-            }
-            showtimesText = showtimesText.substring(0, showtimesText.length() - 1); //remove the extra comma at the end
-            tvShowtimes.setText(showtimesText);
+//            String showtimesText = "";
+////            showtimesText += H.name + "\n";
+//            for (String showTime : H.showTimes) {
+//                showtimesText += " " + showTime + ",";
+//            }
+//            showtimesText = showtimesText.substring(0, showtimesText.length() - 1); //remove the extra comma at the end
+//            tvShowtimes.setText(showtimesText);
 
 
 //            myButton.setText(showtimesText);
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent seatAct = new Intent(MainActivity.this, SeatActivity.class);
                     seatAct.putExtra("movie_date", movie.date);
                     seatAct.putExtra("movie_name", movie.name);
-                    seatAct.putExtra("movie_showtimes", movie.showTimes.toArray());
+//                    seatAct.putExtra("movie_showtimes", showtime.showTimes.toArray());
                     clickedMovie = movie;
                     startActivity(seatAct);
                 }
