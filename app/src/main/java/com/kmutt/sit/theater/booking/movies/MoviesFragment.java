@@ -116,7 +116,7 @@ public class MoviesFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(true);
 
         // make a connection request to server
-        String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/movies/all";
+        String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/movies";
         JsonArrayRequest movieRequest = new JsonArrayRequest (Request.Method.GET, movieUrl, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

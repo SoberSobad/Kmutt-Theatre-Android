@@ -19,8 +19,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.kmutt.sit.theater.R;
 import com.kmutt.sit.theater.booking.SeatActivity;
+import com.kmutt.sit.theater.booking.movies.Movie;
 import com.kmutt.sit.theater.booking.movies.MoviesListAdapter;
 import com.kmutt.sit.theater.membership.MySingleton;
+import com.kmutt.sit.theater.shared.libs.GlideApp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,9 +45,12 @@ public class ShowtimesActivity extends AppCompatActivity {
     String movieLength;
 
     //
-    // Movie Info
+    // MovieInfo Info
     //
     TextView tvMovieTitle;
+    TextView tvMovieGenre;
+    TextView tvMovieLength;
+    TextView tvMovieDetail;
     ImageView poster;
 
     //
@@ -92,16 +97,21 @@ public class ShowtimesActivity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //
-        // Movie info
+        // MovieInfo info
         //
         this.tvMovieTitle = findViewById(R.id.tvMovieTitle);
-        tvMovieTitle.setText(movieName);
+        this.tvMovieGenre = findViewById(R.id.tvMovieGenre);
+        this.tvMovieLength = findViewById(R.id.tvMovieLength);
+        this.tvMovieDetail = findViewById(R.id.tvMovieDetail);
         this.poster = findViewById(R.id.poster);
+//        tvMovieTitle.setText(movieName);
 
         //
         // TabLayout
         //
         datesTabLayout = findViewById(R.id.dataTabLayout);
+        datesTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        datesTabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         datesTabLayout.removeAllTabs();
         datesTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -133,6 +143,7 @@ public class ShowtimesActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                refreshMovieInfo();
                 refreshAvailableDates();
             }
         });
@@ -142,7 +153,80 @@ public class ShowtimesActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        refreshMovieInfo();
         refreshAvailableDates();
+    }
+
+    public void refreshMovieInfo() {
+        // start refreshing
+        swipeRefreshLayout.setRefreshing(true);
+
+        // make a connection request to server
+        String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/movies/" + movieId;
+        JsonArrayRequest showtimeRequest = new JsonArrayRequest (Request.Method.GET, movieUrl, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    JSONObject json = response.getJSONObject(0);
+                    Movie m = Movie.fromJson(json);
+
+                    //
+                    // TITLE
+                    //
+                    tvMovieTitle.setText(m.name);
+
+                    //
+                    // GENRE
+                    //
+                    tvMovieGenre.setText(m.genre);
+
+                    //
+                    // DESCRIPTION
+                    tvMovieDetail.setText(m.detail);
+
+                    //
+                    tvMovieGenre.setText(m.genre);
+
+                    //
+                    // POSTER
+                    //
+                    m.imageUrl = m.imageUrl.replace('\\', '\0');    // remove all the \ symbol
+                    GlideApp.with(ShowtimesActivity.this)
+                            .load(m.imageUrl)
+                            .into(poster);
+
+                    //
+                    // LENGTH
+                    //
+                    String[] length = m.length.split(":");
+                    String hr = length[0];
+                    String min = length[1];
+
+                    // remove 0 from first digit
+                    if (hr.charAt(0) == '0')
+                        hr = hr.substring(1);
+                    if (min.charAt(0) == '0')
+                        min = min.substring(1);
+
+                    tvMovieLength.setText(hr + " hr " + min + " min.");
+
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // stop refreshing
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+//                memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
+                Toast.makeText(ShowtimesActivity.this, "Error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        MySingleton.getInstance(this).addToRequestQueue(showtimeRequest);
     }
 
     //
@@ -161,8 +245,8 @@ public class ShowtimesActivity extends AppCompatActivity {
                 datesTabLayout.removeAllTabs();
 
                 // date format
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-                SimpleDateFormat displayDateFormat = new SimpleDateFormat("MMM dd\n(EEE)");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat displayDateFormat = new SimpleDateFormat("(EEE)\ndd MMM yyyy");
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -191,7 +275,11 @@ public class ShowtimesActivity extends AppCompatActivity {
                     }
                 }
 
-                datesTabLayout.getTabAt(0).select();
+                if (datesTabLayout.getTabAt(0) != null)
+                    datesTabLayout.getTabAt(0).select();
+                else {
+                    Toast.makeText(ShowtimesActivity.this, "No showtime available", Toast.LENGTH_SHORT).show();
+                }
 
                 // stop refreshing
                 swipeRefreshLayout.setRefreshing(false);

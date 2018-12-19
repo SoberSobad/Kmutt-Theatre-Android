@@ -179,18 +179,18 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
             // success
-//            List<Movie> tmp = Arrays.asList(
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
-//                    new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
-//                    new Movie("Harry Potter and test", "16_12_2018", Arrays.asList("13:00","16:00","","")),
-//                    new Movie("Harry Potter and test2", "15_12_2018", Arrays.asList("13:00","16:00","",""))
+//            List<MovieInfo> tmp = Arrays.asList(
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")),
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
+//                    new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00")),
+//                    new MovieInfo("Harry Potter and test", "16_12_2018", Arrays.asList("13:00","16:00","","")),
+//                    new MovieInfo("Harry Potter and test2", "15_12_2018", Arrays.asList("13:00","16:00","",""))
 //            ); //TODO: REMOVE
             List<Movie> tmp = new ArrayList<>();
             for (int i = 0; i < response.length(); i++) {
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-//            tmp.add(new Movie("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
+//            tmp.add(new MovieInfo("Harry Potter and test", "15_12_2018", Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00")));
             populateMovieList(tmp, "15_12_2018"); //TODO: REMOVE
             }
         }, new Response.ErrorListener() {
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
             // BIND SHOWTIMES
 //            String showtimesText = "";
-////            showtimesText += H.name + "\n";
+////            showtimesText += H.json + "\n";
 //            for (String showTime : H.showTimes) {
 //                showtimesText += " " + showTime + ",";
 //            }

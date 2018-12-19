@@ -35,7 +35,7 @@ public class JsonHandler {
                         }
                     return result;
                 }
-                if(i == str.length()-1) return "Cannot find given name in "+jsonArray.toString();
+                if(i == str.length()-1) return "Cannot find given json in "+jsonArray.toString();
             }
         }return "Array is null !!";
     }

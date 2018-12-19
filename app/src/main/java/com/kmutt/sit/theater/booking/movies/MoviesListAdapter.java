@@ -83,7 +83,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
             super(itemView);
 
             tvMovieTitle = itemView.findViewById(R.id.tvMovieTitle);
-            tvMovieLang = itemView.findViewById(R.id.tvMovieLang);
+            tvMovieLang = itemView.findViewById(R.id.tvMovieGenre);
             tvMovieLength = itemView.findViewById(R.id.tvMovieLength);
 
             poster = itemView.findViewById(R.id.poster);

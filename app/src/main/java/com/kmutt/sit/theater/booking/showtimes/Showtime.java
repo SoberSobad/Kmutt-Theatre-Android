@@ -1,36 +1,109 @@
 package com.kmutt.sit.theater.booking.showtimes;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Showtime {
-    public String name = null;
-    public String id = null;
-    public String date = null; //dd_mm_yyyy
-    public String imageUrl = null;
-    public String length;
-//    public Collection<String> showTimes = null;     // TODO: remove this
+import java.util.ArrayList;
+import java.util.List;
 
-    public Showtime(String name, String date, String imageUrl) {
-        this.name = name;
-        this.date = date;
-        this.imageUrl = imageUrl;
-//        this.showTimes = showTimes;
-    }
+public class Showtime {
+    public String json;
+
+    //
+    // Fields
+    //
+    public int branchId;
+    public String branchName;
+    public List<Room> rooms;
 
     public Showtime() {
-
+        rooms = new ArrayList<>();
     }
 
-    public static Showtime fromJson(JSONObject json) throws JSONException {
-        Showtime m = new Showtime();
-        m.name = json.toString();
-//        m.name = json.getString("title");
-//        m.id = json.getString("id");
-//        m.length = json.getString("length");
-//        m.imageUrl = "http://theatre.sit.kmutt.ac.th" + json.getString("Image");
-////        m.showTimes = Arrays.asList("13:00","16:00","18:00","21:00","22:00","23:00");
+    public static class Room {
+        public int roomNo;
+        public String roomType;
+        public String roomName;
 
-        return m;
+        public List<MovieInfo> movies;
+
+        public Room() {
+            movies = new ArrayList<>();
+        }
+
+        public static Room fromJson(JSONObject json) throws JSONException {
+            Room r = new Room();
+
+            r.roomNo = json.getInt("room_no");
+            r.roomType = json.getString("roomtype");
+            r.roomName = json.getString("room_name");
+
+            // load movies
+            if (r.movies == null)
+                r.movies = new ArrayList<>();
+            r.movies.clear();
+
+            JSONArray moviesJson = json.getJSONArray("movies");
+            for (int i = 0; i < moviesJson.length(); i++) {
+                MovieInfo m = MovieInfo.fromJson(moviesJson.getJSONObject(i));
+                r.movies.add(m);
+            }
+
+
+            return r;
+        }
+    }
+
+    public static class MovieInfo {
+        public int movieId;
+        public String soundtrack;
+        public String subtitle;
+        public String startTime;
+        public String EndTime;
+        public String showtime;
+        public String status;
+        public boolean clickable;
+
+        public MovieInfo() {
+        }
+
+        public static MovieInfo fromJson(JSONObject json) throws JSONException {
+            MovieInfo m = new MovieInfo();
+
+            m.movieId = json.getInt("movie_id");
+            m.soundtrack = json.getString("soundtrack");
+            m.subtitle = json.getString("subtitle");
+            m.startTime = json.getString("startTime");
+            m.EndTime = json.getString("EndTime");
+            m.showtime = json.getString("showtime");
+            m.status = json.getString("status");
+            m.clickable = json.getBoolean("clickable");
+
+            return m;
+        }
+    }
+
+    //
+    // Factory Method
+    //
+    public static Showtime fromJson(JSONObject json) throws JSONException {
+        Showtime s = new Showtime();
+        s.json = json.toString();
+        s.branchId = json.getInt("branch_id");
+        s.branchName = json.getString("branch_name");
+
+        // load rooms
+        if (s.rooms == null)
+            s.rooms = new ArrayList<>();
+        s.rooms.clear();
+
+        JSONArray roomsJson = json.getJSONArray("rooms");
+        for (int i = 0; i < roomsJson.length(); i++) {
+            Room r = Room.fromJson(roomsJson.getJSONObject(i));
+            s.rooms.add(r);
+        }
+
+        return s;
     }
 }

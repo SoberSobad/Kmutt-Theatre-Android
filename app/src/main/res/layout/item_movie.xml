@@ -56,13 +56,14 @@
                     android:layout_marginTop="4dp">
 
                     <TextView
-                        android:id="@+id/tvMovieLang"
+                        android:id="@+id/tvMovieGenre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EN"
+                        android:text="COMEDY"
                         android:textSize="13dp"
                         android:textColor="#4dffffff"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -72,7 +73,8 @@
                         android:textColor="#4dffffff"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/tvMovieLength"

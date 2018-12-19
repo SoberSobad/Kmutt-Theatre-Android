@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kmutt.sit.theater.R;
-import com.kmutt.sit.theater.shared.libs.GlideApp;
 
 import java.util.List;
 
@@ -84,7 +83,7 @@ public class ShowtimesListAdapter extends RecyclerView.Adapter<ShowtimesListAdap
             super(itemView);
 
             tvMovieTitle = itemView.findViewById(R.id.tvMovieTitle);
-            tvMovieLang = itemView.findViewById(R.id.tvMovieLang);
+            tvMovieLang = itemView.findViewById(R.id.tvMovieGenre);
             tvMovieLength = itemView.findViewById(R.id.tvMovieLength);
 
             poster = itemView.findViewById(R.id.poster);
@@ -96,7 +95,7 @@ public class ShowtimesListAdapter extends RecyclerView.Adapter<ShowtimesListAdap
             //
             // TITLE
             //
-            tvMovieTitle.setText(s.name);
+            tvMovieTitle.setText(s.branchName);
 
 //            //
 //            // POSTER

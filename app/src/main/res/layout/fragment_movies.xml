@@ -20,7 +20,8 @@
             android:id="@+id/lastDayButt"
             android:layout_width="36dp"
             android:layout_height="40dp"
-            android:text="&lt;" />
+            android:text="&lt;"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -34,7 +35,7 @@
                 android:id="@+id/dayTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MOVIES FOR"
+                android:text="KMUTT THEATRE"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="13dp"
@@ -47,10 +48,10 @@
                 android:id="@+id/currentDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="December 15"
+                android:text="Available Movies"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="17sp" />
+                android:textSize="17dp" />
 
         </LinearLayout>
 
@@ -58,7 +59,8 @@
             android:id="@+id/nextDayButt"
             android:layout_width="36dp"
             android:layout_height="40dp"
-            android:text="&gt;" />
+            android:text="&gt;"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnTest"
@@ -68,6 +70,16 @@
             android:visibility="gone"/>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#10ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/swipeRefreshLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
