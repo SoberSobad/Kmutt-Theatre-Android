@@ -9,7 +9,7 @@ import java.util.Collection;
 
 public class Movie {
     public String name = null;
-    public String id = null;
+    public int id;
     public String date = null; //dd_mm_yyyy
     public String imageUrl = null;
     public String length;
@@ -31,7 +31,7 @@ public class Movie {
     public static Movie fromJson(JSONObject json) throws JSONException {
         Movie m = new Movie();
         m.name = json.getString("title");
-        m.id = json.getString("id");
+        m.id = json.getInt("id");
         m.length = json.getString("length");
         m.detail = json.getString("detail");
         m.imageUrl = "http://theatre.sit.kmutt.ac.th" + json.getString("Image");

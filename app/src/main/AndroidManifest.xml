@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivityV2">
+        <activity android:name=".MainActivityV2"
+            android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,18 +24,30 @@
         </activity>
         <activity
             android:name=".membership.MembershipActivity"
+            android:screenOrientation="sensorPortrait"
             android:launchMode="singleTask" />
-        <activity android:name=".membership.RegisterActivity" />
-        <activity android:name=".membership.TopupActivity" />
-        <activity android:name=".membership.InfoActivity" />
-        <activity android:name=".membership.EditActivity" />
-        <activity android:name=".membership.ChangePasswordActivity" />
-        <activity android:name=".booking.PaymentActivity" />
-        <activity android:name=".booking.ConfirmationActivity" />
-        <activity android:name=".booking.SeatActivity" />
-        <activity android:name=".booking.showtimes.ShowtimesActivity" />
-        <activity android:name=".membership.ForgetPasswordActivity" />
-        <activity android:name=".membership.PointHistoryActivity"></activity>
+        <activity android:name=".membership.RegisterActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".membership.TopupActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".membership.InfoActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".membership.EditActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".membership.ChangePasswordActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".booking.PaymentActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".booking.ConfirmationActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".booking.SeatActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".booking.showtimes.ShowtimesActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".membership.ForgetPasswordActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".membership.PointHistoryActivity"
+            android:screenOrientation="sensorPortrait" />
     </application>
 
 </manifest>

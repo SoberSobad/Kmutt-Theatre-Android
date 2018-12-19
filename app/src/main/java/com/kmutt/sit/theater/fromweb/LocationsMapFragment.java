@@ -3,8 +3,6 @@ package com.kmutt.sit.theater.fromweb;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,9 +28,22 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.kmutt.sit.theater.R;
+import com.kmutt.sit.theater.booking.movies.Movie;
+import com.kmutt.sit.theater.membership.MySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,12 +55,27 @@ import java.util.Map;
  */
 public class LocationsMapFragment extends Fragment {
 
+    final String URL = "http://theatre.sit.kmutt.ac.th/customer/group14/map/mobile/";
+
     //
     // Views
     //
     View rootView;
+    Spinner movieSelector;
     WebView webView;
     SwipeRefreshLayout swipeRefreshLayout;
+
+    //
+    // Data
+    //
+    List<Integer> moviesId;
+    List<String> moviesName;
+
+    //
+    // Spinner
+    //
+    ArrayAdapter<String> mMoviesAdapter;
+    int currentIndex = 0;
 
     public LocationsMapFragment() { }
 
@@ -58,10 +84,71 @@ public class LocationsMapFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_locations_map, container, false);
 
+        //
+        // init data
+        //
+        moviesId = new ArrayList<>();
+        moviesName = new ArrayList<>();
+
+        //
+        // Spinner
+        //
+        mMoviesAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, moviesName);
+        movieSelector = rootView.findViewById(R.id.movieSelector);
+        movieSelector.setAdapter(mMoviesAdapter);
+        movieSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (currentIndex != i) {
+                    webView.loadUrl(URL + moviesId.get(i));
+                    currentIndex = i;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        //
+        // Load data into spinner
+        //
+        String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/movies";
+        JsonArrayRequest movieRequest = new JsonArrayRequest (Request.Method.GET, movieUrl, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+            // success
+            for (int i = 0; i < response.length(); i++) {
+                try {
+                    JSONObject json = response.getJSONObject(i);
+                    Movie mov = Movie.fromJson(json);
+
+                    moviesId.add(mov.id);
+                    moviesName.add(mov.name);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            mMoviesAdapter.notifyDataSetChanged();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // TODO: Handle error
+//                memberInfo.setText("fail to retrieve member's information \nMemberID = "+memberID);
+                Toast.makeText(getActivity(), "Error fetching movies: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        MySingleton.getInstance(getActivity()).addToRequestQueue(movieRequest);
+
+
         // WebView
         this.webView = rootView.findViewById(R.id.mapWebView);
 //        webView.loadUrl("http://theatre.sit.kmutt.ac.th/customer/group14/map");
-        webView.loadUrl("http://theatre.sit.kmutt.ac.th/customer/group14/map/mobile");
+        webView.loadUrl(URL + "92");
         webView.setWebViewClient(new WebViewClient() {
 
             @Override

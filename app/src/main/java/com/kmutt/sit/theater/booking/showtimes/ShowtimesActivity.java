@@ -42,7 +42,7 @@ public class ShowtimesActivity extends AppCompatActivity {
     //
     // PARAMS
     //
-    String movieId;
+    int movieId;
     String movieName;
     String movieImageUrl;
     String movieLength;
@@ -87,7 +87,7 @@ public class ShowtimesActivity extends AppCompatActivity {
         //
         // Params
         //
-        this.movieId = getIntent().getStringExtra("movie_id");
+        this.movieId = getIntent().getIntExtra("movie_id", -1);
         this.movieName = getIntent().getStringExtra("movie_name");
         this.movieImageUrl = getIntent().getStringExtra("movie_img_url");
         this.movieLength = getIntent().getStringExtra("movie_length");
@@ -285,6 +285,7 @@ public class ShowtimesActivity extends AppCompatActivity {
                     datesTabLayout.getTabAt(0).select();
                 else {
                     Toast.makeText(ShowtimesActivity.this, "No showtime available", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
                 // stop refreshing

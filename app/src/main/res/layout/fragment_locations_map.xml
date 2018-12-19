@@ -12,6 +12,11 @@
         android:layout_height="match_parent"
         android:background="#212121">
 
+        <Spinner
+            android:id="@+id/movieSelector"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="0dp"
@@ -19,7 +24,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/movieSelector">
 
             <WebView
                 android:id="@+id/mapWebView"
