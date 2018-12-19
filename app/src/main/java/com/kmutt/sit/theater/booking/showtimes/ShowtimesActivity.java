@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +34,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class ShowtimesActivity extends AppCompatActivity {
 
@@ -73,7 +76,8 @@ public class ShowtimesActivity extends AppCompatActivity {
     //
     // List Adapter
     //
-    ShowtimesListAdapter mAdapter;
+//    ShowtimesListAdapter mAdapter;
+    SectionedRecyclerViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,10 +137,12 @@ public class ShowtimesActivity extends AppCompatActivity {
         });
 
         //
-        // RecyclerView
+        // RecyclerView & Adapter
         //
         this.showtimesListView = findViewById(R.id.showtimesListView);
-        showtimesListView.setLayoutManager(new LinearLayoutManager(this));
+        showtimesListView.setLayoutManager(new GridLayoutManager(this, 1));
+        mAdapter = new SectionedRecyclerViewAdapter();
+        showtimesListView.setAdapter(mAdapter);
 
         // set up "Swipe to Refresh"
         this.swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
@@ -308,6 +314,11 @@ public class ShowtimesActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
 
+                //
+                // Clear old data
+                //
+                mAdapter.removeAllSections();
+
                 List<Showtime> showtimes = new ArrayList<>();
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -317,27 +328,31 @@ public class ShowtimesActivity extends AppCompatActivity {
                         Showtime s = Showtime.fromJson(json);
                         showtimes.add(s);
 
+                        //
+                        // Create new Section
+                        //
+                        ShowtimeLocationSection newSection = new ShowtimeLocationSection(ShowtimesActivity.this, s);
+                        newSection.setOnClickListener(new ShowtimeLocationSection.OnClickListener() {
+                            @Override
+                            public void onClick(ShowtimeLocationSection.ViewHolder v) {
+//                            Intent i = new Intent(getActivity(), SeatActivity.class);
+                                Intent i = new Intent(ShowtimesActivity.this, SeatActivity.class);
+                                i.putExtra("movie_name", movieName);
+                                i.putExtra("movie_id", movieId);
+                                startActivity(i);
+                            }
+                        });
+
+                        // Add section
+                        mAdapter.addSection(newSection);
+                        mAdapter.notifyDataSetChanged();
+
+//                        Toast.makeText(ShowtimesActivity.this, "" + i, Toast.LENGTH_SHORT).show();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-
-                // Create list mAdapter
-                if (mAdapter == null) {
-                    mAdapter = new ShowtimesListAdapter(ShowtimesActivity.this, showtimes);
-                    mAdapter.setOnClickListener(new ShowtimesListAdapter.OnClickListener() {
-                        @Override
-                        public void onClick(ShowtimesListAdapter.ViewHolder v) {
-//                            Intent i = new Intent(getActivity(), SeatActivity.class);
-                            Intent i = new Intent(ShowtimesActivity.this, SeatActivity.class);
-                            i.putExtra("movie_name", movieName);
-                            i.putExtra("movie_id", movieId);
-                            startActivity(i);
-                        }
-                    });
-                }
-                mAdapter.updateMoviesList(showtimes);
-                showtimesListView.setAdapter(mAdapter);
 
                 // stop refreshing
                 swipeRefreshLayout.setRefreshing(false);
