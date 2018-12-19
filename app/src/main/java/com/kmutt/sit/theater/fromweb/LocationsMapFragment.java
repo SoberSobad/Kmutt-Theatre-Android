@@ -164,6 +164,8 @@ public class LocationsMapFragment extends Fragment {
                     Intent i = new Intent(getActivity(), ShowtimesActivity.class);
                     i.putExtra("movie_id", movieId);
                     i.putExtra("branch_id", branchId);
+
+                    Toast.makeText(getActivity(), movieId + " " + branchId, Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }
                 else {

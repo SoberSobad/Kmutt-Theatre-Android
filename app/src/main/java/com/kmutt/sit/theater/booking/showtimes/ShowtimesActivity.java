@@ -246,6 +246,10 @@ public class ShowtimesActivity extends AppCompatActivity {
 
         // make a connection request to server
         String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/showtimes/" + movieId;
+        if (branchId != -1) {
+            movieUrl += ("/" + branchId);
+        }
+//        Toast.makeText(this, movieUrl, Toast.LENGTH_LONG).show();
         JsonArrayRequest showtimeRequest = new JsonArrayRequest (Request.Method.GET, movieUrl, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -313,6 +317,9 @@ public class ShowtimesActivity extends AppCompatActivity {
 
         // make a connection request to server
         String movieUrl = "http://theatre.sit.kmutt.ac.th/customer/mobile/showtime/all/" + movieId + "/" + strDate;
+        if (branchId != -1) {
+            movieUrl += ("/" + branchId);
+        }
         JsonArrayRequest showtimeRequest = new JsonArrayRequest (Request.Method.GET, movieUrl, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
