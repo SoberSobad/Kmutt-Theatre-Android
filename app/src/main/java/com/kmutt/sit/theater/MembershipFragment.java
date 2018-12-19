@@ -28,6 +28,7 @@ import com.kmutt.sit.theater.membership.InfoActivity;
 import com.kmutt.sit.theater.membership.JsonHandler;
 import com.kmutt.sit.theater.membership.MembershipActivity;
 import com.kmutt.sit.theater.membership.MySingleton;
+import com.kmutt.sit.theater.membership.PointHistoryActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,10 +55,15 @@ public class MembershipFragment extends Fragment {
     Button infoButt;
     Button editButt;
     Button passwordChangeButt;
-    TextView tvPoint;
+    //TextView tvPoint;
+    Button pointButt;
     TextView pointShow;
     EditText memberInfo;
     ImageView avatar;
+
+    Intent pointHistory;
+    String name;
+    String point;
 
     public MembershipFragment() {
 //        memberID = getArguments().getInt("memberID",-1);
@@ -77,7 +83,7 @@ public class MembershipFragment extends Fragment {
         editButt = rootView.findViewById(R.id.editButt);
         passwordChangeButt = rootView.findViewById(R.id.passwordChangeButt);
         avatar = rootView.findViewById(R.id.avatar);
-        tvPoint = rootView.findViewById(R.id.tvPoint);
+        pointButt = rootView.findViewById(R.id.pointButt);
         pointShow = rootView.findViewById(R.id.pointShow);
 
         final Intent mbshipAct = new Intent(getActivity(), MembershipActivity.class);
@@ -120,6 +126,14 @@ public class MembershipFragment extends Fragment {
             }
         });
 
+        pointButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pointHistory = new Intent(getActivity(), PointHistoryActivity.class);
+                startActivity(pointHistory);
+            }
+        });
+
         return rootView;
     }
 
@@ -135,9 +149,10 @@ public class MembershipFragment extends Fragment {
                     (Request.Method.GET, url1, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
-                            memberInfo.setText("Hi, " + JsonHandler.parseString(response, "Fname") + " " +
-                                    JsonHandler.parseString(response, "Lname")
-                            );
+                            name = JsonHandler.parseString(response, "Fname") + " " + JsonHandler.parseString(response, "Lname");
+                            editor.putString("name", name);
+                            editor.commit();
+                            memberInfo.setText("Hi, " + name);
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -154,7 +169,10 @@ public class MembershipFragment extends Fragment {
                         @Override
                         public void onResponse(JSONArray response) {
                             if (response.toString().length() > 2) {
-                                pointShow.setText(JsonHandler.parseString(response, "totalpoint"));
+                                point = JsonHandler.parseString(response, "totalpoint");
+                                editor.putString("point", point);
+                                editor.commit();
+                                pointShow.setText(point);
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -171,7 +189,7 @@ public class MembershipFragment extends Fragment {
             infoButt.setVisibility(View.VISIBLE);
             editButt.setVisibility(View.VISIBLE);
             passwordChangeButt.setVisibility(View.VISIBLE);
-            tvPoint.setVisibility(View.VISIBLE);
+            pointButt.setVisibility(View.VISIBLE);
             pointShow.setVisibility(View.VISIBLE);
 
         }else{
@@ -181,7 +199,7 @@ public class MembershipFragment extends Fragment {
             infoButt.setVisibility(View.INVISIBLE);
             editButt.setVisibility(View.INVISIBLE);
             passwordChangeButt.setVisibility(View.INVISIBLE);
-            tvPoint.setVisibility(View.INVISIBLE);
+            pointButt.setVisibility(View.INVISIBLE);
             pointShow.setVisibility(View.INVISIBLE);
         }
     }

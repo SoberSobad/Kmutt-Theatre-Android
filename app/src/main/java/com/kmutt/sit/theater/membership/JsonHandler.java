@@ -24,7 +24,7 @@ public class JsonHandler {
             String str = jsonArray.toString();
             if(str.length() <= 2) return "Array is null !";
             for(int i=0; i<str.length(); i++){
-                if( i+pattern.length()<=str.length() & str.substring(i,i+pattern.length()).equals(pattern) ){
+                if( i+pattern.length()<=str.length() && str.substring(i,i+pattern.length()).equals(pattern) ){
                         if(str.charAt(i+pattern.length()) == '"'){
                             hasQoute = true;
                             i++;
@@ -38,6 +38,43 @@ public class JsonHandler {
                 if(i == str.length()-1) return "Cannot find given name in "+jsonArray.toString();
             }
         }return "Array is null !!";
+    }
+
+    public static String[] parseString2 (JSONArray jsonArray, String key){
+        boolean hasQoute = false;
+        String keyPattern = "\"" + key + "\":";
+        String[] result = new String[0];
+        int count = 0;
+        if (jsonArray != null) {
+            String str = jsonArray.toString();
+            if(str.length() <= 2) return result = new String[0];
+            for(int i=0; i<str.length(); i++){
+                if( i+keyPattern.length()<=str.length() && str.substring(i,i+keyPattern.length()).equals(keyPattern) ){
+                    count++;
+                    i = i+keyPattern.length();
+                }
+            }
+            if (count > 0) {
+                int pointer = 0;
+                result = new String[count];
+                for(int i=0; i<str.length(); i++){
+                    if( i+keyPattern.length()<=str.length() && str.substring(i,i+keyPattern.length()).equals(keyPattern) ){
+                        if(str.charAt(i+keyPattern.length()) == '"'){
+                            hasQoute = true;
+                            i++;
+                        }
+                        String hold = "";
+                        for(int j=i+keyPattern.length(); j<str.length(); j++){
+                            if((str.charAt(j) == ',' & !hasQoute) | (str.charAt(j) == '"' & hasQoute) | (str.charAt(j) == '}')) break;
+                            hold += str.charAt(j);
+                        }
+                        result[pointer] = hold;
+                        pointer++;
+                    }
+                    if(i >= str.length()-1) break;
+                }
+            }else return result = new String[0];
+        }return result;
     }
 
     public static JSONArray getMethod(String url, Context context){

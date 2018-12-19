@@ -59,14 +59,14 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="20dp"
         android:text="Info"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPoint" />
+        app:layout_constraintTop_toBottomOf="@+id/pointButt" />
 
     <Button
         android:id="@+id/editButt"
@@ -94,11 +94,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editButt" />
 
-    <TextView
-        android:id="@+id/tvPoint"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/pointButt"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
+        android:background="#202020"
         android:text="Point :"
         android:textColor="@color/colorAccent"
         android:textSize="25dp"
@@ -110,10 +111,10 @@
         android:id="@+id/pointShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvPoint"
-        app:layout_constraintStart_toEndOf="@+id/tvPoint" />
+        app:layout_constraintBottom_toBottomOf="@+id/pointButt"
+        app:layout_constraintStart_toEndOf="@+id/pointButt" />
 
 
 </android.support.constraint.ConstraintLayout>

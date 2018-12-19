@@ -39,7 +39,6 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        //memberID = getIntent().getIntExtra("memberID",-1);
         sp = getSharedPreferences(P_NAME, Context.MODE_PRIVATE);
         editor = sp.edit();
         memberID = sp.getInt("memberID",-1);
@@ -58,8 +57,6 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent editIntent = new Intent(InfoActivity.this, EditActivity.class);
-                //editIntent.putExtra("memberID",memberID);
-                //editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(editIntent);
             }
         });
@@ -76,7 +73,6 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        //memberID = getIntent().getIntExtra("memberID",-1);
         memberID = sp.getInt("memberID",-1);
         if(memberID != -1) {
             String url = "http://theatre.sit.kmutt.ac.th/customer/androidGetInfo?id=" + memberID;
